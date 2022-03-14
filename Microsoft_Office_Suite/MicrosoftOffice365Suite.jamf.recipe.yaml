@@ -1,0 +1,124 @@
+Description: Downloads the latest version and makes a pkg. Then, uploads the package to the Jamf Pro Server and creates a Policy and Smart Group.
+Identifier: com.buoy.recipes.jamf.microsoftofficesuite
+MinimumVersion: "2.3"
+ParentRecipe: com.github.rtrouton.pkg.MicrosoftOffice365Suite
+
+Input:
+  NAME: "Microsoft Office 365"
+  APP_BUNDLE_ID: "com.microsoft.Excel,com.microsoft.Outlook,com.microsoft.Powerpoint,com.microsoft.Word"
+  CATEGORY: Productivity
+  TRIGGER_NAME: "autoupdate-%NAME%"
+  DEFER_TRIGGER: "defer-%NAME%"
+  SELF_SERVICE_DESCRIPTION: "You MUST have an active Office 365 license through Buoy in order to use these applications. If you do not have a license, please request one by filing an Access Request on the Help Desk."
+  SELF_SERVICE_ICON: MicrosoftOffice.png
+  UPDATE_PREDICATE: "pkg_uploaded == False"
+  STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
+  SLACK_WEBHOOK_URL: ""
+  
+Process:
+
+  - Processor: io.github.hjuutilainen.VirusTotalAnalyzer/VirusTotalAnalyzer
+  
+  - Processor: StopProcessingIf
+    Arguments:
+      predicate: "%STOP_PREDICATE%"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfCategoryUploader
+    Arguments:
+      category_name: "%CATEGORY%"
+
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageUploader
+    Arguments:
+      pkg_category: "AutoPkg"
+
+  - Processor: StopProcessingIf
+    Arguments:
+      predicate: "%UPDATE_PREDICATE%"
+
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
+    Arguments:
+      computergroup_template: "SmartGroupTemplate-autopatch.xml"
+      computergroup_name: "autoupdate-%NAME%"
+      replace_group: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
+    Arguments:
+      computergroup_template: "SmartGroupTemplate-notinstalled.xml"
+      computergroup_name: "App Not Installed: %NAME%"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
+    Arguments:
+      computergroup_template: "SmartGroupTemplate-installed.xml"
+      computergroup_name: "App Installed: %NAME%"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-autopatch.xml"
+      policy_name: "Install Latest %NAME%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      trigger_name: "%TRIGGER_NAME%"
+      policy_category: "AutoPkg"
+      group_name: "autoupdate-%NAME%"
+      self_service_bool: "false"
+      self_service_action: "Install"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfUploaderSlacker
+    Arguments:
+      POLICY_CATEGORY: "%CATEGORY%"
+      slack_webhook_url: "%SLACK_WEBHOOK_URL%"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-selfservice-install.xml"
+      policy_name: "Install %NAME%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      policy_category: "%CATEGORY%"
+      group_name: "App Not Installed: %NAME%"
+      self_service_bool: "true"
+      self_service_action: "Install"
+      icon: "%SELF_SERVICE_ICON%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-selfservice-reinstall.xml"
+      policy_name: "Re-Install %NAME%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      policy_category: "%CATEGORY%"
+      group_name: "App Installed: %NAME%"
+      exclude_group_name: "autoupdate-%NAME%"
+      self_service_bool: "true"
+      self_service_action: "Re-Install"
+      icon: "%SELF_SERVICE_ICON%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-prompt.xml"
+      policy_name: "Monthly Prompt: %NAME%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      policy_category: "Auto-Update: Monthly Prompt"
+      group_name: "autoupdate-%NAME%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-defer.xml"
+      policy_name: "Deferred Update: %NAME%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      policy_category: "Auto-Update: Deferral Policies"
+      group_name: "autoupdate-%NAME%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-silent.xml"
+      policy_name: "Silent Update: %NAME%"
+      group_name: "autoupdate-%NAME%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      replace_policy: "True"
+      
