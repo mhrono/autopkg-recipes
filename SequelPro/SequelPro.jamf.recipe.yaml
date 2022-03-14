@@ -22,7 +22,8 @@ Process:
   - Processor: StopProcessingIf
     Arguments:
       predicate: "%STOP_PREDICATE%"
-      - Processor: com.github.grahampugh.jamf-upload.processors/JamfCategoryUploader
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfCategoryUploader
     Arguments:
       category_name: "%CATEGORY%"
 
