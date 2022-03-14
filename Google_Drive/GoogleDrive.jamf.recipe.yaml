@@ -91,7 +91,7 @@ Process:
       policy_category: "Updates"
       group_name: "autoupdate-%NAME%"
       self_service_bool: "true"
-      self_service_action: "Update"
+      self_service_action: "Update to"
       icon: "%SELF_SERVICE_ICON%"
       replace_policy: "True"
       
