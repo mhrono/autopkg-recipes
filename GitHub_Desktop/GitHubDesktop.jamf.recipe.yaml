@@ -11,8 +11,8 @@ Input:
   DOWNLOAD_TYPE: "arm64"
   GROUP_CRITERIA: "arm64"
   SIGNING_CERTIFICATE: ""
-  TRIGGER_NAME: "autoupdate-%NAME%"
-  DEFER_TRIGGER: "defer-%NAME%"
+  TRIGGER_NAME: "autoupdate-%NAME%-%ARCHITECTURE%"
+  DEFER_TRIGGER: "defer-%NAME%-%ARCHITECTURE%"
   SELF_SERVICE_DESCRIPTION: "Focus on what matters instead of fighting with Git. Whether you're new to Git or a seasoned user, GitHub Desktop simplifies your development workflow."
   SELF_SERVICE_ICON: GitHub_Desktop.png
   UPDATE_PREDICATE: "pkg_uploaded == False"
@@ -61,29 +61,29 @@ Process:
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
       policy_template: "PolicyTemplate-autopatch.xml"
-      policy_name: "Install Latest %NAME%"
+      policy_name: "Install Latest %NAME%-%ARCHITECTURE%"
       frequency: "Ongoing"
       checkin_bool: "false"
       trigger_name: "%TRIGGER_NAME%"
       policy_category: "AutoPkg"
-      group_name: "autoupdate-%NAME%"
+      group_name: "autoupdate-%NAME%-%ARCHITECTURE%"
       self_service_bool: "false"
       self_service_action: "Install"
       replace_policy: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfUploaderSlacker
     Arguments:
-      POLICY_CATEGORY: "%CATEGORY%"
+      PKG_CATEGORY: "%CATEGORY%"
       slack_webhook_url: "%SLACK_WEBHOOK_URL%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
       policy_template: "PolicyTemplate-selfservice-install.xml"
-      policy_name: "Install %NAME%"
+      policy_name: "Install %NAME%-%ARCHITECTURE%"
       frequency: "Ongoing"
       checkin_bool: "false"
       policy_category: "%CATEGORY%"
-      group_name: "App Not Installed: %NAME%"
+      group_name: "App Not Installed: %NAME%-%ARCHITECTURE%"
       self_service_bool: "true"
       self_service_action: "Install"
       icon: "%SELF_SERVICE_ICON%"
@@ -91,13 +91,26 @@ Process:
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
+      policy_template: "PolicyTemplate-selfservice-install.xml"
+      policy_name: "Update %NAME%-%ARCHITECTURE%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      policy_category: "Updates"
+      group_name: "autoupdate-%NAME%-%ARCHITECTURE%"
+      self_service_bool: "true"
+      self_service_action: "Update"
+      icon: "%SELF_SERVICE_ICON%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
       policy_template: "PolicyTemplate-selfservice-reinstall.xml"
-      policy_name: "Re-Install %NAME%"
+      policy_name: "Re-Install %NAME%-%ARCHITECTURE%"
       frequency: "Ongoing"
       checkin_bool: "false"
       policy_category: "%CATEGORY%"
-      group_name: "App Installed: %NAME%"
-      exclude_group_name: "autoupdate-%NAME%"
+      group_name: "App Installed: %NAME%-%ARCHITECTURE%"
+      exclude_group_name: "autoupdate-%NAME%-%ARCHITECTURE%"
       self_service_bool: "true"
       self_service_action: "Re-Install"
       icon: "%SELF_SERVICE_ICON%"
@@ -106,26 +119,26 @@ Process:
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
       policy_template: "PolicyTemplate-prompt.xml"
-      policy_name: "Monthly Prompt: %NAME%"
+      policy_name: "Monthly Prompt: %NAME%-%ARCHITECTURE%"
       script_trigger_name: "%TRIGGER_NAME%"
       policy_category: "Auto-Update: Monthly Prompt"
-      group_name: "autoupdate-%NAME%"
+      group_name: "autoupdate-%NAME%-%ARCHITECTURE%"
       replace_policy: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
       policy_template: "PolicyTemplate-defer.xml"
-      policy_name: "Deferred Update: %NAME%"
+      policy_name: "Deferred Update: %NAME%-%ARCHITECTURE%"
       script_trigger_name: "%TRIGGER_NAME%"
       policy_category: "Auto-Update: Deferral Policies"
-      group_name: "autoupdate-%NAME%"
+      group_name: "autoupdate-%NAME%-%ARCHITECTURE%"
       replace_policy: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
       policy_template: "PolicyTemplate-silent.xml"
-      policy_name: "Silent Update: %NAME%"
-      group_name: "autoupdate-%NAME%"
+      policy_name: "Silent Update: %NAME%-%ARCHITECTURE%"
+      group_name: "autoupdate-%NAME%-%ARCHITECTURE%"
       script_trigger_name: "%TRIGGER_NAME%"
       replace_policy: "True"
       

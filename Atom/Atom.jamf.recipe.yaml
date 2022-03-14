@@ -66,7 +66,7 @@ Process:
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfUploaderSlacker
     Arguments:
-      POLICY_CATEGORY: "%CATEGORY%"
+      PKG_CATEGORY: "%CATEGORY%"
       slack_webhook_url: "%SLACK_WEBHOOK_URL%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
@@ -79,6 +79,19 @@ Process:
       group_name: "App Not Installed: %NAME%"
       self_service_bool: "true"
       self_service_action: "Install"
+      icon: "%SELF_SERVICE_ICON%"
+      replace_policy: "True"
+
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-selfservice-install.xml"
+      policy_name: "Update %NAME%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      policy_category: "Updates"
+      group_name: "autoupdate-%NAME%"
+      self_service_bool: "true"
+      self_service_action: "Update"
       icon: "%SELF_SERVICE_ICON%"
       replace_policy: "True"
       
