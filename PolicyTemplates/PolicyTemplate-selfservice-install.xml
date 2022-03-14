@@ -35,8 +35,8 @@
     <!-- Self Service details -->
     <self_service>
         <use_for_self_service>true</use_for_self_service>
-        <install_button_text>Install %version%</install_button_text>
-        <reinstall_button_text>Install %version%</reinstall_button_text>
+        <install_button_text>%self_service_action% %version%</install_button_text>
+        <reinstall_button_text>%self_service_action% %version%</reinstall_button_text>
         <self_service_display_name>%policy_name%</self_service_display_name>
         <self_service_description>%SELF_SERVICE_DESCRIPTION%</self_service_description>
     </self_service>
