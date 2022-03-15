@@ -32,9 +32,9 @@ Process:
       pkg_category: "AutoPkg"
       
 - Processor: com.github.grahampugh.jamf-upload.processors/JamfExtensionAttributeUploader
-  Arguments:
-    ea_name: "%NAME% Version"
-    ea_script_path: "CFBundleVersionEA.sh"
+    Arguments:
+      ea_name: "%NAME% Version"
+      ea_script_path: "CFBundleVersionEA.sh"
 
   - Processor: StopProcessingIf
     Arguments:
