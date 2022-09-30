@@ -1,0 +1,136 @@
+Description: Downloads the latest version and makes a pkg. Then, uploads the package to the Jamf Pro Server and creates a Policy and Smart Group.
+Identifier: com.mhrono.recipes.jamf.openjdk
+MinimumVersion: "2.3"
+ParentRecipe: com.github.dataJAR-recipes.pkg.OpenJDK
+
+Input:
+  NAME: "OpenJDK"
+  APP_BUNDLE_ID: "net.java.openjdk"
+  CATEGORY: "Development"
+  ARCHITECTURE: "aarch64"
+  GROUP_CRITERIA: "%ARCHITECTURE%"
+  TRIGGER_NAME: "autoupdate-%NAME%-%ARCHITECTURE%"
+  DEFER_TRIGGER: "defer-%NAME%-%ARCHITECTURE%"
+  SELF_SERVICE_DESCRIPTION: "OpenJDK is a free and open-source alternative for Oracle's traditional JDK."
+  SELF_SERVICE_ICON: "OpenJDK.png"
+  UPDATE_PREDICATE: "pkg_uploaded == False"
+  STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
+
+Process:
+
+  - Processor: io.github.hjuutilainen.VirusTotalAnalyzer/VirusTotalAnalyzer
+  
+  - Processor: StopProcessingIf
+    Arguments:
+      predicate: "%STOP_PREDICATE%"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfCategoryUploader
+    Arguments:
+      category_name: "%CATEGORY%"
+
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageUploader
+    Arguments:
+      pkg_category: "AutoPkg"
+
+  - Processor: StopProcessingIf
+    Arguments:
+      predicate: "%UPDATE_PREDICATE%"
+
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
+    Arguments:
+      computergroup_template: "SmartGroupTemplate-autopatch-arch.xml"
+      computergroup_name: "autoupdate-%NAME%-%ARCHITECTURE%"
+      replace_group: "True"
+      group_arch: "%GROUP_CRITERIA%"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
+    Arguments:
+      computergroup_template: "SmartGroupTemplate-notinstalled-arch.xml"
+      computergroup_name: "App Not Installed: %NAME%-%ARCHITECTURE%"
+      group_arch: "%GROUP_CRITERIA%"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
+    Arguments:
+      computergroup_template: "SmartGroupTemplate-installed-arch.xml"
+      computergroup_name: "App Installed: %NAME%-%ARCHITECTURE%"
+      group_arch: "%GROUP_CRITERIA%"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-autopatch.xml"
+      policy_name: "Install Latest %NAME%-%ARCHITECTURE%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      trigger_name: "%TRIGGER_NAME%"
+      policy_category: "AutoPkg"
+      group_name: "autoupdate-%NAME%-%ARCHITECTURE%"
+      self_service_bool: "false"
+      self_service_action: "Install"
+      replace_policy: "True"
+
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-selfservice-install.xml"
+      policy_name: "Install %NAME%-%ARCHITECTURE%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      policy_category: "%CATEGORY%"
+      group_name: "App Not Installed: %NAME%-%ARCHITECTURE%"
+      self_service_bool: "true"
+      self_service_action: "Install"
+      icon: "%SELF_SERVICE_ICON%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-selfservice-install.xml"
+      policy_name: "Update %NAME%-%ARCHITECTURE%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      policy_category: "Updates"
+      group_name: "autoupdate-%NAME%-%ARCHITECTURE%"
+      self_service_bool: "true"
+      self_service_action: "Update to"
+      icon: "%SELF_SERVICE_ICON%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-selfservice-reinstall.xml"
+      policy_name: "Re-Install %NAME%-%ARCHITECTURE%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      policy_category: "%CATEGORY%"
+      group_name: "App Installed: %NAME%-%ARCHITECTURE%"
+      exclude_group_name: "autoupdate-%NAME%-%ARCHITECTURE%"
+      self_service_bool: "true"
+      self_service_action: "Re-Install"
+      icon: "%SELF_SERVICE_ICON%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-prompt.xml"
+      policy_name: "Monthly Prompt: %NAME%-%ARCHITECTURE%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      policy_category: "Auto-Update: Monthly Prompt"
+      group_name: "autoupdate-%NAME%-%ARCHITECTURE%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-defer.xml"
+      policy_name: "Deferred Update: %NAME%-%ARCHITECTURE%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      policy_category: "Auto-Update: Deferral Policies"
+      group_name: "autoupdate-%NAME%-%ARCHITECTURE%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-silent.xml"
+      policy_name: "Silent Update: %NAME%-%ARCHITECTURE%"
+      group_name: "autoupdate-%NAME%-%ARCHITECTURE%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      replace_policy: "True"
+      
