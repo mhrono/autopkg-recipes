@@ -110,7 +110,7 @@ Process:
       script_trigger_name: "%TRIGGER_NAME%"
       policy_category: "Auto-Update: Monthly Prompt"
       group_name: "autoupdate-%NAME%"
-      replace_policy: "False"
+      replace_policy: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
@@ -119,7 +119,7 @@ Process:
       script_trigger_name: "%TRIGGER_NAME%"
       policy_category: "Auto-Update: Deferral Policies"
       group_name: "autoupdate-%NAME%"
-      replace_policy: "False"
+      replace_policy: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
@@ -127,5 +127,5 @@ Process:
       policy_name: "Silent Update: %NAME%"
       group_name: "autoupdate-%NAME%"
       script_trigger_name: "%TRIGGER_NAME%"
-      replace_policy: "False"
+      replace_policy: "True"
       
