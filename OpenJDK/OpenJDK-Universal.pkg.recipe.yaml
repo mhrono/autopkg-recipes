@@ -1,0 +1,120 @@
+Description: Downloads the latest version and makes a pkg. Then, uploads the package to the Jamf Pro Server and creates a Policy and Smart Group.
+Identifier: com.mhrono.recipes.pkg.openjdk-universal
+MinimumVersion: "2.3"
+ParentRecipe: com.mhrono.recipes.download.openjdk-universal
+
+Input:
+  NAME: OpenJDK
+
+Process:
+  - Processor: FileFinder
+    Arguments:
+      pattern: '%RECIPE_CACHE_DIR%/unpack/aarch64/jdk*/Contents/Info.plist'
+
+  - Processor: Versioner
+    Arguments:
+      plist_version_key: CFBundleShortVersionString
+      input_plist_path: '%found_filename%'
+
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgroot: '%RECIPE_CACHE_DIR%/pkgroot'
+      pkgdirs:
+        Library: '0755'
+        Library/Java: '0755'
+        Library/Java/JavaVirtualMachines: '0755'
+
+  - Processor: Copier
+    Arguments:
+      source_path: '%RECIPE_CACHE_DIR%/unpack/aarch64'
+      destination_path: '%RECIPE_CACHE_DIR%/pkgroot/Library/Java/JavaVirtualMachines'
+      overwrite: True
+
+  - Processor: PkgCreator
+    Arguments:
+      pkg_request:
+        id: 'net.java.openjdk'
+        version: '%version%'
+        options: purge_ds_store
+        pkgname: '%NAME%-aarch64-%version%'
+        pkgdir: '%RECIPE_CACHE_DIR%/Universal/Scripts'
+        pkgroot: '%RECIPE_CACHE_DIR%/pkgroot'
+
+  - Processor: Copier
+    Arguments:
+      source_path: '%RECIPE_CACHE_DIR%/unpack/x86_64'
+      destination_path: '%RECIPE_CACHE_DIR%/pkgroot/Library/Java/JavaVirtualMachines'
+      overwrite: True
+
+  - Processor: PkgCreator
+    Arguments:
+      pkg_request:
+        id: 'net.java.openjdk'
+        version: '%version%'
+        options: purge_ds_store
+        pkgname: '%NAME%-x86_64-%version%'
+        pkgdir: '%RECIPE_CACHE_DIR%/Universal/Scripts'
+        pkgroot: '%RECIPE_CACHE_DIR%/pkgroot'
+
+  - Processor: FileCreator
+    Arguments:
+      file_path: '%RECIPE_CACHE_DIR%/Universal/Scripts/preinstall'
+      file_mode: '0755'
+      file_content: |-
+        #!/bin/bash
+
+        # Remove existing OpenJDK %version% installation
+
+        version_number="%version%"
+        java_directory="$3/Library/Java/JavaVirtualMachines/jdk-$version_number.jdk"
+
+        if [[ -d "$java_directory" ]]; then
+          rm -rf "$java_directory"
+        fi
+
+        # Install the arch-appropriate package
+
+        aarch64_package="%NAME%-aarch64-%version%.pkg"
+        x86_64_package="%NAME%-x86_64-%version%.pkg"
+
+        if [[ $( /usr/bin/arch ) = arm64* ]]; then
+          /usr/sbin/installer -pkg "$aarch64_package" -target "$3"
+        else
+          /usr/sbin/installer -pkg "$x86_64_package" -target "$3"
+        fi
+
+        exit 0
+
+  - Processor: com.github.smithjw.processors/FriendlyPathDeleter
+    Arguments:
+      fail_deleter_silently: true
+      path_list:
+        - '%RECIPE_CACHE_DIR%/pkgroot/Library/Java/JavaVirtualMachines/jdk-%version%.jdk'
+
+  - Processor: PkgCreator
+    Arguments:
+      pkg_request:
+        pkgname: OpenJDK-Universal-%version%
+        id: net.java.openjdk
+        pkgdir: '%RECIPE_CACHE_DIR%'
+        scripts: '%RECIPE_CACHE_DIR%/Universal/Scripts'
+        pkgroot: '%RECIPE_CACHE_DIR%/pkgroot'
+        options: purge_ds_store
+        chown:
+        - path: Library
+          user: root
+          group: wheel
+        - path: Library/Java
+          user: root
+          group: wheel
+        - path: Library/Java/JavaVirtualMachines
+          user: root
+          group: wheel
+        version: "%version%"
+
+  - Processor: com.github.smithjw.processors/FriendlyPathDeleter
+    Arguments:
+      fail_deleter_silently: true
+      path_list:
+        - '%RECIPE_CACHE_DIR%/Universal'
+        - '%RECIPE_CACHE_DIR%/unpack'

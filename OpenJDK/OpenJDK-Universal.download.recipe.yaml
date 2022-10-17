@@ -1,0 +1,84 @@
+Description: Downloads the latest version and makes a pkg. Then, uploads the package to the Jamf Pro Server and creates a Policy and Smart Group.
+Identifier: com.mhrono.recipes.download.openjdk-universal
+MinimumVersion: "2.3"
+
+Input:
+  NAME: OpenJDK
+
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      url: https://jdk.java.net
+      re_pattern: '<h1 class=\"gap\">Ready for use: <a href=\"/(\d*)/\">JDK \d*</a>'
+
+  - Processor: URLTextSearcher
+    Arguments:
+      url: https://jdk.java.net/%match%/index.html
+      re_pattern: "(?P<url>https://download.java.net/java/GA/jdk%match%.*?/GPL/openjdk-%match%.*?_macos-x64_bin\\.tar\\.gz)"
+
+  - Processor: URLDownloader
+    Arguments:
+      filename: '%NAME%-x86_64.tar.gz'
+      download_dir: '%RECIPE_CACHE_DIR%/downloads'
+      url: "%url%"
+
+  - Processor: URLTextSearcher
+    Arguments:
+      url: https://jdk.java.net
+      re_pattern: '<h1 class=\"gap\">Ready for use: <a href=\"/(\d*)/\">JDK \d*</a>'
+
+  - Processor: URLTextSearcher
+    Arguments:
+      url: https://jdk.java.net/%match%/index.html
+      re_pattern: "(?P<url>https://download.java.net/java/GA/jdk%match%.*?/GPL/openjdk-%match%.*?_macos-aarch64_bin\\.tar\\.gz)"
+
+  - Processor: URLDownloader
+    Arguments:
+      filename: '%NAME%-aarch64.tar.gz'
+      download_dir: '%RECIPE_CACHE_DIR%/downloads'
+      url: "%url%"
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgroot: '%RECIPE_CACHE_DIR%/Scripts'
+      pkgdirs: {}
+
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgroot: '%RECIPE_CACHE_DIR%/Universal'
+      pkgdirs:
+        pkgroot: '0775'
+        Scripts: '0775'
+
+  - Processor: Unarchiver
+    Arguments:
+      archive_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%-x86_64.tar.gz'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/x86_64'
+      purge_destination: true
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%RECIPE_CACHE_DIR%/unpack/x86_64/jdk*/'
+      requirement: "identifier \"net.java.openjdk.jdk\" and anchor apple generic and
+        certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate \nleaf[field.1.2.840.113635.100.6.1.13]
+        /* exists */ and certificate leaf[subject.OU] = VB5E2TV963"
+      deep_verification: true
+      strict_verification: true
+      
+  - Processor: Unarchiver
+    Arguments:
+      archive_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%-aarch64.tar.gz'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/aarch64'
+      purge_destination: true
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%RECIPE_CACHE_DIR%/unpack/aarch64/jdk*/'
+      requirement: "identifier \"net.java.openjdk.jdk\" and anchor apple generic and
+        certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate \nleaf[field.1.2.840.113635.100.6.1.13]
+        /* exists */ and certificate leaf[subject.OU] = VB5E2TV963"
+      deep_verification: true
+      strict_verification: true
+      
