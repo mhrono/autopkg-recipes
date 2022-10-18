@@ -10,7 +10,7 @@ Input:
   TRIGGER_NAME: "autoupdate-%NAME%"
   DEFER_TRIGGER: "defer-%NAME%"
   SELF_SERVICE_DESCRIPTION: "The Zoom app provides cloud-hosted video conferencing, plus online meetings and group messaging."
-  SELF_SERVICE_ICON: Zoom.png
+  SELF_SERVICE_ICON: Zoom-test.png
   UPDATE_PREDICATE: "pkg_uploaded == False"
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
   
