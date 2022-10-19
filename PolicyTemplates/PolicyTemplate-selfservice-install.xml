@@ -19,22 +19,18 @@
         <exclusions/>
     </scope>
     <!-- Packages -->
-    <package_configuration/>
+    <package_configuration>
+        <packages>
+            <size>1</size>
+            <package>
+                <name>%pkg_name%</name>
+                <action>Install</action>
+            </package>
+        </packages>
+    </package_configuration>
     <!-- Scripts -->
     <scripts>
-        <size>1</size>
-        <script>
-            <name>Auto-Update: App Quitter</name>
-            <priority>Before</priority>
-            <parameter4>%APP_BUNDLE_ID%</parameter4>
-            <parameter5>true</parameter5>
-            <parameter6>%NAME%</parameter6>
-            <parameter7>%TRIGGER_NAME%</parameter7>
-            <parameter8>false</parameter8>
-            <parameter9>%DEFER_TRIGGER%</parameter9>
-            <parameter10>14</parameter10>
-            <parameter11/>
-        </script>
+        <size>0</size>
     </scripts>
     <!-- Self Service details -->
     <self_service>
