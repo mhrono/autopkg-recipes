@@ -76,18 +76,19 @@ Process:
     icon: "%SELF_SERVICE_ICON%"
     replace_policy: "True"
     
-- Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-  Arguments:
-    policy_template: "PolicyTemplate-selfservice-install.xml"
-    policy_name: "Update %NAME%"
-    frequency: "Ongoing"
-    checkin_bool: "false"
-    policy_category: "Updates"
-    group_name: "autoupdate-%NAME%"
-    self_service_bool: "true"
-    self_service_action: "Update to"
-    icon: "%SELF_SERVICE_ICON%"
-    replace_policy: "True"
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-selfservice-update.xml"
+      policy_name: "Update %NAME%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      policy_category: "Updates"
+      group_name: "autoupdate-%NAME%"
+      self_service_bool: "true"
+      self_service_action: "Update to"
+      icon: "%SELF_SERVICE_ICON%"
+      replace_policy: "True"
     
 - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
   Arguments:

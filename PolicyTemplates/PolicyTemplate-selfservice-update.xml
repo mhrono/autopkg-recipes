@@ -30,7 +30,7 @@
             <parameter5>false</parameter5>
             <parameter6>%NAME%</parameter6>
             <parameter7>%script_trigger_name%</parameter7>
-            <parameter8>false</parameter8>
+            <parameter8>true</parameter8>
             <parameter9>%DEFER_TRIGGER%</parameter9>
             <parameter10>14</parameter10>
             <parameter11>%version%</parameter11>

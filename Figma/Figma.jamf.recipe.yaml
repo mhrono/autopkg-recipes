@@ -79,8 +79,9 @@ Process:
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
-      policy_template: "PolicyTemplate-selfservice-install.xml"
+      policy_template: "PolicyTemplate-selfservice-update.xml"
       policy_name: "Update %NAME%"
+      script_trigger_name: "%TRIGGER_NAME%"
       frequency: "Ongoing"
       checkin_bool: "false"
       policy_category: "Updates"
