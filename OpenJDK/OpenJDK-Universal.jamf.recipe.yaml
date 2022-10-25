@@ -90,43 +90,43 @@ Process:
       icon: "%SELF_SERVICE_ICON%"
       replace_policy: "True"
     
-- Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-  Arguments:
-    policy_template: "PolicyTemplate-selfservice-reinstall.xml"
-    policy_name: "Re-Install %NAME%"
-    frequency: "Ongoing"
-    checkin_bool: "false"
-    policy_category: "%CATEGORY%"
-    group_name: "App Installed: %NAME%"
-    exclude_group_name: "autoupdate-%NAME%"
-    self_service_bool: "true"
-    self_service_action: "Re-Install"
-    icon: "%SELF_SERVICE_ICON%"
-    replace_policy: "True"
-    
-- Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-  Arguments:
-    policy_template: "PolicyTemplate-prompt.xml"
-    policy_name: "Monthly Prompt: %NAME%"
-    script_trigger_name: "%TRIGGER_NAME%"
-    policy_category: "Auto-Update: Monthly Prompt"
-    group_name: "autoupdate-%NAME%"
-    replace_policy: "True"
-    
-- Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-  Arguments:
-    policy_template: "PolicyTemplate-defer.xml"
-    policy_name: "Deferred Update: %NAME%"
-    script_trigger_name: "%TRIGGER_NAME%"
-    policy_category: "Auto-Update: Deferral Policies"
-    group_name: "autoupdate-%NAME%"
-    replace_policy: "True"
-    
-- Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-  Arguments:
-    policy_template: "PolicyTemplate-silent.xml"
-    policy_name: "Silent Update: %NAME%"
-    group_name: "autoupdate-%NAME%"
-    script_trigger_name: "%TRIGGER_NAME%"
-    replace_policy: "True"
-    
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-selfservice-reinstall.xml"
+      policy_name: "Re-Install %NAME%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      policy_category: "%CATEGORY%"
+      group_name: "App Installed: %NAME%"
+      exclude_group_name: "autoupdate-%NAME%"
+      self_service_bool: "true"
+      self_service_action: "Re-Install"
+      icon: "%SELF_SERVICE_ICON%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-prompt.xml"
+      policy_name: "Monthly Prompt: %NAME%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      policy_category: "Auto-Update: Monthly Prompt"
+      group_name: "autoupdate-%NAME%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-defer.xml"
+      policy_name: "Deferred Update: %NAME%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      policy_category: "Auto-Update: Deferral Policies"
+      group_name: "autoupdate-%NAME%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-silent.xml"
+      policy_name: "Silent Update: %NAME%"
+      group_name: "autoupdate-%NAME%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      replace_policy: "True"
+      
