@@ -1,0 +1,13 @@
+Description: Downloads the latest version of Yubikey Manager and creates a package.
+Identifier: com.mhrono.recipes.pkg.yubikeymanager
+ParentRecipe: com.mhrono.recipes.download.yubikeymanager
+MinimumVersion: '2.3'
+
+Input:
+  NAME: "Yubikey Manager"
+  SOFTWARE_TITLE: "Yubikey Manager"
+
+Process:
+  - Processor: PkgCopier
+    Arguments:
+      source_pkg: '%pathname%'
