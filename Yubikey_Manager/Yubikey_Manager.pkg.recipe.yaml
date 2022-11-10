@@ -1,6 +1,6 @@
 Description: Downloads the latest version of Yubikey Manager and creates a package.
 Identifier: com.mhrono.recipes.pkg.yubikeymanager
-ParentRecipe: com.mhrono.recipes.download.yubikeymanager
+ParentRecipe: com.github.apfelwerk.download.yubikey_manager
 MinimumVersion: '2.3'
 
 Input:
