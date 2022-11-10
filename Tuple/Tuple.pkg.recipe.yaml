@@ -38,8 +38,8 @@ Process:
         pkgdir: '%RECIPE_CACHE_DIR%'
         chown:
           - path: 'Applications'
-          - user: 'root'
-          - group: 'admin'
+            user: 'root'
+            group: 'admin'
 
   - Processor: com.github.smithjw.processors/FriendlyPathDeleter
     Arguments:
