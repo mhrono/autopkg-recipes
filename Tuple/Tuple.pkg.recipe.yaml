@@ -1,0 +1,48 @@
+Description: Downloads the latest version of Tuple and creates a package.
+Identifier: com.mhrono.recipes.pkg.tuple
+ParentRecipe: com.mhrono.recipes.download.tuple
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Tuple
+  SOFTWARE_TITLE: Tuple
+
+Process:
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgroot: '%RECIPE_CACHE_DIR%/%NAME%-pkg'
+      pkgdirs:
+        Applications: '0775'
+
+  - Processor: Copier
+    Arguments:
+      destination_path: '%pkgroot%/Applications/'
+      source_path: '%RECIPE_CACHE_DIR%/%NAME%/'
+
+  - Processor: PlistReader
+    Arguments:
+      info_path: '%pkgroot%/Applications/Tuple.app'
+      plist_keys:
+        CFBundleShortVersionString: 'version'
+        CFBundleIdentifier: 'bundleid'
+        CFBundleName: 'app_name'
+
+  - Processor: PkgCreator
+    Arguments:
+      pkg_request:
+        id: '%bundleid%'
+        version: '%version%'
+        options: purge_ds_store
+        pkgname: '%NAME%-%version%'
+        pkgdir: '%RECIPE_CACHE_DIR%'
+        chown:
+          path: 'Applications'
+          user: 'root'
+          group: 'admin'
+
+  - Processor: com.github.smithjw.processors/FriendlyPathDeleter
+    Arguments:
+      fail_deleter_silently: true
+      path_list:
+        - '%RECIPE_CACHE_DIR%/%NAME%'
+        - '%RECIPE_CACHE_DIR%/%NAME%-pkg'
