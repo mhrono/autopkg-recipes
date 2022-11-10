@@ -18,6 +18,7 @@ Process:
     Arguments:
       destination_path: '%pkgroot%/Applications/'
       source_path: '%RECIPE_CACHE_DIR%/%NAME%/'
+      overwrite: True
 
   - Processor: PlistReader
     Arguments:
