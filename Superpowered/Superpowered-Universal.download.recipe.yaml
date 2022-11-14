@@ -23,6 +23,13 @@ Process:
 
   - Processor: EndOfCheckPhase
 
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgroot: '%RECIPE_CACHE_DIR%/unpack'
+      pkgdirs:
+        arm64: '0775'
+        x86_64: '0775'
+
   - Processor: Copier
     Arguments:
       source_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-arm64.dmg'
