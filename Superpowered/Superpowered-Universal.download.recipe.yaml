@@ -25,13 +25,13 @@ Process:
 
   - Processor: Copier
     Arguments:
-      source_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-arm64.dmg/%NAME%.app'
+      source_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-arm64.dmg/*'
       destination_path: '%RECIPE_CACHE_DIR%/unpack/arm64'
       overwrite: true
 
   - Processor: Copier
     Arguments:
-      source_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-x86_64.dmg/%NAME%.app'
+      source_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-x86_64.dmg/*'
       destination_path: '%RECIPE_CACHE_DIR%/unpack/x86_64'
       overwrite: true
 
