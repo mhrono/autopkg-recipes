@@ -1,0 +1,55 @@
+Description: Downloads the latest versions (ARM and INTEL) of Superpowered.
+Identifier: com.mhrono.recipes.download.superpowered-universal
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Superpowered
+  SOFTWARE_TITLE: Superpowered
+  URL_ARM64: https://download.superpowered.me/mac/dmg/arm64
+  URL_X86_64: https://download.superpowered.me/mac/dmg/x64
+
+Process:
+  - Processor: URLDownloader
+    Arguments:
+      filename: '%SOFTWARE_TITLE%-arm64.dmg'
+      download_dir: '%RECIPE_CACHE_DIR%/downloads'
+      url: '%URL_ARM64%'
+
+  - Processor: URLDownloader
+    Arguments:
+      filename: '%SOFTWARE_TITLE%-x86_64.dmg'
+      download_dir: '%RECIPE_CACHE_DIR%/downloads'
+      url: '%URL_X86_64%'
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: Unarchiver
+    Arguments:
+      archive_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-arm64.dmg'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/arm64'
+      purge_destination: true
+
+  - Processor: Unarchiver
+    Arguments:
+      archive_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-x86_64.dmg'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/x86_64'
+      purge_destination: true
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%RECIPE_CACHE_DIR%/unpack/arm64/%NAME%.app'
+      requirement: 'identifier "com.superpowered.app" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = AS7VEXXF8M'
+      deep_verification: true
+      strict_verification: true
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%RECIPE_CACHE_DIR%/unpack/x86_64/%NAME%.app'
+      requirement: 'identifier "com.superpowered.app" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = AS7VEXXF8M'
+      deep_verification: true
+      strict_verification: true
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%RECIPE_CACHE_DIR%/unpack/arm64/%NAME%.app/Contents/Info.plist'
+      plist_version_key: CFBundleShortVersionString
