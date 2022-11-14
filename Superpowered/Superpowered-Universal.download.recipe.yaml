@@ -23,17 +23,17 @@ Process:
 
   - Processor: EndOfCheckPhase
 
-  - Processor: Unarchiver
+  - Processor: Copier
     Arguments:
-      archive_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-arm64.dmg'
+      source_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-arm64.dmg'
       destination_path: '%RECIPE_CACHE_DIR%/unpack/arm64'
-      purge_destination: true
+      overwrite: true
 
-  - Processor: Unarchiver
+  - Processor: Copier
     Arguments:
-      archive_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-x86_64.dmg'
+      source_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-x86_64.dmg'
       destination_path: '%RECIPE_CACHE_DIR%/unpack/x86_64'
-      purge_destination: true
+      overwrite: true
 
   - Processor: CodeSignatureVerifier
     Arguments:
