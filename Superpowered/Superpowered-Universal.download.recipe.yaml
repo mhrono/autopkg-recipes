@@ -23,24 +23,17 @@ Process:
 
   - Processor: EndOfCheckPhase
 
-  - Processor: PkgRootCreator
+  - Processor: Unarchiver
     Arguments:
-      pkgroot: '%RECIPE_CACHE_DIR%/unpack'
-      pkgdirs:
-        arm64: '0775'
-        x86_64: '0775'
+      archive_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-arm64.dmg'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/arm64'
+      purge_destination: true
 
-  - Processor: Copier
+  - Processor: Unarchiver
     Arguments:
-      source_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-arm64.dmg'
-      destination_path: '%RECIPE_CACHE_DIR%/unpack/arm64/'
-      overwrite: true
-
-  - Processor: Copier
-    Arguments:
-      source_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-x86_64.dmg'
-      destination_path: '%RECIPE_CACHE_DIR%/unpack/x86_64/'
-      overwrite: true
+      archive_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-x86_64.dmg'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/x86_64'
+      purge_destination: true
 
   - Processor: CodeSignatureVerifier
     Arguments:
