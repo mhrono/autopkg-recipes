@@ -1,0 +1,137 @@
+Description: Downloads the latest version and makes a pkg. Then, uploads the package to the Jamf Pro Server and creates a Policy and Smart Group.
+Identifier: com.mhrono.recipes.jamf.awscli
+MinimumVersion: "2.3"
+ParentRecipe: com.github.homebysix.pkg.AWSCLI
+
+Input:
+  NAME: AWSCLI
+  APP_BUNDLE_ID: a2543e-aws
+  CATEGORY: Development
+  TRIGGER_NAME: "autoupdate-%NAME%"
+  DEFER_TRIGGER: "defer-%NAME%"
+  SELF_SERVICE_DESCRIPTION: "The AWS Command Line Interface (CLI) is a unified tool to manage your AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts."
+  SELF_SERVICE_ICON: AWSCLI.png
+  UPDATE_PREDICATE: "pkg_uploaded == False"
+  STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
+  
+Process:
+
+  - Processor: io.github.hjuutilainen.VirusTotalAnalyzer/VirusTotalAnalyzer
+  
+  - Processor: StopProcessingIf
+    Arguments:
+      predicate: "%STOP_PREDICATE%"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfCategoryUploader
+    Arguments:
+      category_name: "%CATEGORY%"
+
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageUploader
+    Arguments:
+      pkg_category: "AutoPkg"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfExtensionAttributeUploader
+    Arguments:
+      ea_name: "%NAME% Version"
+      ea_script_path: "AWSCLIVersionEA.sh"
+
+  - Processor: StopProcessingIf
+    Arguments:
+      predicate: "%UPDATE_PREDICATE%"
+
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
+    Arguments:
+      computergroup_template: "SmartGroupTemplate-autopatch-AWSCLI.xml"
+      computergroup_name: "autoupdate-%NAME%"
+      replace_group: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
+    Arguments:
+      computergroup_template: "SmartGroupTemplate-notinstalled.xml"
+      computergroup_name: "App Not Installed: %NAME%"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
+    Arguments:
+      computergroup_template: "SmartGroupTemplate-installed.xml"
+      computergroup_name: "App Installed: %NAME%"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-autopatch.xml"
+      policy_name: "Install Latest %NAME%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      trigger_name: "%TRIGGER_NAME%"
+      policy_category: "AutoPkg"
+      group_name: "autoupdate-%NAME%"
+      self_service_bool: "false"
+      self_service_action: "Install"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-selfservice-install.xml"
+      policy_name: "Install %NAME%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      policy_category: "%CATEGORY%"
+      group_name: "App Not Installed: %NAME%"
+      self_service_bool: "true"
+      self_service_action: "Install"
+      icon: "%SELF_SERVICE_ICON%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-selfservice-update.xml"
+      policy_name: "Update %NAME%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      policy_category: "Updates"
+      group_name: "autoupdate-%NAME%"
+      self_service_bool: "true"
+      self_service_action: "Update to"
+      icon: "%SELF_SERVICE_ICON%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-selfservice-reinstall.xml"
+      policy_name: "Re-Install %NAME%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      policy_category: "%CATEGORY%"
+      group_name: "App Installed: %NAME%"
+      exclude_group_name: "autoupdate-%NAME%"
+      self_service_bool: "true"
+      self_service_action: "Re-Install"
+      icon: "%SELF_SERVICE_ICON%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-prompt.xml"
+      policy_name: "Monthly Prompt: %NAME%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      policy_category: "Auto-Update: Monthly Prompt"
+      group_name: "autoupdate-%NAME%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-defer.xml"
+      policy_name: "Deferred Update: %NAME%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      policy_category: "Auto-Update: Deferral Policies"
+      group_name: "autoupdate-%NAME%"
+      replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-silent.xml"
+      policy_name: "Silent Update: %NAME%"
+      group_name: "autoupdate-%NAME%"
+      script_trigger_name: "%TRIGGER_NAME%"
+      replace_policy: "True"
+      
