@@ -23,7 +23,7 @@ Process:
   - Processor: URLTextSearcher
     Arguments:
       url: '%SEARCH_URL%'
-      re_pattern: '%SEARCH_URL_ARM64%'
+      re_pattern: '%SEARCH_PATTERN_ARM64%'
 
   - Processor: URLDownloader
     Arguments:
