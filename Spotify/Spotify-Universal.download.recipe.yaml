@@ -1,0 +1,55 @@
+Description: Downloads the latest versions (ARM and INTEL) of Spotify.
+Identifier: com.mhrono.recipes.download.spotify-universal
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Spotify
+  SOFTWARE_TITLE: Spotify
+  URL_ARM64: https://download.scdn.co/SpotifyARM64.dmg
+  URL_X86_64: https://download.scdn.co/Spotify.dmg
+
+Process:
+  - Processor: URLDownloader
+    Arguments:
+      filename: '%SOFTWARE_TITLE%-arm64.dmg'
+      download_dir: '%RECIPE_CACHE_DIR%/downloads'
+      url: '%URL_ARM64%'
+
+  - Processor: URLDownloader
+    Arguments:
+      filename: '%SOFTWARE_TITLE%-x86_64.dmg'
+      download_dir: '%RECIPE_CACHE_DIR%/downloads'
+      url: '%URL_X86_64%'
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: Copier
+    Arguments:
+      source_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-arm64.dmg/%NAME%.app'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/arm64/%NAME%.app'
+      overwrite: true
+
+  - Processor: Copier
+    Arguments:
+      source_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-x86_64.dmg/%NAME%.app'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/x86_64/%NAME%.app'
+      overwrite: true
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%RECIPE_CACHE_DIR%/unpack/arm64/%NAME%.app'
+      requirement: 'identifier "com.spotify.client" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "2FNC3A47ZF"'
+      deep_verification: true
+      strict_verification: true
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%RECIPE_CACHE_DIR%/unpack/x86_64/%NAME%.app'
+      requirement: 'identifier "com.spotify.client" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "2FNC3A47ZF"'
+      deep_verification: true
+      strict_verification: true
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%RECIPE_CACHE_DIR%/unpack/arm64/%NAME%.app/Contents/Info.plist'
+      plist_version_key: CFBundleShortVersionString

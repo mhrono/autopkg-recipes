@@ -1,0 +1,62 @@
+Description: Downloads the latest version of Spotify and creates a package.
+Identifier: com.mhrono.recipes.pkg.spotify-universal
+ParentRecipe: com.mhrono.recipes.download.spotify-universal
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Spotify
+  SOFTWARE_TITLE: Spotify
+
+Process:
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgroot: '%RECIPE_CACHE_DIR%/Universal'
+      pkgdirs:
+        pkgroot: '0775'
+        Scripts: '0775'
+
+  - Processor: AppPkgCreator
+    Arguments:
+      app_path: '%RECIPE_CACHE_DIR%/unpack/arm64/%NAME%.app'
+      pkg_path: '%RECIPE_CACHE_DIR%/Universal/Scripts/%SOFTWARE_TITLE%-arm64-%version%.pkg'
+
+  - Processor: AppPkgCreator
+    Arguments:
+      app_path: '%RECIPE_CACHE_DIR%/unpack/x86_64/%NAME%.app'
+      pkg_path: '%RECIPE_CACHE_DIR%/Universal/Scripts/%SOFTWARE_TITLE%-x86_64-%version%.pkg'
+
+  - Processor: FileCreator
+    Arguments:
+      file_path: '%RECIPE_CACHE_DIR%/Universal/Scripts/preinstall'
+      file_mode: '0755'
+      file_content: |
+        #!/bin/bash
+
+        arm64_package="%SOFTWARE_TITLE%-arm64-%version%.pkg"
+        x86_64_package="%SOFTWARE_TITLE%-x86_64-%version%.pkg"
+
+        if [[ $( /usr/bin/arch ) = arm64* ]]; then
+          /usr/sbin/installer -pkg "$arm64_package" -target "$3"
+        else
+          /usr/sbin/installer -pkg "$x86_64_package" -target "$3"
+        fi
+
+        exit 0
+
+  - Processor: PkgCreator
+    Arguments:
+      pkg_request:
+        id: '%bundleid%'
+        version: '%version%'
+        options: purge_ds_store
+        pkgname: '%SOFTWARE_TITLE%-Universal-%version%'
+        pkgdir: '%RECIPE_CACHE_DIR%'
+        scripts: '%RECIPE_CACHE_DIR%/Universal/Scripts'
+        pkgroot: '%RECIPE_CACHE_DIR%/Universal/pkgroot'
+
+  - Processor: com.github.smithjw.processors/FriendlyPathDeleter
+    Arguments:
+      fail_deleter_silently: true
+      path_list:
+        - '%RECIPE_CACHE_DIR%/Universal'
+        - '%RECIPE_CACHE_DIR%/unpack'
