@@ -1,0 +1,22 @@
+Description: Downloads the latest version of AWSCLIV2.
+Identifier: com.mhrono.recipes.download.awscliv2
+MinimumVersion: '2.3'
+
+Input:
+  NAME: AWSCLI
+  SOFTWARE_TITLE: AWSCLI
+
+Process:
+  - Processor: URLDownloader
+    Arguments:
+      url: 'https://awscli.amazonaws.com/AWSCLIV2.pkg'
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%pathname%'
+      expected_authority_names:
+        - 'Developer ID Installer: AMZN Mobile LLC (94KV3E626L)'
+        - 'Developer ID Certification Authority'
+        - 'Apple Root CA'

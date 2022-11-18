@@ -1,0 +1,20 @@
+Description: Downloads the latest version of AWSCLIV2 and creates a package.
+Identifier: com.mhrono.recipes.pkg.awscliv2
+ParentRecipe: com.mhrono.recipes.download.awscliv2
+MinimumVersion: '2.3'
+
+Input:
+  NAME: AWSCLI
+  SOFTWARE_TITLE: AWSCLI
+
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      url: 'https://api.github.com/repos/aws/aws-cli/tags'
+      re_pattern: '2\.\d*\.\d*'
+      result_output_var_name: 'version'
+
+  - Processor: PkgCopier
+    Arguments:
+      source_pkg: '%pathname%'
+      pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
