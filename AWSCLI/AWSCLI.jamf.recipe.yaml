@@ -47,12 +47,12 @@ Process:
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-notinstalled.xml"
+      computergroup_template: "SmartGroupTemplate-notinstalled-AWSCLI.xml"
       computergroup_name: "App Not Installed: %NAME%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-installed.xml"
+      computergroup_template: "SmartGroupTemplate-installed-AWSCLI.xml"
       computergroup_name: "App Installed: %NAME%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader

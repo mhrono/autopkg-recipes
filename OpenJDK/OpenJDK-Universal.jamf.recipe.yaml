@@ -30,24 +30,29 @@ Process:
     Arguments:
       pkg_category: "AutoPkg"
 
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfExtensionAttributeUploader
+    Arguments:
+      ea_name: "OpenJDK Version"
+      ea_script_path: "OpenJDKVersionEA.sh"
+
   - Processor: StopProcessingIf
     Arguments:
       predicate: "%UPDATE_PREDICATE%"
 
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-autopatch.xml"
+      computergroup_template: "SmartGroupTemplate-autopatch-OpenJDK.xml"
       computergroup_name: "autoupdate-%NAME%"
       replace_group: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-notinstalled.xml"
+      computergroup_template: "SmartGroupTemplate-notinstalled-OpenJDK.xml"
       computergroup_name: "App Not Installed: %NAME%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-installed.xml"
+      computergroup_template: "SmartGroupTemplate-installed-OpenJDK.xml"
       computergroup_name: "App Installed: %NAME%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader

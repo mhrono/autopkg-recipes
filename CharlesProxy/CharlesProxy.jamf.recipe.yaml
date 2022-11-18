@@ -4,7 +4,7 @@ MinimumVersion: "2.3"
 ParentRecipe: com.github.autopkg.pkg.CharlesProxy
 
 Input:
-  NAME: "Charles Proxy"
+  NAME: "Charles"
   APP_BUNDLE_ID: "com.xk72.Charles"
   CATEGORY: Development
   TRIGGER_NAME: "autoupdate-%NAME%"

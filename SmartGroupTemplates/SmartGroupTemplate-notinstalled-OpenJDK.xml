@@ -1,0 +1,13 @@
+<computer_group>
+    <name>%computergroup_name%</name>
+    <is_smart>true</is_smart>
+    <criteria>
+        <criterion>
+            <name>OpenJDK Version</name>
+            <priority>0</priority>
+            <and_or>and</and_or>
+            <search_type>is</search_type>
+            <value>Not Installed</value>
+        </criterion>
+    </criteria>
+</computer_group>
