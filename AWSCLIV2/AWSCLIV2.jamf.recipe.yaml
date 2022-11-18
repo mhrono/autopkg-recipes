@@ -10,7 +10,7 @@ Input:
   TRIGGER_NAME: "autoupdate-%NAME%"
   DEFER_TRIGGER: "defer-%NAME%"
   SELF_SERVICE_DESCRIPTION: "The AWS Command Line Interface (CLI) is a unified tool to manage your AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts."
-  SELF_SERVICE_ICON: AWSCLI.png
+  SELF_SERVICE_ICON: AWSCLIV2.png
   UPDATE_PREDICATE: "pkg_uploaded == False"
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
   
@@ -41,18 +41,18 @@ Process:
 
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-autopatch-AWSCLI.xml"
+      computergroup_template: "SmartGroupTemplate-autopatch-AWSCLIV2.xml"
       computergroup_name: "autoupdate-%NAME%"
       replace_group: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-notinstalled-AWSCLI.xml"
+      computergroup_template: "SmartGroupTemplate-notinstalled-AWSCLIV2.xml"
       computergroup_name: "App Not Installed: %NAME%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-installed-AWSCLI.xml"
+      computergroup_template: "SmartGroupTemplate-installed-AWSCLIV2.xml"
       computergroup_name: "App Installed: %NAME%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
