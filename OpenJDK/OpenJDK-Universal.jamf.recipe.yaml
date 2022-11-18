@@ -35,6 +35,11 @@ Process:
       ea_name: "OpenJDK Version"
       ea_script_path: "OpenJDKVersionEA.sh"
 
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfExtensionAttributeUploader
+    Arguments:
+      ea_name: "Installed JDK Vendor"
+      ea_script_path: "InstalledJDKVendorEA.sh"
+
   - Processor: StopProcessingIf
     Arguments:
       predicate: "%UPDATE_PREDICATE%"

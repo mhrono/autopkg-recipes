@@ -8,6 +8,7 @@
 			<and_or>and</and_or>
 			<search_type>is not</search_type>
 			<value>%version%</value>
+			<opening_paren>true</opening_paren>
 		</criterion>
 		<criterion>
 			<name>OpenJDK Version</name>
@@ -15,6 +16,21 @@
 			<and_or>and</and_or>
 			<search_type>is not</search_type>
 			<value>Not Installed</value>
+		</criterion>
+		<criterion>
+			<name>OpenJDK Version</name>
+			<priority>2</priority>
+			<and_or>and</and_or>
+			<search_type>is not</search_type>
+			<value></value>
+			<closing_paren>true</closing_paren>
+		</criterion>
+		<criterion>
+			<name>Installed JDK Vendor</name>
+			<priority>3</priority>
+			<and_or>and</and_or>
+			<search_type>is</search_type>
+			<value>OpenJDK</value>
 		</criterion>
 	</criteria>
 </computer_group>
