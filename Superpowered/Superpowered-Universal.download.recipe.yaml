@@ -14,12 +14,18 @@ Process:
       filename: '%SOFTWARE_TITLE%-arm64.dmg'
       download_dir: '%RECIPE_CACHE_DIR%/downloads'
       url: '%URL_ARM64%'
+      request_headers:
+        user-agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15'
+        Referer: 'https://superpowered.me/download'
 
   - Processor: URLDownloader
     Arguments:
       filename: '%SOFTWARE_TITLE%-x86_64.dmg'
       download_dir: '%RECIPE_CACHE_DIR%/downloads'
       url: '%URL_X86_64%'
+      request_headers:
+        user-agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.1 Safari/605.1.15'
+        Referer: 'https://superpowered.me/download'
 
   - Processor: EndOfCheckPhase
 
