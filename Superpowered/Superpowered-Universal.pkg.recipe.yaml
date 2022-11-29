@@ -43,6 +43,19 @@ Process:
 
         exit 0
 
+  - Processor: FileCreator
+    Arguments:
+      file_path: '%RECIPE_CACHE_DIR%/Universal/Scripts/postinstall'
+      file_mode: '0755'
+      file_content: |
+        #!/bin/bash
+
+        currentUser=$(stat -f %Su /dev/console)
+
+        chown -R $currentUser /Applications/Superpowered.app
+
+        exit 0
+
   - Processor: PkgCreator
     Arguments:
       pkg_request:
