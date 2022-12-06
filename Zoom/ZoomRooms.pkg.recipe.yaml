@@ -1,0 +1,36 @@
+Description: Downloads the latest version of the Zoom Rooms app and creates a pkg.
+Identifier: com.mhrono.recipes.pkg.zoomrooms
+MinimumVersion: "2.3"
+ParentRecipe: com.github.homebysix.download.ZoomPresence
+
+Input:
+  NAME: ZoomPresence
+
+Process:
+
+  - Processor: FlatPkgUnpacker
+    Arguments:
+      destination_path: "%RECIPE_CACHE_DIR%/expanded"
+      flat_pkg_path: "%pathname%"
+
+  - Processor: PkgPayloadUnpacker
+    Arguments:
+      destination_path: "%RECIPE_CACHE_DIR%/expanded/ZoomPresence.app"
+      pkg_payload_path: "%RECIPE_CACHE_DIR%/expanded/zp.pkg/Payload"
+  
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: "%RECIPE_CACHE_DIR%/expanded/ZoomPresence.app/Contents/Info.plist"
+
+  - Processor: com.github.homebysix.VersionSplitter/VersionSplitter
+
+  - Processor: PkgCopier
+    Arguments:
+      pkg_path: "%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg"
+      source_pkg: "%pathname%"
+
+  - Processor: com.github.smithjw.processors/FriendlyPathDeleter
+    Arguments:
+      fail_deleter_silently: true
+      path_list:
+        - '%RECIPE_CACHE_DIR%/expanded'

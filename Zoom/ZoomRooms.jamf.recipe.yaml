@@ -1,0 +1,50 @@
+Description: Downloads the latest version of the Zoom Rooms app and uploads it to Jamf Pro.
+Identifier: com.mhrono.recipes.jamf.zoomrooms
+MinimumVersion: "2.3"
+ParentRecipe: com.github.homebysix.pkg.ZoomPresence
+
+Input:
+  NAME: ZoomPresence
+  APP_BUNDLE_ID: us.zoom.ZoomPresence
+  CATEGORY: Collaboration
+  TRIGGER_NAME: "autoupdate-%NAME%"
+  UPDATE_PREDICATE: "pkg_uploaded == False"
+  STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
+  
+Process:
+
+  - Processor: io.github.hjuutilainen.VirusTotalAnalyzer/VirusTotalAnalyzer
+  
+  - Processor: StopProcessingIf
+    Arguments:
+      predicate: "%STOP_PREDICATE%"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfCategoryUploader
+    Arguments:
+      category_name: "%CATEGORY%"
+
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageUploader
+    Arguments:
+      pkg_category: "AutoPkg"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfExtensionAttributeUploader
+    Arguments:
+      ea_name: "%NAME% Version"
+      ea_script_path: "CFBundleVersionEA.sh"
+
+  - Processor: StopProcessingIf
+    Arguments:
+      predicate: "%UPDATE_PREDICATE%"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
+    Arguments:
+      policy_template: "PolicyTemplate-autopatch.xml"
+      policy_name: "Install Latest %NAME%"
+      frequency: "Ongoing"
+      checkin_bool: "false"
+      trigger_name: "%TRIGGER_NAME%"
+      policy_category: "AutoPkg"
+      group_name: "Zoom Room Devices"
+      self_service_bool: "false"
+      self_service_action: "Install"
+      replace_policy: "True"
