@@ -1,7 +1,7 @@
 Description: Downloads the latest version of the Zoom Rooms app and uploads it to Jamf Pro.
 Identifier: com.mhrono.recipes.jamf.zoomrooms
 MinimumVersion: "2.3"
-ParentRecipe: com.github.homebysix.pkg.ZoomPresence
+ParentRecipe: com.mhrono.recipes.pkg.zoomrooms
 
 Input:
   NAME: ZoomPresence
