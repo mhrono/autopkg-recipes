@@ -4,13 +4,13 @@ MinimumVersion: "2.3"
 ParentRecipe: com.github.rtrouton.pkg.VMwareHorizonClient
 
 Input:
-  NAME: "VMWare Horizon Client"
+  NAME: "VMware Horizon Client"
   APP_BUNDLE_ID: "com.vmware.horizon"
   CATEGORY: Productivity
   TRIGGER_NAME: "autoupdate-%NAME%"
   DEFER_TRIGGER: "defer-%NAME%"
   SELF_SERVICE_DESCRIPTION: "VMware Horizon is a modern platform for running and delivering virtual desktops and apps across the hybrid cloud."
-  SELF_SERVICE_ICON: VMWareHorizonClient.png
+  SELF_SERVICE_ICON: VMwareHorizonClient.png
   UPDATE_PREDICATE: "pkg_uploaded == False"
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
   

@@ -4,13 +4,13 @@ MinimumVersion: "2.3"
 ParentRecipe: com.github.homebysix.pkg.MySQLWorkbench
 
 Input:
-  NAME: MySQLWorkBench
+  NAME: MySQLWorkbench
   APP_BUNDLE_ID: com.oracle.workbench.MySQLWorkbench
   CATEGORY: Development
   TRIGGER_NAME: "autoupdate-%NAME%"
   DEFER_TRIGGER: "defer-%NAME%"
   SELF_SERVICE_DESCRIPTION: "MySQL Workbench is a unified visual tool for database architects, developers, and DBAs."
-  SELF_SERVICE_ICON: MySQLWorkBench.png
+  SELF_SERVICE_ICON: MySQLWorkbench.png
   UPDATE_PREDICATE: "pkg_uploaded == False"
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
   

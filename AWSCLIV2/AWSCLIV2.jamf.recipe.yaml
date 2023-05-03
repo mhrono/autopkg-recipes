@@ -32,7 +32,7 @@ Process:
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfExtensionAttributeUploader
     Arguments:
-      ea_name: "AWS CLI Tools Version"
+      ea_name: "AWSCLI Version"
       ea_script_path: "AWSCLIVersionEA.sh"
 
   - Processor: StopProcessingIf

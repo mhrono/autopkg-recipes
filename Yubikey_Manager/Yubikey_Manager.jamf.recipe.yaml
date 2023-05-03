@@ -4,7 +4,7 @@ MinimumVersion: "2.3"
 ParentRecipe: com.mhrono.recipes.pkg.yubikeymanager
 
 Input:
-  NAME: "Yubikey Manager"
+  NAME: "YubiKey Manager"
   APP_BUNDLE_ID: "com.yubico.ykman"
   CATEGORY: "Productivity"
   TRIGGER_NAME: "autoupdate-%NAME%"

@@ -4,8 +4,8 @@ ParentRecipe: com.github.apfelwerk.download.yubikey_manager
 MinimumVersion: '2.3'
 
 Input:
-  NAME: "Yubikey Manager"
-  SOFTWARE_TITLE: "Yubikey Manager"
+  NAME: "YubiKey Manager"
+  SOFTWARE_TITLE: "YubiKey Manager"
 
 Process:
   - Processor: PkgCopier
