@@ -47,12 +47,12 @@ Process:
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGrouptemplate-notinstalled-CFBundleVersion.xml"
+      computergroup_template: "SmartGrouptemplate-notinstalled.xml"
       computergroup_name: "App Not Installed: %NAME%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGrouptemplate-installed-CFBundleVersion.xml"
+      computergroup_template: "SmartGrouptemplate-installed.xml"
       computergroup_name: "App Installed: %NAME%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
