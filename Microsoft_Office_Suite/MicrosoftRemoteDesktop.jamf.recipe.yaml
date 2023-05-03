@@ -41,18 +41,18 @@ Process:
 
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-autopatch.xml"
+      computergroup_template: "SmartGrouptemplate-autopatch-CFBundleVersion.xml"
       computergroup_name: "autoupdate-%NAME%"
       replace_group: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-notinstalled.xml"
+      computergroup_template: "SmartGrouptemplate-notinstalled-CFBundleVersion.xml"
       computergroup_name: "App Not Installed: %NAME%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-installed.xml"
+      computergroup_template: "SmartGrouptemplate-installed-CFBundleVersion.xml"
       computergroup_name: "App Installed: %NAME%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
