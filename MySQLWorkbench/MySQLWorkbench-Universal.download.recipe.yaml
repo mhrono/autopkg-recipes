@@ -10,14 +10,14 @@ Process:
   - Processor: URLTextSearcher
     Arguments:
       url: 'https://dev.mysql.com/downloads/workbench'
-      re_pattern: '(?&lt;dmg_arm64&gt;mysql-workbench-community-(?&lt;version&gt;[\d.]+)-\S+arm64\.dmg)'
+      re_pattern: '(?<dmg_arm64>mysql-workbench-community-(?<version>[\d.]+)-\S+arm64\.dmg)'
       request_headers:
         user-agent: '%USER_AGENT%'
 
   - Processor: URLTextSearcher
     Arguments:
       url: 'https://dev.mysql.com/downloads/workbench'
-      re_pattern: '(?&lt;dmg_x86_64&gt;mysql-workbench-community-(?&lt;version&gt;[\d.]+)-\S+x86_64\.dmg)'
+      re_pattern: '(?<dmg_x86_64>mysql-workbench-community-(?<version>[\d.]+)-\S+x86_64\.dmg)'
       request_headers:
         user-agent: '%USER_AGENT%'
 
