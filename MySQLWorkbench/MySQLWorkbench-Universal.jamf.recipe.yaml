@@ -41,7 +41,7 @@ Process:
 
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGrouptemplate-autopatch-CFBundleVersion.xml"
+      computergroup_template: "SmartGrouptemplate-autopatch-MySQLWorkbench.xml"
       computergroup_name: "autoupdate-%NAME%"
       replace_group: "True"
       
