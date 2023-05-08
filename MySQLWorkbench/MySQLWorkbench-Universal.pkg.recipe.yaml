@@ -1,6 +1,6 @@
 Description: Downloads the latest version of MySQLWorkbench and creates a package.
 Identifier: com.mhrono.recipes.pkg.mysqlworkbench-universal
-ParentRecipe: com.mhrono.recipes.download.mysqlworkorkbench-universal
+ParentRecipe: com.mhrono.recipes.download.mysqlworkbench-universal
 MinimumVersion: '2.3'
 
 Input:
