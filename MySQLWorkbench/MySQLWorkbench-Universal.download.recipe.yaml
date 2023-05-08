@@ -1,0 +1,49 @@
+Description: Downloads the latest versions (ARM and INTEL) of MySQLWorkbench.
+Identifier: com.mhrono.recipes.download.mysqlworkbench-universal
+MinimumVersion: '2.3'
+
+Input:
+  NAME: MySQLWorkbench
+  USER_AGENT: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8'
+
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      url: 'https://dev.mysql.com/downloads/workbench'
+      re_pattern: '(?P&lt;dmg_arm64&gt;mysql-workbench-community-(?P&lt;version&gt;[\d.]+)-\S+arm64\.dmg)'
+      request_headers:
+        user-agent: '%USER_AGENT%'
+
+  - Processor: URLTextSearcher
+    Arguments:
+      url: 'https://dev.mysql.com/downloads/workbench'
+      re_pattern: '(?P&lt;dmg_x64&gt;mysql-workbench-community-(?P&lt;version&gt;[\d.]+)-\S+x86_64\.dmg)'
+      request_headers:
+        user-agent: '%USER_AGENT%'
+
+  - Processor: URLDownloader
+    Arguments:
+      filename: '%NAME%-arm64.zip'
+      download_dir: '%RECIPE_CACHE_DIR%/downloads'
+      url: 'https://dev.mysql.com/get/Downloads/MySQLGUITools/%dmg_arm64%'
+
+  - Processor: URLDownloader
+    Arguments:
+      filename: '%NAME%-x86_64.zip'
+      download_dir: '%RECIPE_CACHE_DIR%/downloads'
+      url: 'https://dev.mysql.com/get/Downloads/MySQLGUITools/%dmg_x64%'
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%pathname%/MySQLWorkbench.app'
+      requirement: 'identifier "com.oracle.workbench.MySQLWorkbench" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = VB5E2TV963</string>'      deep_verification: true
+      strict_verification: true
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%pathname%/MySQLWorkbench.app'
+      requirement: 'identifier "com.oracle.workbench.MySQLWorkbench" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = VB5E2TV963</string>'
+      deep_verification: true
+      strict_verification: true
