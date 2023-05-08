@@ -1,16 +1,16 @@
 Description: This recipe does not behave like standard jamf recipes. After downloading and packaging the app, multiple smart groups and policies are created or updated. This recipe is intended for use with the Auto-Update workflow available at https://github.com/mhrono/Auto-Update.
-Identifier: com.mhrono.recipes.jamf.1password-universal
+Identifier: com.mhrono.recipes.jamf.mysqlworkbench-universal
 MinimumVersion: "2.3"
-ParentRecipe: com.mhrono.recipes.pkg.1password-universal
+ParentRecipe: com.mhrono.recipes.pkg.mysqlworkbench-universal
 
 Input:
-  NAME: "1Password"
-  APP_BUNDLE_ID: "com.1password.1password"
-  CATEGORY: "Productivity"
+  NAME: "MySQLWorkbench"
+  APP_BUNDLE_ID: "com.oracle.workbench.MySQLWorkbench"
+  CATEGORY: "Development"
   TRIGGER_NAME: "autoupdate-%NAME%"
   DEFER_TRIGGER: "defer-%NAME%"
-  SELF_SERVICE_DESCRIPTION: "1Password for Mac lets you keep all of your log-ins in one place, so you'll never have to worry about forgetting passwords again. And all of the information you enter into this app is protected by a master password, which means you won't have to worry about unauthorized access, either."
-  SELF_SERVICE_ICON: "1Password.png"
+  SELF_SERVICE_DESCRIPTION: "MySQL Workbench is a unified visual tool for database architects, developers, and DBAs."
+  SELF_SERVICE_ICON: "MySQLWorkbench.png"
   UPDATE_PREDICATE: "pkg_uploaded == False"
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
 
@@ -30,24 +30,29 @@ Process:
     Arguments:
       pkg_category: "AutoPkg"
 
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfExtensionAttributeUploader
+    Arguments:
+      ea_name: "%NAME% Version"
+      ea_script_path: "CFBundleShortVersionStringEA.sh"
+
   - Processor: StopProcessingIf
     Arguments:
       predicate: "%UPDATE_PREDICATE%"
 
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-autopatch.xml"
+      computergroup_template: "SmartGrouptemplate-autopatch-CFBundleVersion.xml"
       computergroup_name: "autoupdate-%NAME%"
       replace_group: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-notinstalled.xml"
+      computergroup_template: "SmartGrouptemplate-notinstalled.xml"
       computergroup_name: "App Not Installed: %NAME%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-installed.xml"
+      computergroup_template: "SmartGrouptemplate-installed.xml"
       computergroup_name: "App Installed: %NAME%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
@@ -62,7 +67,7 @@ Process:
       self_service_bool: "false"
       self_service_action: "Install"
       replace_policy: "True"
-
+      
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
       policy_template: "PolicyTemplate-selfservice-install.xml"
@@ -129,4 +134,3 @@ Process:
       group_name: "autoupdate-%NAME%"
       script_trigger_name: "%TRIGGER_NAME%"
       replace_policy: "True"
-      

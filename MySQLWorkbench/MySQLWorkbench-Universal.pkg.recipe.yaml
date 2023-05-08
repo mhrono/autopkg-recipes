@@ -1,11 +1,10 @@
-Description: Downloads the latest version of 1Password and creates a package.
-Identifier: com.mhrono.recipes.pkg.1password-universal
-ParentRecipe: com.mhrono.recipes.download.1password-universal
+Description: Downloads the latest version of MySQLWorkbench and creates a package.
+Identifier: com.mhrono.recipes.pkg.mysqlworkbench-universal
+ParentRecipe: com.mhrono.recipes.download.mysqlworkorkbench-universal
 MinimumVersion: '2.3'
 
 Input:
-  NAME: 1Password
-  SOFTWARE_TITLE: 1Password
+  NAME: MySQLWorkbench
 
 Process:
   - Processor: PkgRootCreator
@@ -18,12 +17,12 @@ Process:
   - Processor: AppPkgCreator
     Arguments:
       app_path: '%RECIPE_CACHE_DIR%/unpack/arm64/%NAME%.app'
-      pkg_path: '%RECIPE_CACHE_DIR%/Universal/Scripts/%SOFTWARE_TITLE%-arm64-%version%.pkg'
+      pkg_path: '%RECIPE_CACHE_DIR%/Universal/Scripts/%NAME%-arm64-%version%.pkg'
 
   - Processor: AppPkgCreator
     Arguments:
       app_path: '%RECIPE_CACHE_DIR%/unpack/x86_64/%NAME%.app'
-      pkg_path: '%RECIPE_CACHE_DIR%/Universal/Scripts/%SOFTWARE_TITLE%-x86_64-%version%.pkg'
+      pkg_path: '%RECIPE_CACHE_DIR%/Universal/Scripts/%NAME%-x86_64-%version%.pkg'
 
   - Processor: FileCreator
     Arguments:
@@ -32,8 +31,8 @@ Process:
       file_content: |
         #!/bin/bash
 
-        arm64_package="%SOFTWARE_TITLE%-arm64-%version%.pkg"
-        x86_64_package="%SOFTWARE_TITLE%-x86_64-%version%.pkg"
+        arm64_package="%NAME%-arm64-%version%.pkg"
+        x86_64_package="%NAME%-x86_64-%version%.pkg"
 
         if [[ $( /usr/bin/arch ) = arm64* ]]; then
           /usr/sbin/installer -pkg "$arm64_package" -target "$3"
@@ -43,13 +42,26 @@ Process:
 
         exit 0
 
+  - Processor: FileCreator
+    Arguments:
+      file_path: '%RECIPE_CACHE_DIR%/Universal/Scripts/postinstall'
+      file_mode: '0755'
+      file_content: |
+        #!/bin/bash
+
+        currentUser=$(stat -f %Su /dev/console)
+
+        chown -R $currentUser /Applications/MySQLWorkbench.app
+
+        exit 0
+
   - Processor: PkgCreator
     Arguments:
       pkg_request:
         id: '%bundleid%'
         version: '%version%'
         options: purge_ds_store
-        pkgname: '%SOFTWARE_TITLE%-Universal-%version%'
+        pkgname: '%NAME%-Universal-%version%'
         pkgdir: '%RECIPE_CACHE_DIR%'
         scripts: '%RECIPE_CACHE_DIR%/Universal/Scripts'
         pkgroot: '%RECIPE_CACHE_DIR%/Universal/pkgroot'
