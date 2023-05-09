@@ -39,3 +39,5 @@ Process:
         - path: usr/local/bin
           user: root
           group: wheel
+        - path: usr/local/bin/sdm
+          mode: '0755'
