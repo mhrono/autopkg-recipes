@@ -7,31 +7,13 @@ Input:
   NAME: Island
 
 Process:
-  - Processor: PkgRootCreator
-    Arguments:
-      pkgroot: '%RECIPE_CACHE_DIR%/app'
-      pkgdirs:
-        pkgroot: '0775'
-        Scripts: '0775'
 
   - Processor: AppPkgCreator
     Arguments:
       app_path: '%RECIPE_CACHE_DIR%/unpack/%NAME%.app'
-      pkg_path: '%RECIPE_CACHE_DIR%/app/%NAME%-%version%.pkg'
-
-  - Processor: PkgCreator
-    Arguments:
-      pkg_request:
-        id: '%bundleid%'
-        version: '%version%'
-        options: purge_ds_store
-        pkgname: '%NAME%-%version%'
-        pkgdir: '%RECIPE_CACHE_DIR%'
-        pkgroot: '%RECIPE_CACHE_DIR%/app/pkgroot'
 
   - Processor: com.github.smithjw.processors/FriendlyPathDeleter
     Arguments:
       fail_deleter_silently: true
       path_list:
-        - '%RECIPE_CACHE_DIR%/app'
         - '%RECIPE_CACHE_DIR%/unpack'
