@@ -1,0 +1,41 @@
+Description: Downloads the latest version and makes a pkg. Then, uploads the package to the Jamf Pro Server and creates a Policy and Smart Group.
+Identifier: com.mhrono.recipes.pkg.strongdmcli
+MinimumVersion: "2.3"
+ParentRecipe: com.mhrono.recipes.download.strongdmcli
+
+Input:
+  NAME: StrongDM CLI
+
+Process:
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgroot: '%RECIPE_CACHE_DIR%/pkgroot'
+      pkgdirs:
+        usr: '0755'
+        usr/local: '0755'
+        usr/local/bin: '0755'
+
+  - Processor: Copier
+    Arguments:
+      source_path: '%RECIPE_CACHE_DIR%/%NAME%/sdm'
+      destination_path: '%RECIPE_CACHE_DIR%/pkgroot/usr/local/bin'
+      overwrite: True
+
+  - Processor: PkgCreator
+    Arguments:
+      pkg_request:
+        id: 'sdm.darwin'
+        version: '%version%'
+        options: purge_ds_store
+        pkgname: '%NAME%-%version%'
+        pkgroot: '%RECIPE_CACHE_DIR%/pkgroot'
+        chown:
+        - path: usr
+          user: root
+          group: wheel
+        - path: usr/local
+          user: root
+          group: wheel
+        - path: usr/local/bin
+          user: root
+          group: wheel
