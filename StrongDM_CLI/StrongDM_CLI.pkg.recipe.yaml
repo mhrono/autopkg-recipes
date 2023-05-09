@@ -40,4 +40,6 @@ Process:
           user: root
           group: wheel
         - path: usr/local/bin/sdm
+          user: root
+          group: wheel
           mode: '0755'
