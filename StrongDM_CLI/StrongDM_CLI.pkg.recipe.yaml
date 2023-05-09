@@ -18,7 +18,7 @@ Process:
   - Processor: Copier
     Arguments:
       source_path: '%RECIPE_CACHE_DIR%/%NAME%/sdm'
-      destination_path: '%RECIPE_CACHE_DIR%/pkgroot/usr/local/bin'
+      destination_path: '%RECIPE_CACHE_DIR%/pkgroot/usr/local/bin/sdm'
       overwrite: True
 
   - Processor: PkgCreator
