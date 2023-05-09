@@ -1,0 +1,34 @@
+Description: Downloads the latest version of Island.
+Identifier: com.mhrono.recipes.download.island
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Island
+  URL: ''
+
+Process:
+  - Processor: URLDownloader
+    Arguments:
+      filename: '%NAME%.dmg'
+      download_dir: '%RECIPE_CACHE_DIR%/downloads'
+      url: '%URL%'
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: Copier
+    Arguments:
+      source_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/%NAME%.app'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/%NAME%.app'
+      overwrite: true
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%RECIPE_CACHE_DIR%/unpack/%NAME%.app'
+      requirement: 'identifier "io.island.Island" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */'
+      deep_verification: true
+      strict_verification: true
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%RECIPE_CACHE_DIR%/unpack/%NAME%.app/Contents/Info.plist'
+      plist_version_key: CFBundleShortVersionString
