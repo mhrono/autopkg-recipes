@@ -1,0 +1,32 @@
+Description: Downloads the latest version of StrongDM.
+Identifier: com.mhrono.recipes.download.strongdm
+MinimumVersion: '2.3'
+
+Input:
+  NAME: StrongDM CLI
+  URL: ''
+
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      url: '%URL%'
+      re_pattern: '(?P<dmgurl>https\:\/\/downloads\.strongdm\.com\/builds\/desktop\/(?P<version>[\d.]+)\S+\.dmg)'
+
+  - Processor: URLDownloader
+    Arguments:
+      url: '%dmgurl%'
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%pathname%/%NAME%.app'
+      requirement: 'identifier "com.electron.sdm" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = W5HSYBBJGA'
+      deep_verification: true
+      strict_verification: true
+
+  - Processor: Copier
+    Arguments:
+      source_path: '%pathname%/%NAME%.app'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/%NAME%.app'
+      overwrite: true
