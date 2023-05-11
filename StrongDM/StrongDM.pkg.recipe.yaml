@@ -12,17 +12,16 @@ Process:
       pkgroot: '%RECIPE_CACHE_DIR%/%NAME%-pkg'
       pkgdirs:
         Applications: '0775'
-        scripts: '0775'
 
   - Processor: Copier
     Arguments:
-      destination_path: '%pkgroot%/Applications/'
-      source_path: '%pathname%'
+      destination_path: '%pkgroot%/Applications/%SOFTWARE_TITLE%.app'
+      source_path: '%pathname%/%SOFTWARE_TITLE%.app'
       overwrite: True
 
   - Processor: FileCreator
     Arguments:
-      file_path: '%pkgroot%/scripts/postinstall'
+      file_path: '%RECIPE_CACHE_DIR%/scripts/postinstall'
       file_mode: '0755'
       file_content: |
         #!/bin/bash
@@ -46,7 +45,7 @@ Process:
         version: '%version%'
         pkgdir: '%RECIPE_CACHE_DIR%'
         pkgname: '%NAME%-%version%'
-        scripts: '%pkgroot%/scripts'
+        scripts: '%RECIPE_CACHE_DIR%/scripts'
         chown:
           - path: 'Applications'
             user: 'root'
