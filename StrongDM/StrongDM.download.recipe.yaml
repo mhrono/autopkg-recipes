@@ -33,5 +33,5 @@ Process:
       overwrite: true
 
   - Processor: AppDmgVersioner
-      Arguments:
-        dmg_path: '%pathname%'
+    Arguments:
+      dmg_path: '%pathname%'
