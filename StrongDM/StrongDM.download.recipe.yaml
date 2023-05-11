@@ -31,3 +31,7 @@ Process:
       source_path: '%pathname%/%SOFTWARE_TITLE%.app'
       destination_path: '%RECIPE_CACHE_DIR%/unpack/%SOFTWARE_TITLE%.app'
       overwrite: true
+
+  - Processor: AppDmgVersioner
+      Arguments:
+        dmg_path: '%pathname%'
