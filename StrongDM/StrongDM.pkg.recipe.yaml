@@ -17,7 +17,7 @@ Process:
   - Processor: Copier
     Arguments:
       destination_path: '%pkgroot%/Applications/'
-      source_path: '%pathname%/%SOFTWARE_TITLE%.app'
+      source_path: '%pathname%'
       overwrite: True
 
   - Processor: FileCreator
