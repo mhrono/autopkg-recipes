@@ -17,12 +17,12 @@ Process:
 
   - Processor: AppPkgCreator
     Arguments:
-      app_path: '%RECIPE_CACHE_DIR%/unpack/arm64/%NAME%.app'
+      app_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-arm64.dmg/%NAME%.app'
       pkg_path: '%RECIPE_CACHE_DIR%/Universal/Scripts/%SOFTWARE_TITLE%-arm64-%version%.pkg'
 
   - Processor: AppPkgCreator
     Arguments:
-      app_path: '%RECIPE_CACHE_DIR%/unpack/x86_64/%NAME%.app'
+      app_path: '%RECIPE_CACHE_DIR%/downloads/%SOFTWARE_TITLE%-x86_64.dmg/%NAME%.app'
       pkg_path: '%RECIPE_CACHE_DIR%/Universal/Scripts/%SOFTWARE_TITLE%-x86_64-%version%.pkg'
 
   - Processor: FileCreator
@@ -59,4 +59,3 @@ Process:
       fail_deleter_silently: true
       path_list:
         - '%RECIPE_CACHE_DIR%/Universal'
-        - '%RECIPE_CACHE_DIR%/unpack'
