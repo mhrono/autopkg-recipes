@@ -27,7 +27,7 @@ Process:
 
   - Processor: FileCreator
     Arguments:
-      file_path: '%RECIPE_CACHE_DIR%/scripts/postinstall'
+      file_path: '%RECIPE_CACHE_DIR%/tmp/scripts/postinstall'
       file_mode: '0755'
       file_content: |
         #!/bin/bash
@@ -36,7 +36,7 @@ Process:
           rm /usr/local/bin/sdm
         fi
 
-        cp /Applications/SDM.app/Contents/Resources/sdm.darwin /usr/local/bin/sdm
+        ln -s /Applications/SDM.app/Contents/Resources/sdm.darwin /usr/local/bin/sdm
 
         chown root:wheel /usr/local/bin/sdm
         chmod +x /usr/local/bin/sdm
