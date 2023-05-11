@@ -131,3 +131,4 @@ Process:
       script_trigger_name: "%TRIGGER_NAME%"
       replace_policy: "True"
       
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageCleaner

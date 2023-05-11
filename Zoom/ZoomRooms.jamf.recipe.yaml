@@ -49,3 +49,5 @@ Process:
       self_service_bool: "false"
       self_service_action: "Install"
       replace_policy: "True"
+
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageCleaner
