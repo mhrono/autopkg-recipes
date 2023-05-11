@@ -1,4 +1,4 @@
-Description: Downloads the latest version and makes a pkg. Then, uploads the package to the Jamf Pro Server and creates a Policy and Smart Group.
+Description: Downloads the latest version of StrongDM and makes a pkg.
 Identifier: com.mhrono.recipes.pkg.strongdm
 MinimumVersion: "2.3"
 ParentRecipe: com.mhrono.recipes.download.strongdm
@@ -17,7 +17,7 @@ Process:
   - Processor: Copier
     Arguments:
       destination_path: '%pkgroot%/Applications/'
-      source_path: '%pathname%'
+      source_path: '%pathname%/%SOFTWARE_TITLE%.app'
       overwrite: True
 
   - Processor: FileCreator
