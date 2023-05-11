@@ -12,7 +12,7 @@ Process:
       pkgroot: '%RECIPE_CACHE_DIR%/%NAME%-pkg'
       pkgdirs:
         pkgroot: '0775'
-        scripts: '0775'
+        Scripts: '0775'
 
   - Processor: Copier
     Arguments:
@@ -22,7 +22,7 @@ Process:
 
   - Processor: FileCreator
     Arguments:
-      file_path: '%pkgroot%/scripts/postinstall'
+      file_path: '%pkgroot%/Scripts/postinstall'
       file_mode: '0755'
       file_content: |
         #!/bin/bash
@@ -47,7 +47,7 @@ Process:
         pkgdir: '%RECIPE_CACHE_DIR%'
         pkgname: '%NAME%-%version%'
         pkgroot: '%pkgroot%'
-        scripts: '%pkgroot%/scripts'
+        scripts: '%pkgroot%/Scripts'
         chown:
           - path: 'Applications'
             user: 'root'
