@@ -9,7 +9,11 @@ Input:
 Process:
   - Processor: PkgRootCreator
     Arguments:
-      pkgroot: '%RECIPE_CACHE_DIR%/%NAME%-pkg'
+      pkgroot: '%RECIPE_CACHE_DIR%/scripts'
+
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgroot: '%RECIPE_CACHE_DIR%/payload'
       pkgdirs:
         Applications: '0775'
 
@@ -45,7 +49,7 @@ Process:
         version: '%version%'
         pkgdir: '%RECIPE_CACHE_DIR%'
         pkgname: '%NAME%-%version%'
-        pkgroot: '%RECIPE_CACHE_DIR%/%NAME%-pkg'
+        pkgroot: '%RECIPE_CACHE_DIR%/payload'
         scripts: '%RECIPE_CACHE_DIR%/scripts'
         chown:
           - path: 'Applications'
@@ -56,4 +60,5 @@ Process:
     Arguments:
       fail_deleter_silently: true
       path_list:
-        - '%RECIPE_CACHE_DIR%/%NAME%-pkg'
+        - '%RECIPE_CACHE_DIR%/payload'
+        - '%RECIPE_CACHE_DIR%/scripts'
