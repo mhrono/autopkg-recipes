@@ -9,7 +9,9 @@ Input:
 Process:
   - Processor: PkgRootCreator
     Arguments:
-      pkgroot: '%RECIPE_CACHE_DIR%/scripts'
+      pkgroot: '%RECIPE_CACHE_DIR%'
+      pkgdirs:
+        scripts: '0775'
 
   - Processor: PkgRootCreator
     Arguments:
