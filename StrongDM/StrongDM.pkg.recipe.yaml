@@ -9,7 +9,7 @@ Input:
 Process:
   - Processor: PkgRootCreator
     Arguments:
-      pkgroot: '%RECIPE_CACHE_DIR%'
+      pkgroot: '%RECIPE_CACHE_DIR%/tmp'
       pkgdirs:
         scripts: '0775'
 
@@ -63,4 +63,4 @@ Process:
       fail_deleter_silently: true
       path_list:
         - '%RECIPE_CACHE_DIR%/payload'
-        - '%RECIPE_CACHE_DIR%/scripts'
+        - '%RECIPE_CACHE_DIR%/tmp'
