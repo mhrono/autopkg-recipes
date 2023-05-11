@@ -5,6 +5,7 @@ ParentRecipe: com.mhrono.recipes.pkg.strongdm
 
 Input:
   NAME: StrongDM
+  SOFTWARE_TITLE: SDM
   APP_BUNDLE_ID: com.electron.sdm
   CATEGORY: Development
   TRIGGER_NAME: "autoupdate-%NAME%"
@@ -129,4 +130,5 @@ Process:
       group_name: "autoupdate-%NAME%"
       script_trigger_name: "%TRIGGER_NAME%"
       replace_policy: "True"
-      
+
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageCleaner
