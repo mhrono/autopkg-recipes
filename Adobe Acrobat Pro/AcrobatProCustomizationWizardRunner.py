@@ -18,6 +18,8 @@
 # Based on a simple Customization Wrapper script from:
 # https://gist.github.com/timsutton/212bfed9da2056a070a12ac27febeb71
 
+## Updated 7 June 2023 by @mhrono to remove unneeded PlistFoundation import causing errors with the latest AutoPkg release
+
 from __future__ import absolute_import
 
 import os

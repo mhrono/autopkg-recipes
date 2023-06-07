@@ -1,4 +1,4 @@
-Description: Downloads the latest version of Adobe Acrobat Pro and creates a package.
+Description: Downloads the latest version of Adobe Acrobat Pro and creates a package. Thanks to @mosen and @timsutton for the original versions of these recipes.
 Identifier: com.mhrono.recipes.pkg.acrobatpro
 ParentRecipe: com.mhrono.recipes.download.acrobatpro
 MinimumVersion: '2.3'
