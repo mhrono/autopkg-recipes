@@ -1,0 +1,44 @@
+Description: Downloads the latest version of Adobe Acrobat Pro.
+Identifier: com.mhrono.recipes.download.acrobatpro
+MinimumVersion: '2.3'
+
+Input:
+  NAME: "Adobe Acrobat Pro"
+  MAJOR_VERSION: "DC"
+
+Process:
+  - Processor: URLDownloader
+    Arguments:
+      url: 'https://trials3.adobe.com/AdobeProducts/APRO/Acrobat_HelpX/osx10/Acrobat_%MAJOR_VERSION%_Web_WWMUI.dmg'
+      request_headers:
+        Cookie: 'MM_TRIALS=1234'
+        User-Agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+
+  - Processor: EndOfCheckPhase
+
+  - Processor: FlatPkgUnpacker
+    Arguments:
+      flat_pkg_path: '%pathname%/Acrobat/Acrobat %MAJOR_VERSION% Installer.pkg'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack'
+      purge_destination: true
+
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgroot: '%RECIPE_CACHE_DIR%/unpack/root/Applications'
+      pkgdirs:
+
+  - Processor: PkgPayloadUnpacker
+    Arguments:
+      pkg_payload_path: '%RECIPE_CACHE_DIR%/unpack/application.pkg/Payload'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/root/Applications/Adobe Acrobat %MAJOR_VERSION%'
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%RECIPE_CACHE_DIR%/unpack/root/Applications/Adobe Acrobat %MAJOR_VERSION%/Adobe Acrobat.app'
+      requirement: 'anchor apple generic and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = JQ525L2MZD)'
+      deep_verification: true
+      strict_verification: true
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%RECIPE_CACHE_DIR%/unpack/root/Applications/Adobe Acrobat %MAJOR_VERSION%/Adobe Acrobat.app/Contents/Info.plist'
