@@ -10,9 +10,6 @@ Input:
     DC:
       FeatureLockdown:
         bUpdater: false
-    2015:
-      FeatureLockdown:
-        bUpdater: false
 
 Process:
   - Processor: URLDownloader
