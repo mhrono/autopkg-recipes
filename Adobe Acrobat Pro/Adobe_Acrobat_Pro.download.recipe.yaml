@@ -26,6 +26,7 @@ Process:
     Arguments:
       pkgroot: '%RECIPE_CACHE_DIR%/unpack/root/Applications'
       pkgdirs:
+        tmp: '0775'
 
   - Processor: PkgPayloadUnpacker
     Arguments:
