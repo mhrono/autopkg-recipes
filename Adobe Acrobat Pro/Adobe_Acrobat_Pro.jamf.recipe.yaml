@@ -9,7 +9,7 @@ Input:
   CATEGORY: Productivity
   TRIGGER_NAME: "autoupdate-%NAME%"
   DEFER_TRIGGER: "defer-%NAME%"
-  SELF_SERVICE_DESCRIPTION: "Create, edit, and review PDFs. E-sign documents and collect signatures. Collaborate with your team. All in one app.\n\nNOTE: You must request a license for this app from IT before proceeding with installation. This app will not function without an assigned license."
+  SELF_SERVICE_DESCRIPTION: "Create, edit, and review PDFs. E-sign documents and collect signatures. Collaborate with your team. All in one app.\n\nNOTE: You must request a license for this app from IT before proceeding with installation if you do not already have one. This app will not function without an assigned license."
   SELF_SERVICE_ICON: AcrobatPro.png
   UPDATE_PREDICATE: "pkg_uploaded == False"
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
