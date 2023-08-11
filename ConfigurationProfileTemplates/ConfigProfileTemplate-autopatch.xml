@@ -11,6 +11,6 @@
         <level>computer</level>
         <uuid>%uuid%</uuid>
         <redeploy_on_update>All</redeploy_on_update>
-        <payloads>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;!DOCTYPE plist PUBLIC &quot;-//Apple//DTD PLIST 1.0//EN&quot; &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;&lt;plist version=&quot;1.0&quot;&gt;&lt;dict&gt;&lt;key&gt;bundleID&lt;/key&gt;&lt;string&gt;%bundle_id%&lt;/string&gt;&lt;key&gt;displayName&lt;/key&gt;&lt;string&gt;%name%&lt;/string&gt;&lt;key&gt;targetVersionRegex&lt;/key&gt;&lt;string&gt;%version_regex%&lt;/string&lt;key&gt;targetVersionRegex2&lt;/key&gt;&lt;string&gt;%version_regex_2%&lt;/string&gt;&lt;key&gt;targetVersionRegex3&lt;/key&gt;&lt;string&gt;%version_regex_3%&lt;/string&gt;&lt;key&gt;deferLimit&lt;/key&gt;&lt;integer&gt;10&lt;/integer&gt;&lt;key&gt;forceUpdate&lt;/key&gt;&lt;false/&gt;&lt;key&gt;rollbackVersion&lt;/key&gt;&lt;false/&gt;&lt;/dict&gt;&lt;/plist&gt;</payloads>
+        <payloads>%payload%</payloads>
     </general>
 </os_x_configuration_profile>

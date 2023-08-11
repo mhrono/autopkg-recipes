@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>bundleID</key>
-	<string>%app_bundle_id%</string>
+	<string>%APP_BUNDLE_ID%</string>
 	<key>displayName</key>
-	<string>%name%</string>
+	<string>%NAME%</string>
 	<key>targetVersionRegex</key>
 	<string>%version_regex%</string>
 	<key>targetVersionRegex2</key>
@@ -13,10 +13,10 @@
 	<key>targetVersionRegex3</key>
 	<string>%version_regex_3%</string>
 	<key>deferLimit</key>
-	<integer>10</integer>
+	<string>%DEFER_LIMIT%</string>
 	<key>forceUpdate</key>
-	<false/>
+	<string>%FORCE_UPDATE%</string>
 	<key>rollbackVersion</key>
-	<false/>
+	<string>%ROLLBACK%</string>
 </dict>
 </plist>
