@@ -2,7 +2,7 @@
 <os_x_configuration_profile>
     <general>
         <name>%profile_name%</name>
-        <description>Latest Update Data for %name%</description>
+        <description>Latest Update Data for %NAME%</description>
         <category>
             <name>%profile_category%</name>
         </category>
