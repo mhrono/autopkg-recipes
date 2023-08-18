@@ -10,6 +10,9 @@ Input:
   DOWNLOAD_URL: https://dl.google.com/chrome/mac/universal/stable/GGRO/googlechrome.dmg
   TRIGGER_NAME: "autoupdate-%NAME%"
   DEFER_TRIGGER: "defer-%NAME%"
+  DEFER_LIMIT: "10"
+  FORCE_UPDATE: "False"
+  ROLLBACK: "False"
   SELF_SERVICE_DESCRIPTION: "Google Chrome is a web browser."
   SELF_SERVICE_ICON: Google_Chrome.png
   UPDATE_PREDICATE: "pkg_uploaded == False"
@@ -35,9 +38,11 @@ Process:
     Arguments:
       predicate: "%UPDATE_PREDICATE%"
 
+  - Processor: com.github.grahampugh.recipes.commonprocessors/VersionRegexGenerator
+
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-autopatch.xml"
+      computergroup_template: "SmartGroupTemplate-autopatch-regex.xml"
       computergroup_name: "autoupdate-%NAME%"
       replace_group: "True"
       
@@ -130,5 +135,15 @@ Process:
       group_name: "autoupdate-%NAME%"
       script_trigger_name: "%TRIGGER_NAME%"
       replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerProfileUploader
+    Arguments:
+      profile_name: "App Update Data: %NAME%"
+      identifier: "com.appUpdates.managedApps.%NAME%"
+      organization: "AutoPkg"
+      payload: "payloadTemplate.plist"
+      profile_template: "ConfigProfileTemplate-autopatch.xml"
+      profile_category: "AutoPkg"
+      replace_profile: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageCleaner

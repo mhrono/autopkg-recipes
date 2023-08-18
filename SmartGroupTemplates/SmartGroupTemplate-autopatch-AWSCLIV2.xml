@@ -1,0 +1,20 @@
+<computer_group>
+	<name>%computergroup_name%</name>
+	<is_smart>true</is_smart>
+	<criteria>
+		<criterion>
+			<name>AWSCLI Version</name>
+			<priority>0</priority>
+			<and_or>and</and_or>
+			<search_type>is not</search_type>
+			<value>%version%</value>
+		</criterion>
+		<criterion>
+			<name>AWSCLI Version</name>
+			<priority>1</priority>
+			<and_or>and</and_or>
+			<search_type>is not</search_type>
+			<value>Not Installed</value>
+		</criterion>
+	</criteria>
+</computer_group>
