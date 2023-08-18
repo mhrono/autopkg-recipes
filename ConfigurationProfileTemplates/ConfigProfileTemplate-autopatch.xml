@@ -13,4 +13,36 @@
         <redeploy_on_update>All</redeploy_on_update>
         <payloads>%payload%</payloads>
     </general>
+    <scope>
+        <all_computers>false</all_computers>
+        <all_jss_users>false</all_jss_users>
+        <computers/>
+        <buildings/>
+        <departments/>
+        <computer_groups>
+            <computer_group>
+                <name>autoupdate-%NAME%</name>
+            </computer_group>
+        </computer_groups>
+        <jss_users/>
+        <jss_user_groups/>
+        <limitations>
+            <users/>
+            <user_groups/>
+            <network_segments/>
+            <ibeacons/>
+        </limitations>
+        <exclusions>
+            <computers/>
+            <buildings/>
+            <departments/>
+            <computer_groups/>
+            <users/>
+            <user_groups/>
+            <network_segments/>
+            <ibeacons/>
+            <jss_users/>
+            <jss_user_groups/>
+        </exclusions>
+    </scope>
 </os_x_configuration_profile>

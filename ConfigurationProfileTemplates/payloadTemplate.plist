@@ -6,6 +6,8 @@
 	<string>%APP_BUNDLE_ID%</string>
 	<key>displayName</key>
 	<string>%NAME%</string>
+	<key>targetVersionString</key>
+	<string>%version%</string>
 	<key>targetVersionRegex</key>
 	<string>%version_regex%</string>
 	<key>targetVersionRegex2</key>
