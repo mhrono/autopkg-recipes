@@ -12,6 +12,7 @@ Input:
   DEFER_LIMIT: "10"
   FORCE_UPDATE: "False"
   ROLLBACK: "False"
+  TEST_FLAG: ""
   SELF_SERVICE_DESCRIPTION: "Slack is a platform for team communication: everything in one place, instantly searchable, available wherever you go."
   SELF_SERVICE_ICON: Slack.png
   UPDATE_PREDICATE: "pkg_uploaded == False"
@@ -41,8 +42,8 @@ Process:
 
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-autopatch-regex.xml"
-      computergroup_name: "autoupdate-%NAME%"
+      computergroup_template: "SmartGroupTemplate-autopatch-regex%TEST_FLAG%.xml"
+      computergroup_name: "autoupdate-%NAME%%TEST_FLAG%"
       replace_group: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
@@ -58,12 +59,12 @@ Process:
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
       policy_template: "PolicyTemplate-autopatch.xml"
-      policy_name: "Install Latest %NAME%"
+      policy_name: "Install Latest %NAME%%TEST_FLAG%"
       frequency: "Ongoing"
       checkin_bool: "false"
       trigger_name: "%TRIGGER_NAME%"
       policy_category: "AutoPkg"
-      group_name: "autoupdate-%NAME%"
+      group_name: "autoupdate-%NAME%%TEST_FLAG%"
       self_service_bool: "false"
       self_service_action: "Install"
       replace_policy: "True"
@@ -89,7 +90,7 @@ Process:
       frequency: "Ongoing"
       checkin_bool: "false"
       policy_category: "Updates"
-      group_name: "autoupdate-%NAME%"
+      group_name: "autoupdate-%NAME%%TEST_FLAG%"
       self_service_bool: "true"
       self_service_action: "Update to"
       icon: "%SELF_SERVICE_ICON%"
@@ -103,7 +104,7 @@ Process:
       checkin_bool: "false"
       policy_category: "%CATEGORY%"
       group_name: "App Installed: %NAME%"
-      exclude_group_name: "autoupdate-%NAME%"
+      exclude_group_name: "autoupdate-%NAME%%TEST_FLAG%"
       self_service_bool: "true"
       self_service_action: "Re-Install"
       icon: "%SELF_SERVICE_ICON%"
@@ -112,26 +113,26 @@ Process:
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
       policy_template: "PolicyTemplate-prompt.xml"
-      policy_name: "Monthly Prompt: %NAME%"
+      policy_name: "Monthly Prompt: %NAME%%TEST_FLAG%"
       script_trigger_name: "%TRIGGER_NAME%"
       policy_category: "Auto-Update: Monthly Prompt"
-      group_name: "autoupdate-%NAME%"
+      group_name: "autoupdate-%NAME%%TEST_FLAG%"
       replace_policy: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
       policy_template: "PolicyTemplate-defer.xml"
-      policy_name: "Deferred Update: %NAME%"
+      policy_name: "Deferred Update: %NAME%%TEST_FLAG%"
       script_trigger_name: "%TRIGGER_NAME%"
       policy_category: "Auto-Update: Deferral Policies"
-      group_name: "autoupdate-%NAME%"
+      group_name: "autoupdate-%NAME%%TEST_FLAG%"
       replace_policy: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
       policy_template: "PolicyTemplate-silent.xml"
-      policy_name: "Silent Update: %NAME%"
-      group_name: "autoupdate-%NAME%"
+      policy_name: "Silent Update: %NAME%%TEST_FLAG%"
+      group_name: "autoupdate-%NAME%%TEST_FLAG%"
       script_trigger_name: "%TRIGGER_NAME%"
       replace_policy: "True"
       
