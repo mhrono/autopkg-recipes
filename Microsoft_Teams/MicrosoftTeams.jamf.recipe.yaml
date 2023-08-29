@@ -45,6 +45,8 @@ Process:
 
   - Processor: com.github.grahampugh.recipes.commonprocessors/VersionRegexGenerator
 
+  - Processor: com.github.grahampugh.recipes.commonprocessors/PkgInfoReader
+
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
       computergroup_template: "SmartGrouptemplate-autopatch-CFBundleVersion-regex%TEST_FLAG%.xml"

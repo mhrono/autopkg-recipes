@@ -20,5 +20,7 @@
 	<string>%FORCE_UPDATE%</string>
 	<key>rollbackVersion</key>
 	<string>%ROLLBACK%</string>
+	<key>pkgSize</key>
+	<integer>%installer_item_size%</integer>
 </dict>
 </plist>
