@@ -9,6 +9,7 @@ Input:
   CATEGORY: "Development"
   TRIGGER_NAME: "autoupdate-%NAME%"
   DEFER_TRIGGER: "defer-%NAME%"
+  TEST_FLAG: ""
   SELF_SERVICE_DESCRIPTION: "OpenJDK is a free and open-source alternative for Oracle's traditional JDK."
   SELF_SERVICE_ICON: "OpenJDK.png"
   UPDATE_PREDICATE: "pkg_uploaded == False"

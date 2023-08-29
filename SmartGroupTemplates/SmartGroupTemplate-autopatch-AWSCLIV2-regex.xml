@@ -1,0 +1,27 @@
+<computer_group>
+	<name>%computergroup_name%</name>
+	<is_smart>true</is_smart>
+	<criteria>
+		<criterion>
+            <name>AWSCLI Version</name>
+            <priority>0</priority>
+            <and_or>and</and_or>
+            <search_type>does not match regex</search_type>
+            <value>%version_regex%</value>
+        </criterion>
+        <criterion>
+            <name>AWSCLI Version</name>
+            <priority>1</priority>
+            <and_or>and</and_or>
+            <search_type>does not match regex</search_type>
+            <value>%version_regex_2%</value>
+        </criterion>
+        <criterion>
+            <name>AWSCLI Version</name>
+            <priority>2</priority>
+            <and_or>and</and_or>
+            <search_type>does not match regex</search_type>
+            <value>%version_regex_3%</value>
+        </criterion>
+	</criteria>
+</computer_group>

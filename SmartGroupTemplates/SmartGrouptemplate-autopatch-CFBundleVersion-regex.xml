@@ -30,12 +30,5 @@
             <search_type>does not match regex</search_type>
             <value>%version_regex_3%</value>
         </criterion>
-        <criterion>
-            <name>%NAME% Version</name>
-            <priority>4</priority>
-            <and_or>and</and_or>
-            <search_type>is not</search_type>
-            <value></value>
-        </criterion>
     </criteria>
 </computer_group>

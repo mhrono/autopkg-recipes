@@ -6,6 +6,8 @@
 	<string>%APP_BUNDLE_ID%</string>
 	<key>displayName</key>
 	<string>%NAME%</string>
+	<key>targetVersionString</key>
+	<string>%version%</string>
 	<key>targetVersionRegex</key>
 	<string>%version_regex%</string>
 	<key>targetVersionRegex2</key>
@@ -18,5 +20,7 @@
 	<string>%FORCE_UPDATE%</string>
 	<key>rollbackVersion</key>
 	<string>%ROLLBACK%</string>
+	<key>pkgSize</key>
+	<integer>%installer_item_size%</integer>
 </dict>
 </plist>
