@@ -5,17 +5,12 @@ MinimumVersion: '2.3'
 Input:
   NAME: StrongDM
   SOFTWARE_TITLE: SDM
-  URL: 'https://app.strongdm.com/release?os=darwin&amp;arch=universal&amp;software=sdm-gui&amp;variant=full&amp;version=public'
+  URL: 'https://app.strongdm.com/downloads/client/darwin/public'
 
 Process:
-  - Processor: URLTextSearcher
+  - Processor: URLDownloaderPython
     Arguments:
       url: '%URL%'
-      re_pattern: '(?P<dmgurl>https\:\/\/downloads\.strongdm\.com\/builds\/desktop\/(?P<version>[\d.]+)\S+\.dmg)'
-
-  - Processor: URLDownloader
-    Arguments:
-      url: '%dmgurl%'
 
   - Processor: EndOfCheckPhase
 
