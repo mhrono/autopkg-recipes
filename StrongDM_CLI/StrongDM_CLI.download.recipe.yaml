@@ -6,7 +6,7 @@ Input:
   NAME: StrongDM CLI
 
 Process:
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       url: 'https://app.strongdm.com/releases/cli/darwin/latest'
       prefetch_filename: True

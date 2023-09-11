@@ -1,7 +1,7 @@
 Description: Downloads the latest version of the Zoom Rooms app and creates a pkg.
 Identifier: com.mhrono.recipes.pkg.zoomrooms
 MinimumVersion: "2.3"
-ParentRecipe: com.github.homebysix.download.ZoomPresence
+ParentRecipe: com.mhrono.recipes.download.ZoomPresence
 
 Input:
   NAME: ZoomPresence
@@ -21,6 +21,7 @@ Process:
   - Processor: Versioner
     Arguments:
       input_plist_path: "%RECIPE_CACHE_DIR%/expanded/ZoomPresence.app/Contents/Info.plist"
+      plist_version_key: "CFBundleShortVersionString"
 
   - Processor: com.github.homebysix.VersionSplitter/VersionSplitter
 

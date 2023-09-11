@@ -7,7 +7,7 @@ Input:
   SOFTWARE_TITLE: AWSCLI
 
 Process:
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       url: 'https://awscli.amazonaws.com/AWSCLIV2.pkg'
 

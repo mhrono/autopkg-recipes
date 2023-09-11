@@ -1,0 +1,26 @@
+Description: Downloads the latest Microsoft Edge installer pkg.
+Identifier: com.mhrono.recipes.download.microsoftedge
+MinimumVersion: 1.0.0
+
+Input:
+  NAME: Microsoft Edge
+  VENDOR: Microsoft
+  SOFTWARETITLE: Edge
+  PRODUCTID: '2093504'
+  DOWNLOADURL: https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%
+
+Process:
+- Processor: URLDownloader
+  Arguments:
+    filename: '%VENDOR%_%SOFTWARETITLE%.pkg'
+    url: '%DOWNLOADURL%'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+    - 'Developer ID Installer: Microsoft Corporation (UBF8T346G9)'
+    - Developer ID Certification Authority
+    - Apple Root CA
+    input_path: '%pathname%'

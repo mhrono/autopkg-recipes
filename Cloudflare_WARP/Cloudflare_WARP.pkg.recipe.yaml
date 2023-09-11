@@ -1,0 +1,18 @@
+Description: Downloads and builds a package of the latest CloudFlare Warp for Mac
+Identifier: com.mhrono.recipes.pkg.CloudFlareWarp
+ParentRecipe: com.mhrono.recipes.download.CloudFlareWarp
+MinimumVersion: '2.3'
+
+Input:
+  NAME: CloudFlareWarp
+
+Process:
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%RECIPE_CACHE_DIR%/unpack/payload/Cloudflare WARP.app/Contents/Info.plist'
+    plist_version_key: 'CFBundleShortVersionString'
+
+- Processor: PkgCopier
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
+    source_pkg: '%RECIPE_CACHE_DIR%/unzip/Cloudflare_WARP.pkg'

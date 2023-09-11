@@ -21,13 +21,13 @@ Process:
       request_headers:
         user-agent: '%USER_AGENT%'
 
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       filename: '%NAME%-arm64.dmg'
       download_dir: '%RECIPE_CACHE_DIR%/downloads'
       url: 'https://dev.mysql.com/get/Downloads/MySQLGUITools/%dmg_arm64%'
 
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       filename: '%NAME%-x86_64.dmg'
       download_dir: '%RECIPE_CACHE_DIR%/downloads'
@@ -46,6 +46,11 @@ Process:
       source_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%-x86_64.dmg/%NAME%.app'
       destination_path: '%RECIPE_CACHE_DIR%/unpack/x86_64/%NAME%.app'
       overwrite: true
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%-arm64.dmg/%NAME%.app/Contents/Info.plist'
+      plist_version_key: 'CFBundleShortVersionString'
 
   - Processor: CodeSignatureVerifier
     Arguments:

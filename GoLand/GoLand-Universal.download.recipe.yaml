@@ -15,7 +15,7 @@ Process:
       url: '%SEARCH_URL%'
       re_pattern: '%SEARCH_PATTERN_X86_64%'
 
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       url: '%match%'
       filename: '%NAME%-x86_64.dmg'
@@ -25,7 +25,7 @@ Process:
       url: '%SEARCH_URL%'
       re_pattern: '%SEARCH_PATTERN_ARM64%'
 
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       url: '%match%'
       filename: '%NAME%-arm64.dmg'

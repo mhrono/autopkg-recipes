@@ -1,0 +1,29 @@
+Description: Downloads the current release version of Sublime Text 4
+Identifier: com.mhrono.recipes.download.SublimeText4
+MinimumVersion: '2.3'
+
+Input:
+  NAME: SublimeText4
+  SEARCH_URL: https://www.sublimetext.com/download_thanks
+  SEARCH_PATTERN: <a href="(https:\/\/download\.sublimetext\.com\/sublime_text_build_[0-9a-zA-Z]*_mac\.zip)">
+
+Process:
+- Processor: URLTextSearcher
+  Arguments:
+    re_pattern: '%SEARCH_PATTERN%'
+    url: '%SEARCH_URL%'
+
+- Processor: URLDownloaderPython
+  Arguments:
+    url: '%match%'
+
+- Processor: EndOfCheckPhase
+
+- Processor: Unarchiver
+  Arguments:
+    purge_destination: true
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%RECIPE_CACHE_DIR%/%NAME%/Sublime Text.app'
+    requirement: identifier "com.sublimetext.4" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = Z6D26JE4Y4

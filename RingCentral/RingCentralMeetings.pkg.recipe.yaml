@@ -1,0 +1,38 @@
+Description: |
+  Downloads the current release version of RingCentral Meetings and builds a package.
+      This recipe differs from the ones in homebysix-recipes in the following ways:
+      - This one does not repackage the downloaded pkg
+          "
+Identifier: com.mhrono.recipes.pkg.RingCentralMeetings
+ParentRecipe: com.mhrono.recipes.download.RingCentralMeetings
+MinimumVersion: '2.3'
+
+Input:
+  NAME: RingCentralMeetings
+
+Process:
+- Processor: PkgRootCreator
+  Arguments:
+    pkgdirs:
+      Applications: '0775'
+    pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
+
+- Processor: FlatPkgUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/expanded'
+    flat_pkg_path: '%pathname%'
+
+- Processor: PkgPayloadUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/%NAME%/Applications/'
+    pkg_payload_path: '%RECIPE_CACHE_DIR%/expanded/install.pkg/Payload'
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%RECIPE_CACHE_DIR%/%NAME%/Applications/RingCentral Meetings.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString
+
+- Processor: PkgCopier
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/downloads/RingCentralMeetings-%version%.pkg'
+    source_pkg: '%pathname%'

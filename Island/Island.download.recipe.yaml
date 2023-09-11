@@ -7,7 +7,7 @@ Input:
   URL: ''
 
 Process:
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       filename: '%NAME%.dmg'
       download_dir: '%RECIPE_CACHE_DIR%/downloads'

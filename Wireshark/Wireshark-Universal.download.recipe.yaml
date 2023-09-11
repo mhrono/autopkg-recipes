@@ -9,13 +9,13 @@ Input:
   URL_X86_64: https://www.wireshark.org/download/osx/Wireshark%20Latest%20Intel%2064.dmg
 
 Process:
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       filename: '%SOFTWARE_TITLE%-arm64.dmg'
       download_dir: '%RECIPE_CACHE_DIR%/downloads'
       url: '%URL_ARM64%'
 
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       filename: '%SOFTWARE_TITLE%-x86_64.dmg'
       download_dir: '%RECIPE_CACHE_DIR%/downloads'

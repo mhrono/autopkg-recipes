@@ -25,7 +25,7 @@ Process:
       re_pattern: 'https:\/\/download\.todesktop\.com\/2203083ko7eiitd\/Superpowered%20\d\.\d{3,}\.\d+%20-%20Build%20\d{6}\w+-arm64\.dmg'
       result_output_var_name: 'url_arm64'
 
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       filename: '%SOFTWARE_TITLE%-arm64.dmg'
       download_dir: '%RECIPE_CACHE_DIR%/downloads'
@@ -34,7 +34,7 @@ Process:
         Host: 'download.todesktop.com'
         user-agent: 'Install%20Superpowered/1 CFNetwork/1399.4 Darwin/22.1.0'
 
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       filename: '%SOFTWARE_TITLE%-x86_64.dmg'
       download_dir: '%RECIPE_CACHE_DIR%/downloads'

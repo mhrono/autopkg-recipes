@@ -1,0 +1,63 @@
+Description: Download the latest release of PyCharm (Professional Edition)
+Identifier: com.mhrono.recipes.download.PyCharmPro
+MinimumVersion: '2.3'
+
+Input:
+  NAME: PyCharmPro
+  SEARCH_URL: https://data.services.jetbrains.com/products/releases?code=PCP
+  SEARCH_PATTERN_X86_64: 'mac":{"link":"(.+?dmg)"'
+  SEARCH_PATTERN_ARM64: 'macM1":{"link":"(.+?dmg)"'
+
+Process:
+  - Processor: URLTextSearcher
+    Arguments:
+      url: '%SEARCH_URL%'
+      re_pattern: '%SEARCH_PATTERN_X86_64%'
+
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: '%match%'
+      filename: '%NAME%-x86_64.dmg'
+
+  - Processor: URLTextSearcher
+    Arguments:
+      url: '%SEARCH_URL%'
+      re_pattern: '%SEARCH_PATTERN_ARM64%'
+
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: '%match%'
+      filename: '%NAME%-arm64.dmg'
+  
+  - Processor: EndOfCheckPhase
+
+  - Processor: Copier
+    Arguments:
+      source_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%-arm64.dmg/%NAME%.app'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/arm64/%NAME%.app'
+      overwrite: true
+
+  - Processor: Copier
+    Arguments:
+      source_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%-x86_64.dmg/%NAME%.app'
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/x86_64/%NAME%.app'
+      overwrite: true
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%RECIPE_CACHE_DIR%/unpack/arm64/%NAME%.app'
+      requirement: 'identifier "com.jetbrains.pycharm" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "2ZEFAR8TH3"'
+      deep_verification: true
+      strict_verification: true
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%RECIPE_CACHE_DIR%/unpack/x86_64/%NAME%.app'
+      requirement: 'identifier "com.jetbrains.pycharm" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "2ZEFAR8TH3"'
+      deep_verification: true
+      strict_verification: true
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%RECIPE_CACHE_DIR%/unpack/arm64/%NAME%.app/Contents/Info.plist'
+      plist_version_key: CFBundleShortVersionString

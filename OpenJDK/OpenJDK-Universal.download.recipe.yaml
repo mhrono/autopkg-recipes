@@ -16,7 +16,7 @@ Process:
       url: https://jdk.java.net/%match%/index.html
       re_pattern: "(?P<url>https://download.java.net/java/GA/jdk%match%.*?/GPL/openjdk-%match%.*?_macos-x64_bin\\.tar\\.gz)"
 
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       filename: '%NAME%-x86_64.tar.gz'
       download_dir: '%RECIPE_CACHE_DIR%/downloads'
@@ -32,7 +32,7 @@ Process:
       url: https://jdk.java.net/%match%/index.html
       re_pattern: "(?P<url>https://download.java.net/java/GA/jdk%match%.*?/GPL/openjdk-%match%.*?_macos-aarch64_bin\\.tar\\.gz)"
 
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       filename: '%NAME%-aarch64.tar.gz'
       download_dir: '%RECIPE_CACHE_DIR%/downloads'

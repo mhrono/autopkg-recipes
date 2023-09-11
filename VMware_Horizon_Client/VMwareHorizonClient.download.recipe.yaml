@@ -1,0 +1,40 @@
+Description: |
+  Downloads the latest version of VMWare Horizon Client for Mac.
+  
+  To download a specific major version, override the HORIZON_MAJOR_VERSION variable with a value below:
+  
+  Version 7 (4.0): horizon_7_4_0
+  Version 7 (5.0): horizon_7_5_0
+  Version 8: horizon_8
+      "
+Identifier: com.mhrono.recipes.download.VMwareHorizonClient
+MinimumVersion: '2.3'
+
+Input:
+  HORIZON_MAJOR_VERSION: horizon_8
+
+Process:
+- Processor: URLTextSearcher
+  Arguments:
+    re_pattern: '{\"name\":\"VMware Horizon Client for macOS\",\"code\":\"(?P<downloadGroup>(?P<clientGroup>CART.*?)_MAC_.*?)\",\"releaseDate\":\".*\",\"productId\":\".*\",\"releasePackageId\":\".*\",\"isFirmwareImage\":.*,\"orderId\":.*}'
+    url: https://my.vmware.com/channel/public/api/v1.0/products/getRelatedDLGList?locale=en_US&category=desktop_end_user_computing&product=vmware_horizon_clients&version=%HORIZON_MAJOR_VERSION%&dlgType=PRODUCT_BINARY
+
+- Processor: URLTextSearcher
+  Arguments:
+    re_pattern: VMware-Horizon-Client-.*\.dmg
+    result_output_var_name: dmg_url
+    url: https://my.vmware.com/channel/public/api/v1.0/dlg/details?locale=en_US&category=desktop_end_user_computing&product=vmware_horizon_clients&version=5_0&dlgType=PRODUCT_BINARY&downloadGroup=%downloadGroup%
+
+- Processor: URLDownloaderPython
+  Arguments:
+    url: https://download3.vmware.com/software/%downloadGroup%/%dmg_url%
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+    - 'Developer ID Installer: VMware, Inc. (EG7KH642X6)'
+    - Developer ID Certification Authority
+    - Apple Root CA
+    input_path: '%pathname%/VMware Horizon Client.pkg'

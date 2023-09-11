@@ -7,7 +7,7 @@ Input:
   SOFTWARE_TITLE: Tuple
 
 Process:
-  - Processor: URLDownloader
+  - Processor: URLDownloaderPython
     Arguments:
       url: 'https://production.tuple.app/downloads/latest'
       filename: tuple.zip
@@ -19,6 +19,11 @@ Process:
       archive_path: '%pathname%'
       destination_path: '%RECIPE_CACHE_DIR%/%NAME%'
       purge_destination: True
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%RECIPE_CACHE_DIR%/%NAME%/Tuple.app/Contents/Info.plist'
+      plist_version_key: CFBundleShortVersionString
 
   - Processor: CodeSignatureVerifier
     Arguments:

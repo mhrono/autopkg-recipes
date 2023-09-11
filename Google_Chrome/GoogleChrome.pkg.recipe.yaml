@@ -1,0 +1,35 @@
+Description: Downloads latest Google Chrome disk image and builds a package.
+Identifier: com.github.autopkg.pkg.googlechrome
+ParentRecipe: com.mhrono.recipes.download.googlechrome
+
+Input:
+  NAME: GoogleChrome
+
+Process:
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pathname%/Google Chrome.app/Contents/Info.plist'
+    plist_version_key: 'CFBundleShortVersionString'
+
+- Processor: PkgRootCreator
+  Arguments:
+    pkgdirs:
+      Applications: '0775'
+    pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
+
+- Processor: Copier
+  Arguments:
+    destination_path: '%pkgroot%/Applications/%app_name%'
+    source_path: '%pathname%/%app_name%'
+
+- Processor: PkgCreator
+  Arguments:
+    pkg_request:
+      chown:
+      - group: admin
+        path: Applications
+        user: root
+      id: '%bundleid%'
+      options: purge_ds_store
+      pkgname: '%NAME%-%version%'
+      version: '%version%'

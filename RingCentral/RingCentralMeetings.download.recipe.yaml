@@ -1,0 +1,23 @@
+Description: Downloads the latest version of the RingCentral Meetings Mac app.
+Identifier: com.mhrono.recipes.download.RingCentralMeetings
+MinimumVersion: '2.3'
+
+Input:
+  NAME: RingCentral Meetings
+  DOWNLOAD_URL: https://downloads.ringcentral.com/RCM/RC/meetings/mac/RCMeetingsClientSetup.pkg
+
+Process:
+- Processor: URLDownloaderPython
+  Arguments:
+    filename: '%NAME%.pkg'
+    url: '%DOWNLOAD_URL%'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+    - 'Developer ID Installer: RingCentral, Inc. (M932RC5J66)'
+    - Developer ID Certification Authority
+    - Apple Root CA
+    input_path: '%pathname%'

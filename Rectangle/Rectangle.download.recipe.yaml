@@ -1,0 +1,34 @@
+Description: |
+  Downloads the latest version of Rectangle.
+  Set PRERELEASE to a non-empty string to download prereleases, either
+  via Input in an override or via the -k option,
+  i.e.: `-k PRERELEASE=yes`"
+Identifier: com.mhrono.recipes.download.Rectangle
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Rectangle
+  PRERELEASE: ''
+
+Process:
+- Processor: GitHubReleasesInfoProvider
+  Arguments:
+    asset_regex: '[\S]+\.dmg'
+    github_repo: rxhanson/Rectangle
+    include_prereleases: '%PRERELEASE%'
+
+- Processor: URLDownloaderPython
+  Arguments:
+    filename: '%NAME%-%version%.dmg'
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pathname%/Rectangle.app/Contents/Info.plist'
+    plist_version_key: 'CFBundleShortVersionString'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/Rectangle.app'
+    requirement: anchor apple generic and identifier "com.knollsoft.Rectangle" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = XSYZ3E4B7D)

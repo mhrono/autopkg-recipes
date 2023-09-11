@@ -1,0 +1,20 @@
+Description: Downloads latest Slack.
+Identifier: com.mhrono.recipes.download.slack
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Slack
+  DOWNLOAD_URL: https://slack.com/ssb/download-osx-universal
+
+Process:
+- Processor: URLDownloaderPython
+  Arguments:
+    filename: '%NAME%.dmg'
+    url: '%DOWNLOAD_URL%'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Slack.app'
+    requirement: identifier "com.tinyspeck.slackmacgap" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BQR82RBBHL

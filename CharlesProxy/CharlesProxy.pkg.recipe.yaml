@@ -1,0 +1,37 @@
+Description: Downloads the latest release version of Charles Proxy and copies the downloaded package.
+Identifier: com.mhrono.recipes.pkg.charlesproxy
+MinimumVersion: '2.3'
+ParentRecipe: com.mhrono.recipes.download.charlesproxy
+
+Input:
+  NAME: Charles
+
+Process:
+
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgroot: "%RECIPE_CACHE_DIR%/%NAME%"
+      pkgdirs:
+        Applications: 0775
+
+  - Processor: Copier
+    Arguments:
+      source_path: "%pathname%/Charles.app"
+      destination_path: "%pkgroot%/Applications/Charles.app"
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: "%pkgroot%/Applications/Charles.app/Contents/Info.plist"
+      plist_version_key: "CFBundleShortVersionString"
+
+  - Processor: PkgCreator
+    Arguments:
+      pkg_request:
+        pkgname: "%NAME%-%version%"
+        pkgdir: "%RECIPE_CACHE_DIR%"
+        id: "com.xk72.Charles"
+        options: "purge_ds_store"
+        chown:
+          - path: "Applications"
+          - user: "root"
+          - group: "admin"

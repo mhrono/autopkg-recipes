@@ -1,0 +1,27 @@
+Description: Downloads the latest Microsoft Remote Desktop installer pkg.
+Identifier: com.mhrono.recipes.download.microsoftremotedesktop
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Microsoft Remote Desktop
+  VENDOR: Microsoft
+  SOFTWARETITLE: Remote
+  SOFTWARETYPE: Desktop
+  PRODUCTID: '868963'
+  DOWNLOADURL: https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%
+
+Process:
+- Processor: URLDownloaderPython
+  Arguments:
+    filename: '%VENDOR%_%SOFTWARETITLE%_%SOFTWARETYPE%.pkg'
+    url: '%DOWNLOADURL%'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+    - 'Developer ID Installer: Microsoft Corporation (UBF8T346G9)'
+    - Developer ID Certification Authority
+    - Apple Root CA
+    input_path: '%pathname%'
