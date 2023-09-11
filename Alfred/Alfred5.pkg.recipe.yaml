@@ -1,5 +1,5 @@
 Description: Downloads the current release version of Alfred 5 and creates a package.
-Identifier: com.mhrono.recipes.jamf.alfred5
+Identifier: com.mhrono.recipes.pkg.alfred5
 MinimumVersion: "2.3"
 ParentRecipe: com.mhrono.recipes.download.alfred5
 

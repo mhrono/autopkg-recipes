@@ -1,6 +1,6 @@
 Description: Downloads both Arm and Intel verions of the Postman app, and packages them into a universal installer
-Identifier: com.github.smithjw.pkg.Postman-Universal
-ParentRecipe: com.github.smithjw.download.Postman-Universal
+Identifier: com.mhrono.recipes.pkg.Postman-Universal
+ParentRecipe: com.mhrono.recipes.download.Postman-Universal
 MinimumVersion: '2.3'
 
 Input:

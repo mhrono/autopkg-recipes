@@ -1,5 +1,5 @@
 Description: Downloads the latest amd64 and arm64 versions of Notion
-Identifier: com.mhrono.recipes.download.NotionUniversal
+Identifier: com.mhrono.recipes.download.notion
 MinimumVersion: "2.3"
 
 Input:

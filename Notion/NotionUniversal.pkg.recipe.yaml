@@ -1,7 +1,7 @@
 Description: Downloads the latest amd64 and arm64 versions of Notion and combines them into a package
-Identifier: com.github.moofit-recipes.pkg.NotionUniversal
+Identifier: com.mhrono.recipes.pkg.notion
 MinimumVersion: "2.3"
-ParentRecipe: com.github.moofit-recipes.download.NotionUniversal
+ParentRecipe: com.mhrono.recipes.download.notion
 
 Input:
   BUNDLE_ID: notion.id

@@ -1,7 +1,7 @@
 Description: Downloads latest VLC disk image and builds a package.
-Identifier: com.github.autopkg.pkg.VLC
-ParentRecipe: com.github.autopkg.download.VLC
-MinimumVersion: 0.2.0
+Identifier: com.mhrono.recipes.pkg.VLC
+ParentRecipe: com.mhrono.recipes.download.VLC
+MinimumVersion: '2.3'
 
 Input:
   NAME: VLC

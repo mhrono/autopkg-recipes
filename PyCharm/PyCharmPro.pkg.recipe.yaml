@@ -1,6 +1,6 @@
 Description: Downloads the current release version of PyCharm (Professional) and converts it into a pkg.
-Identifier: com.github.chilcote.pkg.PyCharm
-ParentRecipe: com.github.mosen.download.PyCharmPro
+Identifier: com.mhrono.recipes.pkg.PyCharm
+ParentRecipe: com.mhrono.recipes.download.PyCharmPro
 MinimumVersion: 0.6.1
 
 Input:

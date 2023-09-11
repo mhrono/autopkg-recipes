@@ -1,5 +1,5 @@
 Description: Downloads latest Google Chrome disk image and builds a package.
-Identifier: com.github.autopkg.pkg.googlechrome
+Identifier: com.mhrono.recipes.pkg.googlechrome
 ParentRecipe: com.mhrono.recipes.download.googlechrome
 
 Input:
