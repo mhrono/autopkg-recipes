@@ -1,0 +1,19 @@
+Description: Downloads the current release version of Dropbox
+Identifier: com.mhrono.recipes.download.dropbox
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Dropbox
+
+Process:
+- Processor: URLDownloaderPython
+  Arguments:
+    filename: '%NAME%.dmg'
+    url: https://www.dropbox.com/download?plat=mac&full=1
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/Dropbox.app'
+    requirement: identifier "com.getdropbox.dropbox" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = G7HH3F8CAK

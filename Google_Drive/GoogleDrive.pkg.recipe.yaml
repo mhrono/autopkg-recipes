@@ -1,0 +1,28 @@
+Description: Downloads the latest version of Google Drive for desktop and builds a pkg. Note Google Drive File Stream was rebranded to Google Drive for desktop, and this recipe updated to reflect the name change.
+Identifier: com.mhrono.recipes.pkg.GoogleDrive
+ParentRecipe: com.mhrono.recipes.download.GoogleDrive
+MinimumVersion: "2.3"
+
+Input:
+  NAME: GoogleDrive
+
+Process:
+  - Processor: FlatPkgUnpacker
+    Arguments:
+      destination_path: "%RECIPE_CACHE_DIR%/unpack"
+      flat_pkg_path: "%pathname%/GoogleDrive.pkg"
+
+  - Processor: com.github.eth-its-recipes.processors/PkgPayloadUnpacker2
+    Arguments:
+      destination_path: "%RECIPE_CACHE_DIR%/payload"
+      pkg_payload_path: "%RECIPE_CACHE_DIR%/unpack/GoogleDrive_x86_64.pkg/Payload"
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: "%RECIPE_CACHE_DIR%/payload/Google Drive.app/Contents/Info.plist"
+      plist_version_key: "CFBundleShortVersionString"
+
+  - Processor: PkgCopier
+    Arguments:
+      pkg_path: "%RECIPE_CACHE_DIR%/GoogleDrive-%version%.pkg"
+      source_pkg: "%pathname%/GoogleDrive.pkg"

@@ -1,0 +1,41 @@
+Description: Downloads the current release version of Alfred 5 and creates a package.
+Identifier: com.mhrono.recipes.jamf.alfred5
+MinimumVersion: "2.3"
+ParentRecipe: com.mhrono.recipes.download.alfred5
+
+Input:
+  NAME: "Alfred 5"
+
+Process:
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: "%pkgroot%/Applications/Alfred 5.app/Contents/Info.plist"
+      plist_version_key: "CFBundleShortVersionString"
+
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgroot: "%RECIPE_CACHE_DIR%/%NAME%"
+      pkgdirs:
+        Applications: 0775
+
+  - Processor: Unarchiver
+    Arguments:
+      archive_path: "%pathname%"
+      destination_path: "%pkgroot/Applications/Alfred 5.app"
+      purge_destination: True
+
+  - Processor: PkgCreator
+    Arguments:
+      pkg_request:
+        pkgname: "%NAME%-%version%"
+        pkgdir: "%RECIPE_CACHE_DIR%"
+        options: "purge_ds_store"
+        chown:
+          - path: "Applications"
+          - user: "root"
+          - group: "admin"
+
+  - Processor: PathDeleter
+    Arguments:
+      path_list: "%RECIPE_CACHE_DIR%/%NAME%"

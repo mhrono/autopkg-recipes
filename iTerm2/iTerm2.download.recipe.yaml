@@ -1,0 +1,33 @@
+Description: Downloads the current version of iTerm2. Set RELEASE to either "final" or "testing". For iTerm2 version 3 beta, set RELEASE to "testing3".
+Identifier: com.mhrono.recipes.download.iTerm2
+MinimumVersion: '2.3'
+
+Input:
+  NAME: iTerm2
+  RELEASE: final
+
+Process:
+- Processor: SparkleUpdateInfoProvider
+  Arguments:
+    appcast_url: https://iterm2.com/appcasts/%RELEASE%_new.xml
+
+- Processor: URLDownloaderPython
+
+- Processor: EndOfCheckPhase
+
+- Processor: Unarchiver
+  Arguments:
+    archive_path: '%pathname%'
+    destination_path: '%RECIPE_CACHE_DIR%/%NAME%'
+    purge_destination: true
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%RECIPE_CACHE_DIR%/%NAME%/iTerm.app/Contents/Info.plist'
+    plist_version_key: 'CFBundleShortVersionString'
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%RECIPE_CACHE_DIR%/%NAME%/iTerm.app'
+    requirement: identifier "com.googlecode.iterm2" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = H7V7XYVQ7D
+    strict_verification: true

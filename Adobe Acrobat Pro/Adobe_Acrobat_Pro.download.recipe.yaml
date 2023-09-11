@@ -43,3 +43,4 @@ Process:
   - Processor: Versioner
     Arguments:
       input_plist_path: '%RECIPE_CACHE_DIR%/unpack/root/Applications/Adobe Acrobat %MAJOR_VERSION%/Adobe Acrobat.app/Contents/Info.plist'
+      plist_version_key: "CFBundleShortVersionString"

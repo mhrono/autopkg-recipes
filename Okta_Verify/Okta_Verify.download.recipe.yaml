@@ -1,0 +1,35 @@
+Description: Download the specified version of Okta Verify.
+Identifier: com.mhrono.recipes.download.OktaVerify
+MinimumVersion: '2.3'
+
+Input:
+  NAME: OktaVerify
+  OKTA_ORG_ID: ''
+  OKTA_USERNAME: ''
+  OKTA_PASSWORD: ''
+
+Process:
+- Processor: OktaVerifyURLParser
+  Arguments:
+    okta_org_id: '%OKTA_ORG_ID%'
+    okta_password: '%OKTA_PASSWORD%'
+    okta_username: '%OKTA_USERNAME%'
+
+- Processor: URLDownloaderPython
+  Arguments:
+    url: '%okta_verify_url%'
+
+- Processor: PathDeleter
+  Arguments:
+    path_list:
+    - '%RECIPE_CACHE_DIR%/okta-cookie'
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+    - 'Developer ID Installer: Okta, Inc. (B7F62B65BN)'
+    - Developer ID Certification Authority
+    - Apple Root CA
+    input_path: '%pathname%'

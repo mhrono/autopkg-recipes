@@ -1,0 +1,11 @@
+Description: Uses parent download recipe to download the latest unlicensed Microsoft Office 365 Suite installer package.
+Identifier: com.mhrono.recipes.pkg.MicrosoftOffice365Suite
+ParentRecipe: com.mhrono.recipes.download.MicrosoftOffice365Suite
+MinimumVersion: '2.3'
+
+Input: {}
+
+Process:
+- Processor: PkgCopier
+  Arguments:
+    source_pkg: '%pathname%'

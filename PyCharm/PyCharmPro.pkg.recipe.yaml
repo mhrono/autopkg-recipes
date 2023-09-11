@@ -1,0 +1,37 @@
+Description: Downloads the current release version of PyCharm (Professional) and converts it into a pkg.
+Identifier: com.github.chilcote.pkg.PyCharm
+ParentRecipe: com.github.mosen.download.PyCharmPro
+MinimumVersion: 0.6.1
+
+Input:
+  NAME: PyCharm
+
+Process:
+- Processor: PkgRootCreator
+  Arguments:
+    pkgdirs:
+      Applications: '0775'
+    pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
+
+- Processor: Copier
+  Arguments:
+    destination_path: '%pkgroot%/Applications/PyCharm.app'
+    source_path: '%pathname%/PyCharm.app'
+
+- Processor: Versioner
+  Comment: Get version from the app
+  Arguments:
+    input_plist_path: '%pkgroot%/Applications/PyCharm.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString
+
+- Processor: PkgCreator
+  Arguments:
+    pkg_request:
+      chown:
+      - group: admin
+        path: Applications
+        user: root
+      id: com.jetbrains.PyCharm
+      options: purge_ds_store
+      pkgname: '%NAME%-%version%'
+      version: '%version%'

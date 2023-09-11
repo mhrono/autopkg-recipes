@@ -1,0 +1,38 @@
+Description: Downloads the latest version of VS Code and makes a pkg of it
+Identifier: com.mhrono.recipes.pkg.visualstudioscode
+ParentRecipe: com.mhrono.recipes.download.visualstudiocode
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Visual Studio Code
+  PKG_ID: com.microsoft.VSCode
+
+Process:
+- Processor: PkgRootCreator
+  Arguments:
+    pkgdirs:
+      Applications: '0775'
+    pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
+
+- Processor: Unarchiver
+  Arguments:
+    archive_path: '%pathname%'
+    destination_path: '%pkgroot%/Applications/'
+    purge_destination: true
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pkgroot%/Applications/Visual Studio Code.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString
+
+- Processor: PkgCreator
+  Arguments:
+    pkg_request:
+      chown:
+      - group: admin
+        path: Applications
+        user: root
+      id: '%PKG_ID%'
+      options: purge_ds_store
+      pkgdir: '%RECIPE_CACHE_DIR%'
+      pkgname: '%NAME%-%version%'

@@ -22,5 +22,7 @@
 	<string>%ROLLBACK%</string>
 	<key>pkgSize</key>
 	<integer>%installer_item_size%</integer>
+	<key>versionKey</key>
+	<string>%plist_version_key%</string>
 </dict>
 </plist>

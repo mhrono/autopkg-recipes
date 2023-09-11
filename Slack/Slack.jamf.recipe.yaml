@@ -1,7 +1,7 @@
 Description: This recipe does not behave like standard jamf recipes. After downloading and packaging the app, multiple smart groups and policies are created or updated. This recipe is intended for use with the Auto-Update workflow available at https://github.com/mhrono/Auto-Update.
 Identifier: com.mhrono.recipes.jamf.slack
 MinimumVersion: "2.3"
-ParentRecipe: com.github.killahquam.pkg.slack
+ParentRecipe: com.mhrono.recipes.pkg.slack
 
 Input:
   NAME: Slack

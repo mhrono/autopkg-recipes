@@ -1,0 +1,25 @@
+Description: Downloads latest Visual Studio Code.
+Identifier: com.mhrono.recipes.download.visualstudiocode
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Visual Studio Code
+  DOWNLOAD_URL: https://go.microsoft.com/fwlink/?LinkID=2156837
+
+Process:
+- Processor: URLDownloaderPython
+  Arguments:
+    filename: '%NAME%.zip'
+    url: '%DOWNLOAD_URL%'
+
+- Processor: EndOfCheckPhase
+
+- Processor: Unarchiver
+  Arguments:
+    archive_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%.zip'
+    purge_destination: true
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%RECIPE_CACHE_DIR%/%NAME%/Visual Studio Code.app'
+    requirement: identifier "com.microsoft.VSCode" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = UBF8T346G9

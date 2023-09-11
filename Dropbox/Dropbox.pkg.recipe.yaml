@@ -1,0 +1,16 @@
+Description: Downloads the latest version of Dropbox and makes a pkg of it.
+Identifier: com.mhrono.recipes.pkg.dropbox
+ParentRecipe: com.mhrono.recipes.download.dropbox
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Dropbox
+
+Process:
+
+  - Processor: AppPkgCreator
+
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: "%pathname%/Dropbox.app/Contents/Info.plist"
+      plist_version_key: "CFBundleShortVersionString"

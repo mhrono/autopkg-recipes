@@ -22,6 +22,7 @@ Process:
       deep_verification: true
       strict_verification: true
 
-  - Processor: AppDmgVersioner
+  - Processor: Versioner
     Arguments:
-      dmg_path: '%pathname%'
+      input_plist_path: '%pathname%/%SOFTWARE_TITLE%.app/Contents/Info.plist'
+      plist_version_key: CFBundleShortVersionString

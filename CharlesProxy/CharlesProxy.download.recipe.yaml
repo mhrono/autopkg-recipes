@@ -1,0 +1,24 @@
+Description: Downloads the latest release of Charles Proxy.
+Identifier: com.mhrono.recipes.download.charlesproxy
+MinimumVersion: '2.3'
+
+Input:
+  NAME: CharlesProxy
+  URL: 'https://www.charlesproxy.com/latest.do'
+
+Process:
+- Processor: URLTextSearcher
+  Arguments:
+    re_pattern: .*
+    url: '%URL%'
+
+- Processor: URLDownloaderPython
+  Arguments:
+    url: https://www.charlesproxy.com/assets/release/%match%/charles-proxy-%match%.dmg
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    input_path: '%pathname%/Charles.app'
+    requirement: identifier "com.xk72.Charles" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "9A5PCU4FSD"

@@ -1,0 +1,38 @@
+Description: Downloads the latest VMware Horizon Client disk image, extracts the installer package and prepares it for deployment.
+Identifier: com.mhrono.recipes.pkg.VMwareHorizonClient
+ParentRecipe: com.mhrono.recipes.download.VMwareHorizonClient
+MinimumVersion: '2.3'
+
+Input:
+  NAME: VMwareHorizonClient
+  VENDOR: VMware
+  SOFTWARETITLE1: Horizon
+  SOFTWARETITLE2: Client
+
+Process:
+- Processor: FlatPkgUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/unpack'
+    flat_pkg_path: '%pathname%/VMware Horizon Client.pkg'
+
+- Processor: PkgPayloadUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/payload'
+    pkg_payload_path: '%RECIPE_CACHE_DIR%/unpack/VMware.Horizon.Client.pkg/Payload'
+
+- Processor: Versioner
+  Comment: Get version from the pkg
+  Arguments:
+    input_plist_path: '%RECIPE_CACHE_DIR%/payload/VMware Horizon Client.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString
+
+- Processor: PkgCopier
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/%VENDOR%%SOFTWARETITLE1%%SOFTWARETITLE2%-%version%.pkg'
+    source_pkg: '%pathname%/VMware Horizon Client.pkg'
+
+- Processor: PathDeleter
+  Arguments:
+    path_list:
+    - '%RECIPE_CACHE_DIR%/payload'
+    - '%RECIPE_CACHE_DIR%/unpack'

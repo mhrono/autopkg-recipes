@@ -1,0 +1,41 @@
+Description: Downloads the latest version of Microsoft's Word for Office 365 installer package and renames the package.
+Identifier: com.mhrono.recipes.pkg.microsoftword365
+ParentRecipe: com.mhrono.recipes.download.microsoftword365
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Microsoft Word
+  VENDOR: Microsoft
+  SOFTWARETITLE: Word
+  VERSIONTYPE: CFBundleVersion
+
+Process:
+- Processor: FlatPkgUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/downloads/unpack'
+    flat_pkg_path: '%pathname%'
+
+- Processor: FileFinder
+  Arguments:
+    pattern: '%RECIPE_CACHE_DIR%/downloads/unpack/*Word*.pkg'
+
+- Processor: PkgPayloadUnpacker
+  Arguments:
+    destination_path: '%RECIPE_CACHE_DIR%/downloads/payload'
+    pkg_payload_path: '%found_filename%/Payload'
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%RECIPE_CACHE_DIR%/downloads/payload/Microsoft Word.app/Contents/Info.plist'
+    plist_version_key: '%VERSIONTYPE%'
+
+- Processor: PkgCopier
+  Arguments:
+    pkg_path: '%RECIPE_CACHE_DIR%/%VENDOR%_%SOFTWARETITLE%_%version%.pkg'
+    source_pkg: '%pathname%'
+
+- Processor: PathDeleter
+  Arguments:
+    path_list:
+    - '%RECIPE_CACHE_DIR%/downloads/unpack'
+    - '%RECIPE_CACHE_DIR%/downloads/payload'

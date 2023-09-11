@@ -1,0 +1,37 @@
+Description: Downloads the latest version of Slack and makes a pkg of it
+Identifier: com.mhrono.recipes.pkg.slack
+ParentRecipe: com.mhrono.recipes.download.slack
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Slack
+  PKG_ID: com.tinyspeck.slackmacgap
+
+Process:
+- Processor: PkgRootCreator
+  Arguments:
+    pkgdirs:
+      Applications: '0775'
+    pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
+
+- Processor: Copier
+  Arguments:
+    destination_path: '%pkgroot%/Applications/Slack.app'
+    source_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%.dmg/Slack.app'
+
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%pkgroot%/Applications/Slack.app/Contents/Info.plist'
+    plist_version_key: CFBundleShortVersionString
+
+- Processor: PkgCreator
+  Arguments:
+    pkg_request:
+      chown:
+      - group: admin
+        path: Applications
+        user: root
+      id: '%PKG_ID%'
+      options: purge_ds_store
+      pkgdir: '%RECIPE_CACHE_DIR%'
+      pkgname: '%NAME%-%version%'

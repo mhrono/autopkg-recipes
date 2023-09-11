@@ -1,0 +1,22 @@
+Comment: Created with Recipe Robot v0.0.4 (https://github.com/homebysix/recipe-robot)
+Description: Downloads the latest version of the Zoom Rooms (Mac) application to setup your conference room for one-touch meeting and calendar integration.
+Identifier: com.mhrono.recipes.download.ZoomPresence
+MinimumVersion: '2.3'
+
+Input:
+  NAME: ZoomPresence
+
+Process:
+- Processor: URLDownloaderPython
+  Arguments:
+    url: https://zoom.us/client/latest/ZoomRooms.pkg
+
+- Processor: EndOfCheckPhase
+
+- Processor: CodeSignatureVerifier
+  Arguments:
+    expected_authority_names:
+    - 'Developer ID Installer: Zoom Video Communications, Inc. (BJ4HAAB9B3)'
+    - Developer ID Certification Authority
+    - Apple Root CA
+    input_path: '%pathname%'

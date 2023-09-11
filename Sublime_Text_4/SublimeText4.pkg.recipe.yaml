@@ -1,0 +1,18 @@
+Description: Downloads the current release version of Sublime Text 4 and builds a package.
+Identifier: com.mhrono.recipes.pkg.SublimeText4
+ParentRecipe: com.mhrono.recipes.download.SublimeText4
+MinimumVersion: '2.3'
+
+Input:
+  NAME: SublimeText4
+
+Process:
+- Processor: Versioner
+  Arguments:
+    input_plist_path: '%RECIPE_CACHE_DIR%/%NAME%/Sublime Text.app/Contents/Info.plist'
+    plist_version_key: CFBundleVersion
+
+- Processor: AppPkgCreator
+  Arguments:
+    app_path: '%RECIPE_CACHE_DIR%/%NAME%/Sublime Text.app'
+    pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
