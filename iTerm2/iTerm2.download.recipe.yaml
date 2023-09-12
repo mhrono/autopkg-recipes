@@ -4,12 +4,11 @@ MinimumVersion: '2.3'
 
 Input:
   NAME: iTerm2
-  RELEASE: final
 
 Process:
 - Processor: SparkleUpdateInfoProvider
   Arguments:
-    appcast_url: https://iterm2.com/appcasts/%RELEASE%_new.xml
+    appcast_url: https://iterm2.com/appcasts/final_new.xml
 
 - Processor: URLDownloaderPython
 

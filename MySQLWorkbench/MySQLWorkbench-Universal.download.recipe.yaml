@@ -52,6 +52,12 @@ Process:
       input_plist_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%-arm64.dmg/%NAME%.app/Contents/Info.plist'
       plist_version_key: 'CFBundleShortVersionString'
 
+  - Processor: com.github.jazzace.processors/TextSearcher
+    Arguments:
+      re_pattern: ^\d*\.\d*\.\d*
+      text_in: "%version%"
+      result_output_var_name: "version"
+
   - Processor: CodeSignatureVerifier
     Arguments:
       input_path: '%RECIPE_CACHE_DIR%/unpack/arm64/%NAME%.app'

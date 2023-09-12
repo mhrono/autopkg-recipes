@@ -8,10 +8,11 @@ Input:
 
 Process:
 
-  - Processor: PkgExtractor
+  - Processor: PkgPayloadUnpacker
     Arguments:
-      pkg_path: "%pathname%"
-      extract_root: "%RECIPE_CACHE_DIR%/unpack"
+      pkg_payload_path: "%pathname%"
+      destination_path: "%RECIPE_CACHE_DIR%/unpack"
+      purge_destination: True
 
   - Processor: com.github.apizz.apizz-recipes.SharedProcessors/ExecutableFileVersioner
     Arguments:

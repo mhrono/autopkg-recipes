@@ -2,7 +2,6 @@ Description: Downloads the latest versions of Docker (arm and intel) and creates
 Identifier: com.mhrono.recipes.pkg.Docker-Universal
 ParentRecipe: com.mhrono.recipes.download.Docker-Universal
 MinimumVersion: '2.3'
-Comment: 'Please Note: Due to recent changes to Docker, the postinstall script will only run for the current user. More info here https://dazwallace.wordpress.com/2022/12/02/changes-to-docker-desktop-for-mac/'
 
 Input:
   NAME: Docker
@@ -34,11 +33,9 @@ Process:
           - group: admin
             path: Applications
             user: root
-        id: '%bundleid%'
         options: purge_ds_store
         pkgdir: '%RECIPE_CACHE_DIR%'
         pkgname: '%NAME%-arm64-%version%'
-        scripts: scripts
 
   - Processor: FileMover
     Arguments:
@@ -58,11 +55,9 @@ Process:
           - group: admin
             path: Applications
             user: root
-        id: '%bundleid%'
         options: purge_ds_store
         pkgdir: '%RECIPE_CACHE_DIR%'
         pkgname: '%NAME%-x86_64-%version%'
-        scripts: scripts
 
   - Processor: FileMover
     Arguments:
@@ -87,10 +82,23 @@ Process:
 
         exit 0
 
+  - Processor: FileCreator
+    Arguments:
+      file_path: '%RECIPE_CACHE_DIR%/Universal/Scripts/postinstall'
+      file_mode: '0755'
+      file_content: |
+        #!/bin/bash
+
+        currentUser="$(/usr/sbin/scutil <<< "show State:/Users/ConsoleUser" | /usr/bin/awk '/Name :/ && ! /loginwindow/ { print $3 }')"
+
+        sudo "/Applications/Docker.app/Contents/MacOS/install" --user "${currentUser}"
+
+        exit 0
+
   - Processor: PkgCreator
     Arguments:
       pkg_request:
-        id: '%bundleid%'
+        id: 'com.docker.docker'
         version: '%version%'
         options: purge_ds_store
         pkgname: '%NAME%-Universal-%version%'

@@ -19,8 +19,8 @@ Process:
 
 - Processor: Copier
   Arguments:
-    destination_path: '%pkgroot%/Applications/%app_name%'
-    source_path: '%pathname%/%app_name%'
+    destination_path: '%pkgroot%/Applications/Google Chrome.app'
+    source_path: '%pathname%/Google Chrome.app'
 
 - Processor: PkgCreator
   Arguments:

@@ -15,19 +15,20 @@ Process:
 
   - Processor: PlistReader
     Arguments:
-      info_path: "%RECIPE_CACHE_DIR%/Downloads/metadata.plist"
+      info_path: "%RECIPE_CACHE_DIR%/downloads/metadata.plist"
       plist_keys:
         location: "archive_url"
 
   - Processor: URLDownloaderPython
     Arguments:
       url: "%archive_url%"
+      filename: "%NAME%"
 
   - Processor: EndOfCheckPhase
 
   - Processor: Unarchiver
     Arguments:
-      archive_path: "%pathname%"
+      archive_path: "%RECIPE_CACHE_DIR%/downloads/%NAME%.tar.gz"
       destination_path: "%RECIPE_CACHE_DIR%/%NAME%"
       purge_destination: True
 

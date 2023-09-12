@@ -47,7 +47,6 @@ Process:
     Arguments:
       pkg_request:
         options: purge_ds_store
-        id: '%bundleid%'
         version: '%version%'
         pkgdir: '%RECIPE_CACHE_DIR%'
         pkgname: '%NAME%-%version%'

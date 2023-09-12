@@ -12,7 +12,7 @@ Process:
     Arguments:
       pkgroot: "%RECIPE_CACHE_DIR%/%NAME%"
       pkgdirs:
-        Applications: 0775
+        Applications: '0775'
 
   - Processor: Copier
     Arguments:
