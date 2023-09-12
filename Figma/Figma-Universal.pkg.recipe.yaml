@@ -47,7 +47,7 @@ Process:
   - Processor: PkgCreator
     Arguments:
       pkg_request:
-        id: '%bundleid%'
+        id: '%APP_BUNDLE_ID%'
         version: '%version%'
         options: purge_ds_store
         pkgname: '%NAME%-Universal-%version%'

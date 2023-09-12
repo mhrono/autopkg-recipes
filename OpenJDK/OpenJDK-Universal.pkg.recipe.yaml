@@ -33,7 +33,7 @@ Process:
   - Processor: PkgCreator
     Arguments:
       pkg_request:
-        id: 'net.java.openjdk'
+        id: '%APP_BUNDLE_ID%'
         version: '%version%'
         options: purge_ds_store
         pkgname: '%NAME%-aarch64-%version%'
@@ -49,7 +49,7 @@ Process:
   - Processor: PkgCreator
     Arguments:
       pkg_request:
-        id: 'net.java.openjdk'
+        id: '%APP_BUNDLE_ID%'
         version: '%version%'
         options: purge_ds_store
         pkgname: '%NAME%-x86_64-%version%'
@@ -95,7 +95,7 @@ Process:
     Arguments:
       pkg_request:
         pkgname: OpenJDK-Universal-%version%
-        id: net.java.openjdk
+        id: '%APP_BUNDLE_ID%'
         pkgdir: '%RECIPE_CACHE_DIR%'
         scripts: '%RECIPE_CACHE_DIR%/Universal/Scripts'
         pkgroot: '%RECIPE_CACHE_DIR%/pkgroot'

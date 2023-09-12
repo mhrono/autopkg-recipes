@@ -1,7 +1,7 @@
 Description: Downloads the current release version of iTerm 2 and makes a package.
 Identifier: com.mhrono.recipes.pkg.iTerm2
 ParentRecipe: com.mhrono.recipes.download.iTerm2
-MinimumVersion: 0.3.1
+MinimumVersion: '2.3'
 
 Input:
   NAME: iTerm2
@@ -35,7 +35,7 @@ Process:
       - group: admin
         path: Applications
         user: root
-      id: '%bundleid%'
+      id: '%APP_BUNDLE_ID%'
       options: purge_ds_store
       pkgdir: '%RECIPE_CACHE_DIR%'
       pkgname: '%NAME%-%version%'

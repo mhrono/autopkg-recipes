@@ -36,6 +36,7 @@ Process:
         options: purge_ds_store
         pkgdir: '%RECIPE_CACHE_DIR%'
         pkgname: '%NAME%-arm64-%version%'
+        id: '%APP_BUNDLE_ID%'
 
   - Processor: FileMover
     Arguments:
@@ -58,6 +59,7 @@ Process:
         options: purge_ds_store
         pkgdir: '%RECIPE_CACHE_DIR%'
         pkgname: '%NAME%-x86_64-%version%'
+        id: '%APP_BUNDLE_ID%'
 
   - Processor: FileMover
     Arguments:
@@ -98,7 +100,7 @@ Process:
   - Processor: PkgCreator
     Arguments:
       pkg_request:
-        id: 'com.docker.docker'
+        id: '%APP_BUNDLE_ID%'
         version: '%version%'
         options: purge_ds_store
         pkgname: '%NAME%-Universal-%version%'

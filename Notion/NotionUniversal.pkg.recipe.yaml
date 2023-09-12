@@ -38,7 +38,7 @@ Process:
             mode: "0775"
             path: Applications/Notion.app
             user: root
-        id: "%BUNDLE_ID%.amd64"
+        id: '%APP_BUNDLE_ID%'
         options: purge_ds_store
         pkgname: "%NAME%-amd64-%version%"
         pkgroot: "%RECIPE_CACHE_DIR%/amd64"
@@ -71,7 +71,7 @@ Process:
             mode: "0775"
             path: Applications/Notion.app
             user: root
-        id: "%BUNDLE_ID%.arm64"
+        id: '%APP_BUNDLE_ID%'
         options: purge_ds_store
         pkgname: "%NAME%-arm64-%version%"
         pkgroot: "%RECIPE_CACHE_DIR%/arm64"
@@ -135,7 +135,7 @@ Process:
   - Processor: PkgCreator
     Arguments:
       pkg_request:
-        id: "%BUNDLE_ID%"
+        id: '%APP_BUNDLE_ID%'
         options: purge_ds_store
         pkgname: "%NAME%Universal-%version%"
         pkgroot: "%RECIPE_CACHE_DIR%/universal/root"

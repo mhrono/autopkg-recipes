@@ -1,7 +1,7 @@
 Description: Downloads the latest version of Rectangle and creates a package.
-Identifier: com.github.dataJAR-recipes.pkg.Rectangle
-ParentRecipe: com.github.dataJAR-recipes.download.Rectangle
-MinimumVersion: 0.6.1
+Identifier: com.mhrono.recipes.pkg.Rectangle
+ParentRecipe: com.mhrono.recipes.download.Rectangle
+MinimumVersion: '2.3'
 
 Input:
   NAME: Rectangle
@@ -26,7 +26,7 @@ Process:
       - group: admin
         path: Applications
         user: root
-      id: '%BUNDLE_ID%'
+      id: '%APP_BUNDLE_ID%'
       options: purge_ds_store
       pkgdir: '%RECIPE_CACHE_DIR%'
       pkgname: '%NAME%-%version%'

@@ -52,6 +52,7 @@ Process:
         pkgname: '%NAME%-%version%'
         pkgroot: '%RECIPE_CACHE_DIR%/payload'
         scripts: '%RECIPE_CACHE_DIR%/tmp/scripts'
+        id: '%APP_BUNDLE_ID%'
         chown:
           - path: 'Applications'
             user: 'root'

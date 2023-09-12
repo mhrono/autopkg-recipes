@@ -30,7 +30,7 @@ Process:
       - group: admin
         path: Applications
         user: root
-      id: org.mozilla.firefox.pkg
+      id: '%APP_BUNDLE_ID%'
       options: purge_ds_store
       pkgdir: '%RECIPE_CACHE_DIR%'
       pkgname: '%NAME%-%version%'

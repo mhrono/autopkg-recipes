@@ -44,7 +44,7 @@ Process:
       - group: admin
         path: Applications
         user: root
-      id: '%BUNDLE_ID%'
+      id: '%APP_BUNDLE_ID%'
       options: purge_ds_store
       pkgname: '%NAME%-%version%'
       scripts: scripts
