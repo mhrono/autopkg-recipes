@@ -8,23 +8,20 @@ Input:
 
 Process:
 
-  - Processor: PkgPayloadUnpacker
+  - Processor: FlatPkgUnpacker
     Arguments:
-      pkg_payload_path: "%pathname%"
+      flat_pkg_path: "%pathname%"
       destination_path: "%RECIPE_CACHE_DIR%/unpack"
       purge_destination: True
 
-  - Processor: com.github.apizz.SharedProcessors/ExecutableFileVersioner
+  - Processor: PkgPayloadUnpacker
     Arguments:
-      found_filename: "%RECIPE_CACHE_DIR%/unpack/usr/local/aws-cli/aws"
-      interpreter_path: "/bin/zsh"
-      version_argument: "--version"
+      pkg_payload_path: "%RECIPE_CACHE_DIR%/unpack/aws-cli.pkg/Payload"
+      destination_path: "%RECIPE_CACHE_DIR%/unpack/payload"
 
-  - Processor: com.github.jazzace.processors/TextSearcher
+  - Processor: com.github.nmcspadden.shared/PackageInfoVersioner
     Arguments:
-      re_pattern: (?<=\/).*?(?=\s)
-      text_in: "%version%"
-      result_output_var_name: "version"
+      package_info_path: "%RECIPE_CACHE_DIR%/unpack/aws-cli.pkg/PackageInfo"
 
   - Processor: PkgCopier
     Arguments:
