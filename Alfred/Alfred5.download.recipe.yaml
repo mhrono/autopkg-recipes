@@ -22,6 +22,7 @@ Process:
   - Processor: URLDownloaderPython
     Arguments:
       url: "%archive_url%"
+      filename: "%NAME%.tar.gz"
 
   - Processor: EndOfCheckPhase
 
