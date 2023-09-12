@@ -14,7 +14,7 @@ Process:
       destination_path: "%RECIPE_CACHE_DIR%/unpack"
       purge_destination: True
 
-  - Processor: com.github.apizz.apizz-recipes.SharedProcessors/ExecutableFileVersioner
+  - Processor: com.github.apizz.SharedProcessors/ExecutableFileVersioner
     Arguments:
       found_filename: "%RECIPE_CACHE_DIR%/unpack/usr/local/aws-cli/aws"
       interpreter_path: "/bin/zsh"
