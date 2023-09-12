@@ -22,7 +22,6 @@ Process:
   - Processor: URLDownloaderPython
     Arguments:
       url: "%archive_url%"
-      filename: "%NAME%"
 
   - Processor: EndOfCheckPhase
 
