@@ -10,19 +10,19 @@ Process:
 
   - Processor: Versioner
     Arguments:
-      input_plist_path: "%pkgroot%/Applications/Alfred 5.app/Contents/Info.plist"
+      input_plist_path: "%RECIPE_CACHE_DIR%/unpack/Alfred 5.app/Contents/Info.plist"
       plist_version_key: "CFBundleShortVersionString"
 
   - Processor: PkgRootCreator
     Arguments:
       pkgroot: "%RECIPE_CACHE_DIR%/%NAME%"
       pkgdirs:
-        Applications: 0775
+        Applications: '0775'
 
   - Processor: Unarchiver
     Arguments:
       archive_path: "%pathname%"
-      destination_path: "%pkgroot/Applications/Alfred 5.app"
+      destination_path: "%pkgroot%/Applications/Alfred 5.app"
       purge_destination: True
 
   - Processor: PkgCreator

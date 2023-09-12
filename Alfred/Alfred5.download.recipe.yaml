@@ -29,11 +29,11 @@ Process:
   - Processor: Unarchiver
     Arguments:
       archive_path: "%RECIPE_CACHE_DIR%/downloads/%NAME%.tar.gz"
-      destination_path: "%RECIPE_CACHE_DIR%/%NAME%"
+      destination_path: "%RECIPE_CACHE_DIR%/unpack"
       purge_destination: True
 
   - Processor: CodeSignatureVerifier
     Arguments:
-      input_path: "%RECIPE_CACHE_DIR%/%NAME%/Alfred 5.app"
+      input_path: "%RECIPE_CACHE_DIR%/unpack/Alfred 5.app"
       requirement: anchor apple generic and identifier "com.runningwithcrayons.Alfred" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = XZZXE9SED4)
       strict_verification: True
