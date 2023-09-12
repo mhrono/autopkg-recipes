@@ -154,5 +154,6 @@ Process:
       profile_template: "ConfigProfileTemplate-autopatch.xml"
       profile_category: "AutoPkg"
       replace_profile: "True"
+      plist_version_key: "binary"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageCleaner
