@@ -13,10 +13,12 @@ Input:
   FORCE_UPDATE: "False"
   ROLLBACK: "False"
   TEST_FLAG: ""
+  SELF_SERIVCE_VISIBLE: "True"
   SELF_SERVICE_DESCRIPTION: "Database manager."
   SELF_SERVICE_ICON: SequelPro.png
   UPDATE_PREDICATE: "pkg_uploaded == False"
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
+  SELF_SERVICE_PREDICATE: "SELF_SERVICE_VISIBLE == False"
   
 Process:
 
@@ -73,6 +75,22 @@ Process:
       self_service_action: "Install"
       replace_policy: "True"
       
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerProfileUploader
+    Arguments:
+      profile_name: "App Update Data: %NAME%"
+      identifier: "com.appUpdates.managedApps.%NAME%"
+      organization: "AutoPkg"
+      payload: "payloadTemplate.plist"
+      profile_template: "ConfigProfileTemplate-autopatch.xml"
+      profile_category: "AutoPkg"
+      replace_profile: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageCleaner
+
+  - Processor: StopProcessingIf
+    Arguments:
+      predicate: "%SELF_SERVICE_PREDICATE%"
+      
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
       policy_template: "PolicyTemplate-selfservice-install.xml"
@@ -113,41 +131,3 @@ Process:
       self_service_action: "Re-Install"
       icon: "%SELF_SERVICE_ICON%"
       replace_policy: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-    Arguments:
-      policy_template: "PolicyTemplate-prompt.xml"
-      policy_name: "Monthly Prompt: %NAME%%TEST_FLAG%"
-      script_trigger_name: "%TRIGGER_NAME%"
-      policy_category: "Auto-Update: Monthly Prompt"
-      group_name: "autoupdate-%NAME%%TEST_FLAG%"
-      replace_policy: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-    Arguments:
-      policy_template: "PolicyTemplate-defer.xml"
-      policy_name: "Deferred Update: %NAME%%TEST_FLAG%"
-      script_trigger_name: "%TRIGGER_NAME%"
-      policy_category: "Auto-Update: Deferral Policies"
-      group_name: "autoupdate-%NAME%%TEST_FLAG%"
-      replace_policy: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-    Arguments:
-      policy_template: "PolicyTemplate-silent.xml"
-      policy_name: "Silent Update: %NAME%%TEST_FLAG%"
-      group_name: "autoupdate-%NAME%%TEST_FLAG%"
-      script_trigger_name: "%TRIGGER_NAME%"
-      replace_policy: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerProfileUploader
-    Arguments:
-      profile_name: "App Update Data: %NAME%"
-      identifier: "com.appUpdates.managedApps.%NAME%"
-      organization: "AutoPkg"
-      payload: "payloadTemplate.plist"
-      profile_template: "ConfigProfileTemplate-autopatch.xml"
-      profile_category: "AutoPkg"
-      replace_profile: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageCleaner
