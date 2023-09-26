@@ -20,6 +20,10 @@ Input:
 
 Process:
 
+  - Processor: DeprecationWarning
+    Arguments:
+      warning_message: "Please use the main Spotify.jamf recipe instead, and set the SELF_SERVICE_VISIBLE input variable to False to mimic the behavior of this recipe."
+
   - Processor: io.github.hjuutilainen.VirusTotalAnalyzer/VirusTotalAnalyzer
   
   - Processor: StopProcessingIf

@@ -6,6 +6,6 @@ MinimumVersion: '2.3'
 Input: {}
 
 Process:
-- Processor: PkgCopier
-  Arguments:
-    source_pkg: '%pathname%'
+  - Processor: PkgCopier
+    Arguments:
+      source_pkg: '%pathname%'

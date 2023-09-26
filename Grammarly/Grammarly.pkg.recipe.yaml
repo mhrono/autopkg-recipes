@@ -8,25 +8,25 @@ Input:
   NAME: Grammarly
 
 Process:
-- Processor: PkgRootCreator
-  Arguments:
-    pkgdirs:
-      Applications: '0775'
-    pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgdirs:
+        Applications: '0775'
+      pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
 
-- Processor: Copier
-  Arguments:
-    destination_path: '%pkgroot%/Applications/Grammarly Desktop.app'
-    source_path: '%pathname%/Grammarly Installer.app'
+  - Processor: Copier
+    Arguments:
+      destination_path: '%pkgroot%/Applications/Grammarly Desktop.app'
+      source_path: '%pathname%/Grammarly Installer.app'
 
-- Processor: PkgCreator
-  Arguments:
-    pkg_request:
-      chown:
-      - group: admin
-        path: Applications
-        user: root
-      id: '%APP_BUNDLE_ID%'
-      options: purge_ds_store
-      pkgdir: '%RECIPE_CACHE_DIR%'
-      pkgname: '%NAME%-%version%'
+  - Processor: PkgCreator
+    Arguments:
+      pkg_request:
+        chown:
+        - group: admin
+          path: Applications
+          user: root
+        id: '%APP_BUNDLE_ID%'
+        options: purge_ds_store
+        pkgdir: '%RECIPE_CACHE_DIR%'
+        pkgname: '%NAME%-%version%'

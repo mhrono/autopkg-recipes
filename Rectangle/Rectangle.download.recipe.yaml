@@ -11,24 +11,24 @@ Input:
   PRERELEASE: ''
 
 Process:
-- Processor: GitHubReleasesInfoProvider
-  Arguments:
-    asset_regex: '[\S]+\.dmg'
-    github_repo: rxhanson/Rectangle
-    include_prereleases: '%PRERELEASE%'
+  - Processor: GitHubReleasesInfoProvider
+    Arguments:
+      asset_regex: '[\S]+\.dmg'
+      github_repo: rxhanson/Rectangle
+      include_prereleases: '%PRERELEASE%'
 
-- Processor: URLDownloaderPython
-  Arguments:
-    filename: '%NAME%-%version%.dmg'
+  - Processor: URLDownloaderPython
+    Arguments:
+      filename: '%NAME%-%version%.dmg'
 
-- Processor: Versioner
-  Arguments:
-    input_plist_path: '%pathname%/Rectangle.app/Contents/Info.plist'
-    plist_version_key: 'CFBundleShortVersionString'
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%pathname%/Rectangle.app/Contents/Info.plist'
+      plist_version_key: 'CFBundleShortVersionString'
 
-- Processor: EndOfCheckPhase
+  - Processor: EndOfCheckPhase
 
-- Processor: CodeSignatureVerifier
-  Arguments:
-    input_path: '%pathname%/Rectangle.app'
-    requirement: anchor apple generic and identifier "com.knollsoft.Rectangle" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = XSYZ3E4B7D)
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%pathname%/Rectangle.app'
+      requirement: anchor apple generic and identifier "com.knollsoft.Rectangle" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = XSYZ3E4B7D)

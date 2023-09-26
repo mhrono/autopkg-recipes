@@ -7,15 +7,15 @@ Input:
   SPARKLE_FEED_URL: https://www.sequelpro.com/appcast/app-releases.xml
 
 Process:
-- Processor: SparkleUpdateInfoProvider
-  Arguments:
-    appcast_url: '%SPARKLE_FEED_URL%'
+  - Processor: SparkleUpdateInfoProvider
+    Arguments:
+      appcast_url: '%SPARKLE_FEED_URL%'
 
-- Processor: URLDownloaderPython
+  - Processor: URLDownloaderPython
 
-- Processor: EndOfCheckPhase
+  - Processor: EndOfCheckPhase
 
-- Processor: CodeSignatureVerifier
-  Arguments:
-    input_path: '%pathname%/Sequel Pro.app'
-    requirement: identifier "com.sequelpro.SequelPro" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "Y48LQG59RS"
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%pathname%/Sequel Pro.app'
+      requirement: identifier "com.sequelpro.SequelPro" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "Y48LQG59RS"

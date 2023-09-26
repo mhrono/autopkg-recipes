@@ -11,28 +11,28 @@ Input:
   NAME: RingCentralMeetings
 
 Process:
-- Processor: PkgRootCreator
-  Arguments:
-    pkgdirs:
-      Applications: '0775'
-    pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgdirs:
+        Applications: '0775'
+      pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
 
-- Processor: FlatPkgUnpacker
-  Arguments:
-    destination_path: '%RECIPE_CACHE_DIR%/expanded'
-    flat_pkg_path: '%pathname%'
+  - Processor: FlatPkgUnpacker
+    Arguments:
+      destination_path: '%RECIPE_CACHE_DIR%/expanded'
+      flat_pkg_path: '%pathname%'
 
-- Processor: PkgPayloadUnpacker
-  Arguments:
-    destination_path: '%RECIPE_CACHE_DIR%/%NAME%/Applications/'
-    pkg_payload_path: '%RECIPE_CACHE_DIR%/expanded/install.pkg/Payload'
+  - Processor: PkgPayloadUnpacker
+    Arguments:
+      destination_path: '%RECIPE_CACHE_DIR%/%NAME%/Applications/'
+      pkg_payload_path: '%RECIPE_CACHE_DIR%/expanded/install.pkg/Payload'
 
-- Processor: Versioner
-  Arguments:
-    input_plist_path: '%RECIPE_CACHE_DIR%/%NAME%/Applications/RingCentral Meetings.app/Contents/Info.plist'
-    plist_version_key: CFBundleShortVersionString
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%RECIPE_CACHE_DIR%/%NAME%/Applications/RingCentral Meetings.app/Contents/Info.plist'
+      plist_version_key: CFBundleShortVersionString
 
-- Processor: PkgCopier
-  Arguments:
-    pkg_path: '%RECIPE_CACHE_DIR%/downloads/RingCentralMeetings-%version%.pkg'
-    source_pkg: '%pathname%'
+  - Processor: PkgCopier
+    Arguments:
+      pkg_path: '%RECIPE_CACHE_DIR%/downloads/RingCentralMeetings-%version%.pkg'
+      source_pkg: '%pathname%'

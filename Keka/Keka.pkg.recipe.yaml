@@ -8,32 +8,32 @@ Input:
   USER_AGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
 
 Process:
-- Processor: PkgRootCreator
-  Arguments:
-    pkgdirs:
-      Applications: '0775'
-    pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
-
-- Processor: PkgRootCreator
-  Arguments:
-    pkgdirs:
-      Applications: '0775'
-    pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
-
-- Processor: Copier
-  Arguments:
-    destination_path: '%pkgroot%/Applications/Keka.app'
-    source_path: '%pathname%/Keka.app'
-
-- Processor: AppDmgVersioner
-  Arguments:
-    dmg_path: '%pathname%'
-
-- Processor: PkgCreator
-  Arguments:
-    pkg_request:
-      id: '%APP_BUNDLE_ID%'
-      options: purge_ds_store
-      pkgname: '%NAME%-%version%'
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgdirs:
+        Applications: '0775'
       pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
-      version: '%version%'
+
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgdirs:
+        Applications: '0775'
+      pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
+
+  - Processor: Copier
+    Arguments:
+      destination_path: '%pkgroot%/Applications/Keka.app'
+      source_path: '%pathname%/Keka.app'
+
+  - Processor: AppDmgVersioner
+    Arguments:
+      dmg_path: '%pathname%'
+
+  - Processor: PkgCreator
+    Arguments:
+      pkg_request:
+        id: '%APP_BUNDLE_ID%'
+        options: purge_ds_store
+        pkgname: '%NAME%-%version%'
+        pkgroot: '%RECIPE_CACHE_DIR%/%NAME%'
+        version: '%version%'

@@ -7,22 +7,22 @@ Input:
   NAME: Grammarly
 
 Process:
-- Processor: SparkleUpdateInfoProvider
-  Arguments:
-    appcast_url: https://download-mac.grammarly.com/appcast.xml
+  - Processor: SparkleUpdateInfoProvider
+    Arguments:
+      appcast_url: https://download-mac.grammarly.com/appcast.xml
 
-- Processor: URLDownloaderPython
-  Arguments:
-    filename: '%NAME%-%version%.dmg'
+  - Processor: URLDownloaderPython
+    Arguments:
+      filename: '%NAME%-%version%.dmg'
 
-- Processor: EndOfCheckPhase
+  - Processor: EndOfCheckPhase
 
-- Processor: CodeSignatureVerifier
-  Arguments:
-    input_path: '%pathname%/Grammarly Installer.app'
-    requirement: anchor apple generic and identifier "com.grammarly.ProjectLlama" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = W8F64X92K3)
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%pathname%/Grammarly Installer.app'
+      requirement: anchor apple generic and identifier "com.grammarly.ProjectLlama" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = W8F64X92K3)
 
-- Processor: Versioner
-  Arguments:
-    input_plist_path: '%pathname%/Grammarly Installer.app/Contents/Info.plist'
-    plist_version_key: CFBundleVersion
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%pathname%/Grammarly Installer.app/Contents/Info.plist'
+      plist_version_key: CFBundleVersion

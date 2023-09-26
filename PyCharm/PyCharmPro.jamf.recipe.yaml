@@ -12,14 +12,14 @@ Input:
   DEFER_LIMIT: "10"
   FORCE_UPDATE: "False"
   ROLLBACK: "False"
-  TEST_FLAG: ""
+  SELF_SERIVCE_VISIBLE: "True"
   SELF_SERVICE_DESCRIPTION: "PyCharm is an Integrated Development Environment (IDE) used for programming in Python. It provides code analysis, a graphical debugger, an integrated unit tester, integration with version control systems (VCSes), and supports web development with Django."
   SELF_SERVICE_ICON: PyCharm.png
   UPDATE_PREDICATE: "pkg_uploaded == False"
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
+  SELF_SERVICE_PREDICATE: "SELF_SERVICE_VISIBLE == False"
   
 Process:
-
   - Processor: io.github.hjuutilainen.VirusTotalAnalyzer/VirusTotalAnalyzer
   
   - Processor: StopProcessingIf
@@ -40,14 +40,12 @@ Process:
 
   - Processor: com.github.grahampugh.recipes.commonprocessors/VersionRegexGenerator
 
-  - Processor: com.github.grahampugh.recipes.commonprocessors/PkgInfoReader
-    Arguments:
-      source_pkg: "%pkg_path%"
+  - Processor: com.github.jgstew.SharedProcessors/FileGetStat
 
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
-      computergroup_template: "SmartGroupTemplate-autopatch-regex%TEST_FLAG%.xml"
-      computergroup_name: "autoupdate-%NAME%%TEST_FLAG%"
+      computergroup_template: "SmartGroupTemplate-autopatch-regex.xml"
+      computergroup_name: "autoupdate-%NAME%"
       replace_group: "True"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
@@ -63,15 +61,31 @@ Process:
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
       policy_template: "PolicyTemplate-autopatch.xml"
-      policy_name: "Install Latest %NAME%%TEST_FLAG%"
+      policy_name: "Install Latest %NAME%"
       frequency: "Ongoing"
       checkin_bool: "false"
       trigger_name: "%TRIGGER_NAME%"
       policy_category: "AutoPkg"
-      group_name: "autoupdate-%NAME%%TEST_FLAG%"
+      group_name: "autoupdate-%NAME%"
       self_service_bool: "false"
       self_service_action: "Install"
       replace_policy: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerProfileUploader
+    Arguments:
+      profile_name: "App Update Data: %NAME%"
+      identifier: "com.appUpdates.managedApps.%NAME%"
+      organization: "AutoPkg"
+      payload: "payloadTemplate.plist"
+      profile_template: "ConfigProfileTemplate-autopatch.xml"
+      profile_category: "AutoPkg"
+      replace_profile: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageCleaner
+
+  - Processor: StopProcessingIf
+    Arguments:
+      predicate: "%SELF_SERVICE_PREDICATE%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
@@ -94,7 +108,7 @@ Process:
       frequency: "Ongoing"
       checkin_bool: "false"
       policy_category: "Updates"
-      group_name: "autoupdate-%NAME%%TEST_FLAG%"
+      group_name: "autoupdate-%NAME%"
       self_service_bool: "true"
       self_service_action: "Update to"
       icon: "%SELF_SERVICE_ICON%"
@@ -108,46 +122,8 @@ Process:
       checkin_bool: "false"
       policy_category: "%CATEGORY%"
       group_name: "App Installed: %NAME%"
-      exclude_group_name: "autoupdate-%NAME%%TEST_FLAG%"
+      exclude_group_name: "autoupdate-%NAME%"
       self_service_bool: "true"
       self_service_action: "Re-Install"
       icon: "%SELF_SERVICE_ICON%"
       replace_policy: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-    Arguments:
-      policy_template: "PolicyTemplate-prompt.xml"
-      policy_name: "Monthly Prompt: %NAME%%TEST_FLAG%"
-      script_trigger_name: "%TRIGGER_NAME%"
-      policy_category: "Auto-Update: Monthly Prompt"
-      group_name: "autoupdate-%NAME%%TEST_FLAG%"
-      replace_policy: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-    Arguments:
-      policy_template: "PolicyTemplate-defer.xml"
-      policy_name: "Deferred Update: %NAME%%TEST_FLAG%"
-      script_trigger_name: "%TRIGGER_NAME%"
-      policy_category: "Auto-Update: Deferral Policies"
-      group_name: "autoupdate-%NAME%%TEST_FLAG%"
-      replace_policy: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-    Arguments:
-      policy_template: "PolicyTemplate-silent.xml"
-      policy_name: "Silent Update: %NAME%%TEST_FLAG%"
-      group_name: "autoupdate-%NAME%%TEST_FLAG%"
-      script_trigger_name: "%TRIGGER_NAME%"
-      replace_policy: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerProfileUploader
-    Arguments:
-      profile_name: "App Update Data: %NAME%"
-      identifier: "com.appUpdates.managedApps.%NAME%"
-      organization: "AutoPkg"
-      payload: "payloadTemplate.plist"
-      profile_template: "ConfigProfileTemplate-autopatch.xml"
-      profile_category: "AutoPkg"
-      replace_profile: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageCleaner

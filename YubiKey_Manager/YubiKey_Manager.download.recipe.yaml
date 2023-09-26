@@ -8,44 +8,44 @@ Input:
   RE_PATTERN: (?P<dl_filename>yubikey-manager-qt-((\d*\.?)*[a-z]?)-mac.pkg)
 
 Process:
-- Processor: URLTextSearcher
-  Arguments:
-    re_pattern: '%RE_PATTERN%'
-    result_output_var_name: dl_filename
-    url: '%URL%'
+  - Processor: URLTextSearcher
+    Arguments:
+      re_pattern: '%RE_PATTERN%'
+      result_output_var_name: dl_filename
+      url: '%URL%'
 
-- Processor: URLDownloaderPython
-  Arguments:
-    url: '%URL%%dl_filename%'
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: '%URL%%dl_filename%'
 
-- Processor: EndOfCheckPhase
+  - Processor: EndOfCheckPhase
 
-- Processor: CodeSignatureVerifier
-  Arguments:
-    expected_authority_names:
-    - 'Developer ID Installer: Yubico Limited (LQA3CS5MM7)'
-    - Developer ID Certification Authority
-    - Apple Root CA
-    input_path: '%pathname%'
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      expected_authority_names:
+      - 'Developer ID Installer: Yubico Limited (LQA3CS5MM7)'
+      - Developer ID Certification Authority
+      - Apple Root CA
+      input_path: '%pathname%'
 
-- Processor: FlatPkgUnpacker
-  Arguments:
-    destination_path: '%RECIPE_CACHE_DIR%/unpack/'
-    flat_pkg_path: '%pathname%'
-    purge_destination: 'true'
+  - Processor: FlatPkgUnpacker
+    Arguments:
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/'
+      flat_pkg_path: '%pathname%'
+      purge_destination: 'true'
 
-- Processor: PkgRootCreator
-  Arguments:
-    pkgdirs: {}
-    pkgroot: '%RECIPE_CACHE_DIR%/application_payload/Applications'
+  - Processor: PkgRootCreator
+    Arguments:
+      pkgdirs: {}
+      pkgroot: '%RECIPE_CACHE_DIR%/application_payload/Applications'
 
-- Processor: PkgPayloadUnpacker
-  Arguments:
-    destination_path: '%RECIPE_CACHE_DIR%/application_payload/Applications'
-    pkg_payload_path: '%RECIPE_CACHE_DIR%/unpack/com.yubico.ykman.pkg/Payload'
-    purge_destination: 'true'
+  - Processor: PkgPayloadUnpacker
+    Arguments:
+      destination_path: '%RECIPE_CACHE_DIR%/application_payload/Applications'
+      pkg_payload_path: '%RECIPE_CACHE_DIR%/unpack/com.yubico.ykman.pkg/Payload'
+      purge_destination: 'true'
 
-- Processor: Versioner
-  Arguments:
-    input_plist_path: '%RECIPE_CACHE_DIR%/application_payload/Applications/YubiKey Manager.app/Contents/Info.plist'
-    plist_version_key: CFBundleShortVersionString
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%RECIPE_CACHE_DIR%/application_payload/Applications/YubiKey Manager.app/Contents/Info.plist'
+      plist_version_key: CFBundleShortVersionString

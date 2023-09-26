@@ -21,7 +21,7 @@
 	<key>rollbackVersion</key>
 	<string>%ROLLBACK%</string>
 	<key>pkgSize</key>
-	<integer>%installer_item_size%</integer>
+	<integer>%file_stat_size%</integer>
 	<key>versionKey</key>
 	<string>%plist_version_key%</string>
 </dict>

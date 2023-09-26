@@ -7,7 +7,6 @@ Input:
   NAME: "Alfred 5"
 
 Process:
-
   - Processor: Versioner
     Arguments:
       input_plist_path: "%RECIPE_CACHE_DIR%/unpack/%NAME%.app/Contents/Info.plist"

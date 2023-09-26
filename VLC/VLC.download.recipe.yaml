@@ -13,25 +13,25 @@ Input:
   ARCHITECTURE: universal
 
 Process:
-- Processor: URLTextSearcher
-  Arguments:
-    re_pattern: href="\/\/get\.videolan\.org\/vlc\/([\d\.]+)\/macosx\/vlc-[\d\.]+-%ARCHITECTURE%\.dmg"
-    result_output_var_name: version
-    url: https://www.videolan.org/vlc/download-macosx.html
+  - Processor: URLTextSearcher
+    Arguments:
+      re_pattern: href="\/\/get\.videolan\.org\/vlc\/([\d\.]+)\/macosx\/vlc-[\d\.]+-%ARCHITECTURE%\.dmg"
+      result_output_var_name: version
+      url: https://www.videolan.org/vlc/download-macosx.html
 
-- Processor: URLDownloaderPython
-  Arguments:
-    filename: '%NAME%-%version%.dmg'
-    url: https://get.videolan.org/vlc/%version%/macosx/vlc-%version%-%ARCHITECTURE%.dmg
+  - Processor: URLDownloaderPython
+    Arguments:
+      filename: '%NAME%-%version%.dmg'
+      url: https://get.videolan.org/vlc/%version%/macosx/vlc-%version%-%ARCHITECTURE%.dmg
 
-- Processor: Versioner
-  Arguments:
-    input_plist_path: '%pathname%/VLC.app/Contents/Info.plist'
-    plist_version_key: CFBundleShortVersionString
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%pathname%/VLC.app/Contents/Info.plist'
+      plist_version_key: CFBundleShortVersionString
 
-- Processor: EndOfCheckPhase
+  - Processor: EndOfCheckPhase
 
-- Processor: CodeSignatureVerifier
-  Arguments:
-    input_path: '%pathname%/VLC.app'
-    requirement: anchor apple generic and identifier "org.videolan.vlc" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "75GAHG3SZQ")
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%pathname%/VLC.app'
+      requirement: anchor apple generic and identifier "org.videolan.vlc" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "75GAHG3SZQ")

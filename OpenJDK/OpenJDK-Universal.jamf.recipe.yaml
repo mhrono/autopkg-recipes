@@ -10,13 +10,14 @@ Input:
   TRIGGER_NAME: "autoupdate-%NAME%"
   DEFER_TRIGGER: "defer-%NAME%"
   TEST_FLAG: ""
+  SELF_SERIVCE_VISIBLE: "True"
   SELF_SERVICE_DESCRIPTION: "OpenJDK is a free and open-source alternative for Oracle's traditional JDK."
   SELF_SERVICE_ICON: "OpenJDK.png"
   UPDATE_PREDICATE: "pkg_uploaded == False"
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
+  SELF_SERVICE_PREDICATE: "SELF_SERVICE_VISIBLE == False"
 
 Process:
-
   - Processor: io.github.hjuutilainen.VirusTotalAnalyzer/VirusTotalAnalyzer
 
   - Processor: StopProcessingIf
@@ -40,6 +41,8 @@ Process:
     Arguments:
       ea_name: "Installed JDK Vendor"
       ea_script_path: "InstalledJDKVendorEA.sh"
+
+  - Processor: com.github.jgstew.SharedProcessors/FileGetStat
 
   - Processor: StopProcessingIf
     Arguments:
@@ -75,6 +78,22 @@ Process:
       self_service_bool: "false"
       self_service_action: "Install"
       replace_policy: "True"
+
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerProfileUploader
+    Arguments:
+      profile_name: "App Update Data: %NAME%"
+      identifier: "com.appUpdates.managedApps.%NAME%"
+      organization: "AutoPkg"
+      payload: "payloadTemplate.plist"
+      profile_template: "ConfigProfileTemplate-autopatch.xml"
+      profile_category: "AutoPkg"
+      replace_profile: "True"
+      
+  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageCleaner
+
+  - Processor: StopProcessingIf
+    Arguments:
+      predicate: "%SELF_SERVICE_PREDICATE%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
@@ -116,41 +135,3 @@ Process:
       self_service_action: "Re-Install"
       icon: "%SELF_SERVICE_ICON%"
       replace_policy: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-    Arguments:
-      policy_template: "PolicyTemplate-prompt.xml"
-      policy_name: "Monthly Prompt: %NAME%"
-      script_trigger_name: "%TRIGGER_NAME%"
-      policy_category: "Auto-Update: Monthly Prompt"
-      group_name: "autoupdate-%NAME%"
-      replace_policy: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-    Arguments:
-      policy_template: "PolicyTemplate-defer.xml"
-      policy_name: "Deferred Update: %NAME%"
-      script_trigger_name: "%TRIGGER_NAME%"
-      policy_category: "Auto-Update: Deferral Policies"
-      group_name: "autoupdate-%NAME%"
-      replace_policy: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
-    Arguments:
-      policy_template: "PolicyTemplate-silent.xml"
-      policy_name: "Silent Update: %NAME%"
-      group_name: "autoupdate-%NAME%"
-      script_trigger_name: "%TRIGGER_NAME%"
-      replace_policy: "True"
-
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerProfileUploader
-    Arguments:
-      profile_name: "App Update Data: %NAME%"
-      identifier: "com.appUpdates.managedApps.%NAME%"
-      organization: "AutoPkg"
-      payload: "payloadTemplate.plist"
-      profile_template: "ConfigProfileTemplate-autopatch.xml"
-      profile_category: "AutoPkg"
-      replace_profile: "True"
-      
-  - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageCleaner

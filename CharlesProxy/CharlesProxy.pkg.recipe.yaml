@@ -7,7 +7,6 @@ Input:
   NAME: Charles
 
 Process:
-
   - Processor: PkgRootCreator
     Arguments:
       pkgroot: "%RECIPE_CACHE_DIR%/%NAME%"

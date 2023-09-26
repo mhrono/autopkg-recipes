@@ -7,7 +7,6 @@ Input:
   URL: "https://www.alfredapp.com/app/update5/general.xml"
 
 Process:
-
   - Processor: URLDownloader
     Arguments:
       url: "%URL%"
