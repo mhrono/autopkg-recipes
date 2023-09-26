@@ -1,4 +1,5 @@
 Description: Downloads the latest release of Firefox
+Identifier: com.mhrono.recipes.download.firefox
 MinimumVersion: '2.3'
 
 Input:
