@@ -7,7 +7,6 @@ Input:
   NAME: Dropbox
 
 Process:
-
   - Processor: AppPkgCreator
 
   - Processor: Versioner

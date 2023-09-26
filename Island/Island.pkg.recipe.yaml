@@ -7,7 +7,6 @@ Input:
   NAME: Island
 
 Process:
-
   - Processor: AppPkgCreator
     Arguments:
       app_path: '%RECIPE_CACHE_DIR%/unpack/%NAME%.app'

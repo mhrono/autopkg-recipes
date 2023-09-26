@@ -8,19 +8,18 @@ Input:
   USER_AGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.28.10 (KHTML, like Gecko) Version/6.0.3 Safari/536.28.10
 
 Process:
-- Processor: URLDownloaderPython
-  Arguments:
-    filename: '%NAME%.pkg'
-    request_headers:
-      user-agent: '%USER_AGENT%'
-    url: '%DOWNLOAD_URL%'
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderPython
+    Arguments:
+      filename: '%NAME%.pkg'
+      User_Agent: '%USER_AGENT%'
+      url: '%DOWNLOAD_URL%'
 
-- Processor: EndOfCheckPhase
+  - Processor: EndOfCheckPhase
 
-- Processor: CodeSignatureVerifier
-  Arguments:
-    expected_authority_names:
-    - 'Developer ID Installer: Zoom Video Communications, Inc. (BJ4HAAB9B3)'
-    - Developer ID Certification Authority
-    - Apple Root CA
-    input_path: '%pathname%'
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      expected_authority_names:
+      - 'Developer ID Installer: Zoom Video Communications, Inc. (BJ4HAAB9B3)'
+      - Developer ID Certification Authority
+      - Apple Root CA
+      input_path: '%pathname%'

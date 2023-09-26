@@ -7,7 +7,6 @@ Input:
   NAME: ZoomPresence
 
 Process:
-
   - Processor: FlatPkgUnpacker
     Arguments:
       destination_path: "%RECIPE_CACHE_DIR%/expanded"

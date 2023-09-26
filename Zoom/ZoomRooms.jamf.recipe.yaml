@@ -13,7 +13,6 @@ Input:
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
   
 Process:
-
   - Processor: io.github.hjuutilainen.VirusTotalAnalyzer/VirusTotalAnalyzer
   
   - Processor: StopProcessingIf

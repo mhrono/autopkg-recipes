@@ -10,17 +10,17 @@ Input:
   DOWNLOADURL: https://go.microsoft.com/fwlink/?linkid=%PRODUCTID%
 
 Process:
-- Processor: URLDownloaderPython
-  Arguments:
-    filename: '%VENDOR%_%SOFTWARETITLE%.pkg'
-    url: '%DOWNLOADURL%'
+  - Processor: URLDownloaderPython
+    Arguments:
+      filename: '%VENDOR%_%SOFTWARETITLE%.pkg'
+      url: '%DOWNLOADURL%'
 
-- Processor: EndOfCheckPhase
+  - Processor: EndOfCheckPhase
 
-- Processor: CodeSignatureVerifier
-  Arguments:
-    expected_authority_names:
-    - 'Developer ID Installer: Microsoft Corporation (UBF8T346G9)'
-    - Developer ID Certification Authority
-    - Apple Root CA
-    input_path: '%pathname%'
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      expected_authority_names:
+      - 'Developer ID Installer: Microsoft Corporation (UBF8T346G9)'
+      - Developer ID Certification Authority
+      - Apple Root CA
+      input_path: '%pathname%'

@@ -21,7 +21,6 @@ Input:
   SELF_SERVICE_PREDICATE: "SELF_SERVICE_VISIBLE == False"
 
 Process:
-
   - Processor: io.github.hjuutilainen.VirusTotalAnalyzer/VirusTotalAnalyzer
   
   - Processor: StopProcessingIf

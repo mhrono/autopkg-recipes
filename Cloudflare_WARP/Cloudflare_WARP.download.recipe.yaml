@@ -6,31 +6,31 @@ Input:
   NAME: CloudFlareWarp
 
 Process:
-- Processor: URLDownloaderPython
-  Arguments:
-    filename: '%NAME%.zip'
-    url: https://1111-releases.cloudflareclient.com/mac/Cloudflare_WARP.zip
+  - Processor: URLDownloaderPython
+    Arguments:
+      filename: '%NAME%.zip'
+      url: https://1111-releases.cloudflareclient.com/mac/Cloudflare_WARP.zip
 
-- Processor: Unarchiver
-  Arguments:
-    destination_path: '%RECIPE_CACHE_DIR%/unzip'
-    purge_destination: true
+  - Processor: Unarchiver
+    Arguments:
+      destination_path: '%RECIPE_CACHE_DIR%/unzip'
+      purge_destination: true
 
-- Processor: FlatPkgUnpacker
-  Arguments:
-    destination_path: '%RECIPE_CACHE_DIR%/unpack'
-    flat_pkg_path: '%RECIPE_CACHE_DIR%/unzip/Cloudflare_WARP.pkg'
-    purge_destination: true
+  - Processor: FlatPkgUnpacker
+    Arguments:
+      destination_path: '%RECIPE_CACHE_DIR%/unpack'
+      flat_pkg_path: '%RECIPE_CACHE_DIR%/unzip/Cloudflare_WARP.pkg'
+      purge_destination: true
 
-- Processor: PkgPayloadUnpacker
-  Arguments:
-    destination_path: '%RECIPE_CACHE_DIR%/unpack/payload'
-    pkg_payload_path: '%RECIPE_CACHE_DIR%/unpack/Cloudflare_WARP.pkg/Payload'
+  - Processor: PkgPayloadUnpacker
+    Arguments:
+      destination_path: '%RECIPE_CACHE_DIR%/unpack/payload'
+      pkg_payload_path: '%RECIPE_CACHE_DIR%/unpack/Cloudflare_WARP.pkg/Payload'
 
-- Processor: CodeSignatureVerifier
-  Arguments:
-    input_path: '%RECIPE_CACHE_DIR%/unpack/payload/Cloudflare WARP.app'
-    requirement: anchor apple generic and identifier "com.cloudflare.1dot1dot1dot1.macos" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "68WVV388M8")
-    strict_verification: true
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%RECIPE_CACHE_DIR%/unpack/payload/Cloudflare WARP.app'
+      requirement: anchor apple generic and identifier "com.cloudflare.1dot1dot1dot1.macos" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "68WVV388M8")
+      strict_verification: true
 
-- Processor: EndOfCheckPhase
+  - Processor: EndOfCheckPhase

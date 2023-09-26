@@ -9,6 +9,12 @@ Input:
   USER_AGENT: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36
 
 Process:
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderRequests
+    Arguments:
+    url: "%AMD64_DOWNLOAD_URL%"
+    filename: "%NAME%-amd64.dmg"
+    User_Agent: "%USER_AGENT%"
+
   - Processor: URLDownloader
     Arguments:
       url: "%AMD64_DOWNLOAD_URL%"
@@ -28,12 +34,11 @@ Process:
       input_plist_path: "%pathname%/Notion.app/Contents/Info.plist"
       plist_version_key: CFBundleShortVersionString
 
-  - Processor: URLDownloader
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderRequests
     Arguments:
-      url: "%ARM64_DOWNLOAD_URL%"
-      filename: "%NAME%-arm64.dmg"
-      request_headers:
-        user-agent: "%USER_AGENT%"
+    url: "%ARM64_DOWNLOAD_URL%"
+    filename: "%NAME%-arm64.dmg"
+    User_Agent: "%USER_AGENT%"
 
   - Processor: EndOfCheckPhase
 

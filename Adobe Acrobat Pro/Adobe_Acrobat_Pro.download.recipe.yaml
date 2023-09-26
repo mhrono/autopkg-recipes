@@ -7,12 +7,12 @@ Input:
   MAJOR_VERSION: "DC"
 
 Process:
-  - Processor: URLDownloader
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderRequests
     Arguments:
       url: 'https://trials3.adobe.com/AdobeProducts/APRO/Acrobat_HelpX/osx10/Acrobat_%MAJOR_VERSION%_Web_WWMUI.dmg'
       request_headers:
         Cookie: 'MM_TRIALS=1234'
-        User-Agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
+      User_Agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
 
   - Processor: EndOfCheckPhase
 

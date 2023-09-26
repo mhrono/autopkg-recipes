@@ -24,7 +24,6 @@ Input:
   OKTA_PASSWORD: ""
   
 Process:
-
   - Processor: io.github.hjuutilainen.VirusTotalAnalyzer/VirusTotalAnalyzer
   
   - Processor: StopProcessingIf

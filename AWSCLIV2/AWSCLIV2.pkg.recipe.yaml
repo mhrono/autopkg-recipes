@@ -7,7 +7,6 @@ Input:
   NAME: AWSCLI
 
 Process:
-
   - Processor: FlatPkgUnpacker
     Arguments:
       flat_pkg_path: "%pathname%"

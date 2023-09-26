@@ -7,17 +7,17 @@ Input:
   DOWNLOAD_URL: https://dl.google.com/drive-file-stream/GoogleDrive.dmg
 
 Process:
-- Processor: URLDownloaderPython
-  Arguments:
-    filename: '%NAME%.dmg'
-    url: '%DOWNLOAD_URL%'
+  - Processor: URLDownloaderPython
+    Arguments:
+      filename: '%NAME%.dmg'
+      url: '%DOWNLOAD_URL%'
 
-- Processor: EndOfCheckPhase
+  - Processor: EndOfCheckPhase
 
-- Processor: CodeSignatureVerifier
-  Arguments:
-    expected_authority_names:
-    - 'Developer ID Installer: Google LLC (EQHXZ8M8AV)'
-    - Developer ID Certification Authority
-    - Apple Root CA
-    input_path: '%pathname%/GoogleDrive.pkg'
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      expected_authority_names:
+      - 'Developer ID Installer: Google LLC (EQHXZ8M8AV)'
+      - Developer ID Certification Authority
+      - Apple Root CA
+      input_path: '%pathname%/GoogleDrive.pkg'

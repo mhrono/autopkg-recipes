@@ -7,16 +7,16 @@ Input:
   NAME: ZoomPresence
 
 Process:
-- Processor: URLDownloaderPython
-  Arguments:
-    url: https://zoom.us/client/latest/ZoomRooms.pkg
+  - Processor: URLDownloaderPython
+    Arguments:
+      url: https://zoom.us/client/latest/ZoomRooms.pkg
 
-- Processor: EndOfCheckPhase
+  - Processor: EndOfCheckPhase
 
-- Processor: CodeSignatureVerifier
-  Arguments:
-    expected_authority_names:
-    - 'Developer ID Installer: Zoom Video Communications, Inc. (BJ4HAAB9B3)'
-    - Developer ID Certification Authority
-    - Apple Root CA
-    input_path: '%pathname%'
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      expected_authority_names:
+      - 'Developer ID Installer: Zoom Video Communications, Inc. (BJ4HAAB9B3)'
+      - Developer ID Certification Authority
+      - Apple Root CA
+      input_path: '%pathname%'

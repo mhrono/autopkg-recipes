@@ -16,6 +16,8 @@ Input:
   
 Process:
 
+  - Processor: DeprecationWarning
+
   - Processor: io.github.hjuutilainen.VirusTotalAnalyzer/VirusTotalAnalyzer
   
   - Processor: StopProcessingIf

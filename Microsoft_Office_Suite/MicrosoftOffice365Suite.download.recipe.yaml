@@ -11,19 +11,19 @@ Input:
   DOWNLOAD_URL_BASE: https://go.microsoft.com/fwlink/?linkid=
 
 Process:
-- Processor: OfficeSuiteSKULessVersionProvider
+  - Processor: OfficeSuiteSKULessVersionProvider
 
-- Processor: URLDownloaderPython
-  Arguments:
-    filename: '%VENDOR%_%SOFTWARETITLE1%_%SOFTWARETITLE2%_%version%.pkg'
-    url: '%DOWNLOAD_URL_BASE%%ID%'
+  - Processor: URLDownloaderPython
+    Arguments:
+      filename: '%VENDOR%_%SOFTWARETITLE1%_%SOFTWARETITLE2%_%version%.pkg'
+      url: '%DOWNLOAD_URL_BASE%%ID%'
 
-- Processor: EndOfCheckPhase
+  - Processor: EndOfCheckPhase
 
-- Processor: CodeSignatureVerifier
-  Arguments:
-    expected_authority_names:
-    - 'Developer ID Installer: Microsoft Corporation (UBF8T346G9)'
-    - Developer ID Certification Authority
-    - Apple Root CA
-    input_path: '%pathname%'
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      expected_authority_names:
+      - 'Developer ID Installer: Microsoft Corporation (UBF8T346G9)'
+      - Developer ID Certification Authority
+      - Apple Root CA
+      input_path: '%pathname%'

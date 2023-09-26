@@ -7,17 +7,17 @@ Input:
   DOWNLOAD_URL: https://downloads.ringcentral.com/RCM/RC/meetings/mac/RCMeetingsClientSetup.pkg
 
 Process:
-- Processor: URLDownloaderPython
-  Arguments:
-    filename: '%NAME%.pkg'
-    url: '%DOWNLOAD_URL%'
+  - Processor: URLDownloaderPython
+    Arguments:
+      filename: '%NAME%.pkg'
+      url: '%DOWNLOAD_URL%'
 
-- Processor: EndOfCheckPhase
+  - Processor: EndOfCheckPhase
 
-- Processor: CodeSignatureVerifier
-  Arguments:
-    expected_authority_names:
-    - 'Developer ID Installer: RingCentral, Inc. (M932RC5J66)'
-    - Developer ID Certification Authority
-    - Apple Root CA
-    input_path: '%pathname%'
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      expected_authority_names:
+      - 'Developer ID Installer: RingCentral, Inc. (M932RC5J66)'
+      - Developer ID Certification Authority
+      - Apple Root CA
+      input_path: '%pathname%'
