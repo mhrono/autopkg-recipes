@@ -12,7 +12,6 @@ Input:
   DEFER_LIMIT: "10"
   FORCE_UPDATE: "False"
   ROLLBACK: "False"
-  TEST_FLAG: ""
   SELF_SERIVCE_VISIBLE: "True"
   SELF_SERVICE_DESCRIPTION: "The AWS Command Line Interface (CLI) is a unified tool to manage your AWS services. With just one tool to download and configure, you can control multiple AWS services from the command line and automate them through scripts."
   SELF_SERVICE_ICON: AWSCLIV2.png

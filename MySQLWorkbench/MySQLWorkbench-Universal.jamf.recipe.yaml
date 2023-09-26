@@ -12,7 +12,6 @@ Input:
   DEFER_LIMIT: "10"
   FORCE_UPDATE: "False"
   ROLLBACK: "False"
-  TEST_FLAG: ""
   SELF_SERIVCE_VISIBLE: "True"
   SELF_SERVICE_DESCRIPTION: "MySQL Workbench is a unified visual tool for database architects, developers, and DBAs."
   SELF_SERVICE_ICON: "MySQLWorkbench.png"
