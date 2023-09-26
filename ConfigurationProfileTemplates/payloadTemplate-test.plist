@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleID</key>
+	<string>%APP_BUNDLE_ID%</string>
+	<key>displayName</key>
+	<string>%NAME%</string>
+	<key>targetVersionString</key>
+	<string>%version%</string>
+	<key>targetVersionRegex</key>
+	<string>%version_regex%</string>
+	<key>targetVersionRegex2</key>
+	<string>%version_regex_2%</string>
+	<key>targetVersionRegex3</key>
+	<string>%version_regex_3%</string>
+	<key>deferLimit</key>
+	<string>%DEFER_LIMIT%</string>
+	<key>forceUpdate</key>
+	<string>%FORCE_UPDATE%</string>
+	<key>rollbackVersion</key>
+	<string>%ROLLBACK%</string>
+	<key>pkgSize</key>
+	<integer>%file_stat_size%</integer>
+	<key>versionKey</key>
+	<string>%plist_version_key%</string>
+</dict>
+</plist>
