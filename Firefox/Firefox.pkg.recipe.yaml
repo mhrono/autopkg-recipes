@@ -1,6 +1,6 @@
 Description: Downloads Firefox disk image and builds a package.
 Identifier: com.mhrono.recipes.pkg.Firefox_EN
-ParentRecipe: com.mhrono.recipes.download.firefox-rc-en_US
+ParentRecipe: com.mhrono.recipes.download.firefox
 MinimumVersion: '2.3'
 
 Input:
