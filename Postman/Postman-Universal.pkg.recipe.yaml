@@ -49,6 +49,7 @@ Process:
       file_content: |
         <pkg-info format-version="2" identifier="%APP_BUNDLE_ID%" install-location="/" auth="root">
         </pkg-info>
+
   - Processor: PkgInfoCreator
     Arguments:
       infofile: '%RECIPE_CACHE_DIR%/PackageInfo'
@@ -59,6 +60,7 @@ Process:
   - Processor: PkgCreator
     Arguments:
       pkg_request:
+        infofile: '%RECIPE_CACHE_DIR%/PackageInfo'
         id: '%APP_BUNDLE_ID%'
         version: '%version%'
         options: purge_ds_store
