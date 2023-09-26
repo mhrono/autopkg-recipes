@@ -5,6 +5,7 @@ MinimumVersion: '2.3'
 
 Input:
   NAME: Postman
+  APP_BUNDLE_ID: com.postmanlabs.mac
 
 Process:
   - Processor: PkgRootCreator
