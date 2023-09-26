@@ -43,6 +43,8 @@ Process:
       ea_name: "Installed JDK Vendor"
       ea_script_path: "InstalledJDKVendorEA.sh"
 
+  - Processor: com.github.jgstew.SharedProcessors/FileGetStat
+
   - Processor: StopProcessingIf
     Arguments:
       predicate: "%UPDATE_PREDICATE%"

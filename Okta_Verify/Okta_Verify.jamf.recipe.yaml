@@ -45,9 +45,7 @@ Process:
 
   - Processor: com.github.grahampugh.recipes.commonprocessors/VersionRegexGenerator
 
-  - Processor: com.github.grahampugh.recipes.commonprocessors/PkgInfoReader
-    Arguments:
-      source_pkg: "%pkg_path%"
+  - Processor: com.github.jgstew.SharedProcessors/FileGetStat
 
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfComputerGroupUploader
     Arguments:
