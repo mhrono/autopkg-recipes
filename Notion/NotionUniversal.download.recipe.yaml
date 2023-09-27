@@ -11,9 +11,9 @@ Input:
 Process:
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderRequests
     Arguments:
-    url: "%AMD64_DOWNLOAD_URL%"
-    filename: "%NAME%-amd64.dmg"
-    User_Agent: "%USER_AGENT%"
+      url: "%AMD64_DOWNLOAD_URL%"
+      filename: "%NAME%-amd64.dmg"
+      User_Agent: "%USER_AGENT%"
 
   - Processor: EndOfCheckPhase
 
@@ -29,9 +29,9 @@ Process:
 
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderRequests
     Arguments:
-    url: "%ARM64_DOWNLOAD_URL%"
-    filename: "%NAME%-arm64.dmg"
-    User_Agent: "%USER_AGENT%"
+      url: "%ARM64_DOWNLOAD_URL%"
+      filename: "%NAME%-arm64.dmg"
+      User_Agent: "%USER_AGENT%"
 
   - Processor: EndOfCheckPhase
 
