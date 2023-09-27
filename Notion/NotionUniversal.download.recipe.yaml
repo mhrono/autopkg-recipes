@@ -15,13 +15,6 @@ Process:
     filename: "%NAME%-amd64.dmg"
     User_Agent: "%USER_AGENT%"
 
-  - Processor: URLDownloader
-    Arguments:
-      url: "%AMD64_DOWNLOAD_URL%"
-      filename: "%NAME%-amd64.dmg"
-      request_headers:
-        user-agent: "%USER_AGENT%"
-
   - Processor: EndOfCheckPhase
 
   - Processor: CodeSignatureVerifier
