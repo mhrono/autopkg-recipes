@@ -28,7 +28,7 @@ Process:
     Arguments:
       pkg_request:
         pkgname: "%NAME%-%version%"
-        pkgdir: "%RECIPE_CACHE_DIR%/payload"
+        pkgdir: "%RECIPE_CACHE_DIR%"
         options: "purge_ds_store"
         id: '%APP_BUNDLE_ID%'
         chown:
