@@ -12,12 +12,12 @@ Input:
   DEFER_LIMIT: "10"
   FORCE_UPDATE: "False"
   ROLLBACK: "False"
-  SELF_SERIVCE_VISIBLE: "True"
+  SELF_SERVICE_VISIBLE: "True"
   SELF_SERVICE_DESCRIPTION: "PyCharm is an Integrated Development Environment (IDE) used for programming in Python. It provides code analysis, a graphical debugger, an integrated unit tester, integration with version control systems (VCSes), and supports web development with Django."
   SELF_SERVICE_ICON: PyCharm.png
   UPDATE_PREDICATE: "pkg_uploaded == False"
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
-  SELF_SERVICE_PREDICATE: "SELF_SERVICE_VISIBLE == False"
+  SELF_SERVICE_PREDICATE: "SELF_SERVICE_VISIBLE == 'False'"
   
 Process:
   - Processor: io.github.hjuutilainen.VirusTotalAnalyzer/VirusTotalAnalyzer
