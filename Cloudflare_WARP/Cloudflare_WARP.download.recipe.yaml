@@ -6,10 +6,11 @@ Input:
   NAME: CloudFlareWarp
 
 Process:
-  - Processor: URLDownloaderPython
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderRequests
     Arguments:
       filename: '%NAME%.zip'
       url: https://1111-releases.cloudflareclient.com/mac/Cloudflare_WARP.zip
+      User_Agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
 
   - Processor: Unarchiver
     Arguments:
