@@ -12,7 +12,7 @@ Input:
   DEFER_LIMIT: "10"
   FORCE_UPDATE: "False"
   ROLLBACK: "False"
-  SELF_SERIVCE_VISIBLE: "True"
+  SELF_SERIVCE_VISIBLE: False
   SELF_SERVICE_DESCRIPTION: "The free app that makes your Internet safer."
   SELF_SERVICE_ICON: Cloudflare_WARP.png
   UPDATE_PREDICATE: "pkg_uploaded == False"
@@ -85,7 +85,7 @@ Process:
 
   - Processor: StopProcessingIf
     Arguments:
-      predicate: "%SELF_SERVICE_VISIBLE% == False"
+      predicate: "%SELF_SERVICE_VISIBLE%"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPolicyUploader
     Arguments:
