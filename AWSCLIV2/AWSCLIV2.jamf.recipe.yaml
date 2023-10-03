@@ -85,7 +85,7 @@ Process:
       profile_template: "ConfigProfileTemplate-autopatch.xml"
       profile_category: "AutoPkg"
       replace_profile: "True"
-      plist_version_key: "binary"
+      plist_version_key: "/usr/local/bin/aws"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageCleaner
 
