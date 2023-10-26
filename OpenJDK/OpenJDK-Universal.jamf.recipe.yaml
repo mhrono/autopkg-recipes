@@ -88,6 +88,7 @@ Process:
       profile_template: "ConfigProfileTemplate-autopatch.xml"
       profile_category: "AutoPkg"
       replace_profile: "True"
+      plist_version_key: "/Library/Java/JavaVirtualMachines/jdk-21.jdk/Contents/Home/bin/java"
       
   - Processor: com.github.grahampugh.jamf-upload.processors/JamfPackageCleaner
 
