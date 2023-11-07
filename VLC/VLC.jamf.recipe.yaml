@@ -15,6 +15,7 @@ Input:
   SELF_SERVICE_VISIBLE: "True"
   SELF_SERVICE_DESCRIPTION: "VLC is a free and open source cross-platform multimedia player and framework that plays most multimedia files as well as DVDs, Audio CDs, VCDs, and various streaming protocols."
   SELF_SERVICE_ICON: VLC.png
+  PYTHON3_PATH: ""
   SWIFTPATCH_PATH: ""
   UPDATE_PREDICATE: "pkg_uploaded == False"
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"

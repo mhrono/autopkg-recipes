@@ -15,6 +15,7 @@ Input:
   SELF_SERVICE_VISIBLE: "True"
   SELF_SERVICE_DESCRIPTION: "The Zoom app provides cloud-hosted video conferencing, plus online meetings and group messaging."
   SELF_SERVICE_ICON: Zoom.png
+  PYTHON3_PATH: ""
   SWIFTPATCH_PATH: ""
   UPDATE_PREDICATE: "pkg_uploaded == False"
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"

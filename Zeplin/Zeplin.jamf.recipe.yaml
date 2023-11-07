@@ -15,6 +15,7 @@ Input:
   SELF_SERVICE_VISIBLE: "True"
   SELF_SERVICE_DESCRIPTION: "Organize screens. Publish locked designs. Scale design systems. All in a workspace friendly to the entire team, including non-designers."
   SELF_SERVICE_ICON: Zeplin.png
+  PYTHON3_PATH: ""
   SWIFTPATCH_PATH: ""
   UPDATE_PREDICATE: "pkg_uploaded == False"
   STOP_PREDICATE: "NOT virus_total_analyzer_summary_result.data.ratio BEGINSWITH '0'"
