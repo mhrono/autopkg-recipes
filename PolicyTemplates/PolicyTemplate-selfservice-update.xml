@@ -21,21 +21,7 @@
     <!-- Packages -->
     <package_configuration/>
     <!-- Scripts -->
-    <scripts>
-        <size>1</size>
-        <script>
-            <name>Auto-Update: App Quitter</name>
-            <priority>Before</priority>
-            <parameter4>%APP_BUNDLE_ID%</parameter4>
-            <parameter5>false</parameter5>
-            <parameter6>%NAME%</parameter6>
-            <parameter7>%script_trigger_name%</parameter7>
-            <parameter8>true</parameter8>
-            <parameter9>%DEFER_TRIGGER%</parameter9>
-            <parameter10>14</parameter10>
-            <parameter11>%version%</parameter11>
-        </script>
-    </scripts>
+    <scripts/>
     <!-- Self Service details -->
     <self_service>
         <use_for_self_service>true</use_for_self_service>
@@ -56,7 +42,16 @@
         <recon>true</recon>
     </maintenance>
     <!-- Files and processes e.g. run command -->
-    <files_processes/>
+    <files_processes>
+        <search_by_path/>
+        <delete_file>false</delete_file>
+        <locate_file/>
+        <update_locate_database>false</update_locate_database>
+        <spotlight_search/>
+        <search_for_process/>
+        <kill_process>false</kill_process>
+        <run_command>%SWIFTPATCH_PATH% --selfservice "%NAME%"</run_command>
+    </files_processes>
     <!-- User interaction e.g. start and finish messages -->
     <user_interaction>
         <message_start/>
