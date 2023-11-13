@@ -6,21 +6,20 @@ Input:
   NAME: CloudFlareWarp
 
 Process:
+
+  - Processor: SparkleUpdateInfoProvider
+    Arguments:
+      appcast_url: 'https://api.appcenter.ms/v0.1/public/sparkle/apps/87d9992a-351c-44a9-849b-3f9a89d63d18'
+
   - Processor: com.github.jgstew.SharedProcessors/URLDownloaderRequests
     Arguments:
-      filename: '%NAME%.zip'
-      url: https://1111-releases.cloudflareclient.com/mac/Cloudflare_WARP.zip
-      User_Agent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
-
-  - Processor: Unarchiver
-    Arguments:
-      destination_path: '%RECIPE_CACHE_DIR%/unzip'
-      purge_destination: true
+      filename: '%NAME%.pkg'
+      url: '%url%'
 
   - Processor: FlatPkgUnpacker
     Arguments:
       destination_path: '%RECIPE_CACHE_DIR%/unpack'
-      flat_pkg_path: '%RECIPE_CACHE_DIR%/unzip/Cloudflare_WARP.pkg'
+      flat_pkg_path: '%RECIPE_CACHE_DIR%/downloads/%NAME%.pkg'
       purge_destination: true
 
   - Processor: PkgPayloadUnpacker
