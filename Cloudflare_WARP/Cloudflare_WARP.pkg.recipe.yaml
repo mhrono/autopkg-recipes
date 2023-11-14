@@ -4,7 +4,7 @@ ParentRecipe: com.mhrono.recipes.download.CloudFlareWarp
 MinimumVersion: '2.3'
 
 Input:
-  NAME: CloudFlareWarp
+  NAME: Cloudflare WARP
 
 Process:
   - Processor: Versioner
@@ -15,4 +15,4 @@ Process:
   - Processor: PkgCopier
     Arguments:
       pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
-      source_pkg: '%RECIPE_CACHE_DIR%/unpack/Cloudflare_WARP.pkg'
+      source_pkg: '%RECIPE_CACHE_DIR%/%NAME%.pkg'

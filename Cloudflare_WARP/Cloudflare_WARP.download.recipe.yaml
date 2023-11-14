@@ -3,7 +3,7 @@ Identifier: com.mhrono.recipes.download.CloudFlareWarp
 MinimumVersion: '2.3'
 
 Input:
-  NAME: CloudFlareWarp
+  NAME: Cloudflare WARP
 
 Process:
 
