@@ -1,0 +1,15 @@
+Description: Downloads and builds a package of the latest Amazon Chime for Mac
+Identifier: com.mhrono.recipes.pkg.amazonchime
+ParentRecipe: com.mhrono.recipes.download.amazonchime
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Amazon Chime
+
+Process:
+  - Processor: Versioner
+    Arguments:
+      input_plist_path: '%pathname%/%NAME%.app/Contents/Info.plist'
+      plist_version_key: 'CFBundleShortVersionString'
+
+  - Processor: AppPkgCreator

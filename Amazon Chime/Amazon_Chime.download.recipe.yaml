@@ -1,0 +1,22 @@
+Description: Downloads the latest Amazon Chime for Mac
+Identifier: com.mhrono.recipes.download.amazonchime
+MinimumVersion: '2.3'
+
+Input:
+  NAME: Amazon Chime
+  URL: https://clients.chime.aws/mac/latest
+
+Process:
+
+  - Processor: com.github.jgstew.SharedProcessors/URLDownloaderRequests
+    Arguments:
+      filename: '%NAME%.dmg'
+      url: '%URL%'
+
+  - Processor: CodeSignatureVerifier
+    Arguments:
+      input_path: '%pathname%/%NAME%.app'
+      requirement: anchor apple generic and identifier "com.amazon.Amazon-Chime" and (certificate leaf[field.1.2.840.113635.100.6.1.9] /* exists */ or certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "94KV3E626L")
+      strict_verification: true
+
+  - Processor: EndOfCheckPhase
