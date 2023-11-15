@@ -7,9 +7,15 @@ Input:
   NAME: Island
 
 Process:
-  - Processor: AppPkgCreator
+  - Processor: Versioner
     Arguments:
-      app_path: '%RECIPE_CACHE_DIR%/unpack/%NAME%.app'
+      input_plist_path: '%RECIPE_CACHE_DIR%/unpack/payload/%NAME%.app/Contents/Info.plist'
+      plist_version_key: 'CFBundleShortVersionString'
+
+  - Processor: PkgCopier
+    Arguments:
+      pkg_path: '%RECIPE_CACHE_DIR%/%NAME%-%version%.pkg'
+      source_pkg: '%RECIPE_CACHE_DIR%/downloads/%NAME%.pkg'
 
   - Processor: com.github.smithjw.processors/FriendlyPathDeleter
     Arguments:
