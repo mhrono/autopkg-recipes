@@ -12,7 +12,7 @@ Input:
   DEFER_LIMIT: "10"
   FORCE_UPDATE: "False"
   ROLLBACK: "False"
-  SELF_SERVICE_VISIBLE: "False"
+  SELF_SERVICE_VISIBLE: "True"
   SELF_SERVICE_DESCRIPTION: "Wireshark is a network protocol analyzer."
   SELF_SERVICE_ICON: "Wireshark.png"
   PYTHON3_PATH: ""
